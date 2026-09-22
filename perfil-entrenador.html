@@ -1,27 +1,99 @@
-<main>
+<!DOCTYPE html>
+<html lang="es">
 
-    <section id="perfil">
-        <!-- Persona 1 -->
-    </section>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pokédex - Lista de Pokémon</title>
 
-    <dialog id="editar-perfil">
-        <!-- Persona 2 - Extra -->
-    </dialog>
+  <link rel="icon" type="image/svg+xml" href="assets/pokeball.svg">
+  <link rel="icon" type="image/png" href="assets/pokeball.png">
+  <!-- favicon.ico vive en la raiz: el navegador lo pide solo, sin <link> -->
 
-    <dialog id="team">
-        <!-- Persona 2 -->
-    </dialog>
+  <!-- Hoja de estilos del sitio. Mismo elemento <link> que el favicon;
+       lo que cambia es rel, que dice qué relación tiene el archivo con el documento. -->
 
-    <dialog id="favoritos">
-        <!-- Persona 3 -->
-    </dialog>
+  <!--   
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="styles.css">
+  -->
+</head>
 
-    <dialog id="estadisticas">
-        <!-- Persona 4 -->
-    </dialog>
+<body>
 
-    <dialog id="capturados">
-        <!-- Persona 4 - Extra -->
-    </dialog>
+    <header>
+        <p>
+            <a class="logo" href="./">
+                <img src="assets/logo-pokedex.svg" alt="Pokédex" width="156" height="40">
+            </a>
+        </p>
 
-</main>
+        <nav>
+            <ul>
+                <li><a href="./" accesskey="p">Pokédex</a></li>
+                <li><a href="perfil-entrenador.html">Perfil de entrenador</a></li>
+                <li><a href="acerca-de.html">Acerca de</a></li>
+                <li><a href="configuracion.html">Configuración</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Perfil de Entrenador</h1>
+            <section id="perfil">
+                <a class="trainer">
+                    <img class="trainer-card_image" src="assets/entrenador.png" alt="trainer-picture" width="400" height="400">
+                    <p>#001 Red</p>
+                </a>
+                
+                <h2>Datos de Entrenador</h2>
+                <ul>
+                    <li>Edad: 11 años</li>
+                    <li>Ciudad origen: Pueblo Paleta</li>
+                    <li>Altura: 150cm</li>
+                    
+                    <h3>Biografía de Entrenador</h3>
+                    <p>
+                        Aqui va la biografía
+                    </p>
+                </ul>
+
+            </section>
+
+            <h4>Editar Perfil</h4>
+
+
+            <button type= ></button>
+
+
+
+            <dialog id="editar-perfil">
+                
+                
+            </dialog>
+
+            <dialog id="team">
+                
+            </dialog>
+
+            <dialog id="favoritos">
+                
+            </dialog>
+
+            <dialog id="estadisticas">
+            
+            </dialog>
+
+            <dialog id="capturados">
+                
+            </dialog>
+  
+    </main>
+
+
+</body>
+
+
+
+
+
