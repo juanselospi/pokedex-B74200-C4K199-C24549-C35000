@@ -4,12 +4,107 @@
         <!-- Persona 1 -->
     </section>
 
-    <dialog id="editar-perfil">
-        <!-- Persona 2 - Extra -->
+    <dialog id="editar-perfil" aria-labelledby="editar-perfil-titulo">
+        <h2 id="editar-perfil-titulo">Editar perfil</h2>
+
+        <form method="dialog">
+            <fieldset>
+                <legend>Datos personales</legend>
+
+                <p>
+                    <label for="editar-nombre">Nombre</label>
+                    <input type="text" id="editar-nombre" name="nombre" value="Red" required>
+                </p>
+
+                <p>
+                    <label for="editar-edad">Edad (años)</label>
+                    <input type="number" id="editar-edad" name="edad" value="11" min="5" max="99" required>
+                </p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Origen y medidas</legend>
+
+                <p>
+                    <label for="editar-ciudad">Ciudad de origen</label>
+                    <input type="text" id="editar-ciudad" name="ciudad" value="Pueblo Paleta" required>
+                </p>
+
+                <p>
+                    <label for="editar-estatura">Estatura (m)</label>
+                    <input type="number" id="editar-estatura" name="estatura" value="1.50" min="0.50" max="2.50" step="0.01" required>
+                </p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Sobre mí</legend>
+
+                <p>
+                    <label for="editar-bio">Biografía</label>
+                    <textarea id="editar-bio" name="bio" rows="4">Aqui va la biografia</textarea>
+                </p>
+            </fieldset>
+
+            <p>
+                <button type="submit">Guardar</button>
+                <button type="submit" value="cancelar" formnovalidate>Cancelar</button>
+            </p>
+        </form>
     </dialog>
 
-    <dialog id="team">
-        <!-- Persona 2 -->
+    <dialog id="team" aria-labelledby="team-titulo" closedby="any">
+        <header>
+            <h2 id="team-titulo">Team Pokémon</h2>
+            <form method="dialog">
+                <button aria-label="Cerrar Team Pokémon">✕</button>
+            </form>
+        </header>
+
+        <p>5 de 6 espacios ocupados</p>
+
+        <ul>
+            <li>
+                <img src="assets/bulbasaur.png" alt="Bulbasaur" width="96" height="96">
+                <p>#001</p>
+                <h3>Bulbasaur</h3>
+                <button type="button" aria-label="Quitar a Bulbasaur del equipo">Quitar</button>
+            </li>
+
+            <li>
+                <img src="assets/charmander.png" alt="Charmander" width="96" height="96">
+                <p>#004</p>
+                <h3>Charmander</h3>
+                <button type="button" aria-label="Quitar a Charmander del equipo">Quitar</button>
+            </li>
+
+            <li>
+                <img src="assets/charizard.png" alt="Charizard" width="96" height="96">
+                <p>#006</p>
+                <h3>Charizard</h3>
+                <button type="button" aria-label="Quitar a Charizard del equipo">Quitar</button>
+            </li>
+
+            <li>
+                <img src="assets/squirtle.png" alt="Squirtle" width="96" height="96">
+                <p>#007</p>
+                <h3>Squirtle</h3>
+                <button type="button" aria-label="Quitar a Squirtle del equipo">Quitar</button>
+            </li>
+
+            <li>
+                <img src="assets/pikachu.png" alt="Pikachu" width="96" height="96">
+                <p>#025</p>
+                <h3>Pikachu</h3>
+                <button type="button" aria-label="Quitar a Pikachu del equipo">Quitar</button>
+            </li>
+        </ul>
+
+        <footer>
+            <button type="button" commandfor="capturados" command="show-modal">Agregar desde capturados</button>
+            <form method="dialog">
+                <button>Cerrar</button>
+            </form>
+        </footer>
     </dialog>
 
     <dialog id="favoritos">
