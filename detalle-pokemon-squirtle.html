@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pokédex - Squirtle</title>
+
+  <link rel="icon" type="image/svg+xml" href="assets/pokeball.svg">
+  <link rel="icon" type="image/png" href="assets/pokeball.png">
+  <!-- favicon.ico vive en la raiz: el navegador lo pide solo, sin <link> -->
+
+  <!-- Hoja de estilos del sitio. Mismo elemento <link> que el favicon;
+       lo que cambia es rel, que dice qué relación tiene el archivo con el documento. -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="tokens.css">
+</head>
+
+<body>
+
+  <header>
+    <p>
+      <a class="logo" href="./">
+        <img src="assets/logo-pokedex.svg" alt="Pokédex" width="156" height="40">
+      </a>
+    </p>
+
+    <nav>
+      <ul>
+        <li><a href="./" accesskey="p">Pokédex</a></li>
+        <li><a href="perfil-entrenador.html">Perfil de entrenador</a></li>
+        <li><a href="acerca-de.html">Acerca de</a></li>
+        <li><a href="configuracion.html">Configuración</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!--
+      Carrusel de Pokémon cercanos.
+      En HTML es solamente una lista de enlaces: dos antes, el actual y dos después.
+      El arco, los tamaños y el deslizamiento son CSS y JavaScript, más adelante.
+    -->
+    <nav id="carrusel">
+      <h2>Pokémon cercanos</h2>
+
+      <ul class="carrusel">
+        <li class="carrusel__item">
+          <a href="detalle-pokemon-charmeleon.html">
+            <img src="assets/pokeball-inactiva.svg" alt="Ir a #005 Charmeleon" width="32" height="32">
+            #005
+          </a>
+        </li>
+
+        <li class="carrusel__item">
+          <a href="detalle-pokemon-charizard.html">
+            <img src="assets/pokeball-inactiva.svg" alt="Ir a #006 Charizard" width="32" height="32">
+            #006
+          </a>
+        </li>
+
+        <li class="carrusel__item carrusel__item--activo">
+          <img src="assets/pokeball.svg" alt="Estás viendo #007 Squirtle" width="40" height="40">
+          #007
+        </li>
+
+        <li class="carrusel__item">
+          <a href="detalle-pokemon-wartortle.html">
+            <img src="assets/pokeball-inactiva.svg" alt="Ir a #008 Wartortle" width="32" height="32">
+            #008
+          </a>
+        </li>
+
+        <li class="carrusel__item">
+          <a href="detalle-pokemon-blastoise.html">
+            <img src="assets/pokeball-inactiva.svg" alt="Ir a #009 Blastoise" width="32" height="32">
+            #009
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <p><a href="./">&larr; Volver a la lista</a></p>
+
+    <article id="ficha-pokemon">
+      <h1><span>#007</span> Squirtle</h1>
+
+      <p>Squirtle fue el 7<sup>mo</sup> Pokémon registrado en esta Pokédex, el
+        <time datetime="2026-09-01">1 de setiembre de 2026</time>. Su caparazón no
+        solo lo protege: también <strong>reduce la resistencia del agua</strong>,
+        lo que le permite nadar a gran velocidad.
+      </p>
+
+      <figure>
+        <img src="assets/squirtle-grande.png" alt="Squirtle, un Pokémon de tipo Agua con caparazón de tortuga"
+          width="300" height="300">
+        <figcaption>Squirtle, el Pokémon Tortuguita</figcaption>
+      </figure>
+
+      <section id="detalles">
+        <h2>Detalles</h2>
+
+        <dl>
+          <dt>Peso</dt>
+          <dd>9.0 kg</dd>
+
+          <dt>Tamaño</dt>
+          <dd>0.5 m</dd>
+
+          <dt>Tipo</dt>
+          <dd>Agua</dd>
+        </dl>
+
+        <h3>Cadena evolutiva</h3>
+        <ol>
+          <li>Squirtle</li>
+          <li>Wartortle</li>
+          <li>Blastoise</li>
+        </ol>
+      </section>
+
+      <hr>
+
+      <section id="habilidades">
+        <h2>Habilidades</h2>
+
+        <dl>
+          <dt>Torrente</dt>
+          <dd>Potencia sus movimientos de tipo Agua cuando le queda poca salud.</dd>
+
+          <dt>Cura Lluvia <em>(oculta)</em></dt>
+          <dd>Recupera salud en cada turno mientras esté lloviendo en el combate.</dd>
+        </dl>
+      </section>
+
+      <section id="estadisticas">
+        <h2>Estadísticas</h2>
+
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th abbr="PS">Puntos de Salud</th>
+              <th abbr="ATQ">Ataque</th>
+              <th abbr="DEF">Defensa</th>
+              <th abbr="AT. ESP.">Ataque Especial</th>
+              <th abbr="DEF. ESP.">Defensa Especial</th>
+              <th abbr="VEL">Velocidad</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>44</td>
+              <td>48</td>
+              <td>65</td>
+              <td>50</td>
+              <td>64</td>
+              <td>43</td>
+            </tr>
+          </tbody>
+
+          <tfoot>
+            <tr class="stats-table__total">
+              <td colspan="6">Total: 314</td>
+            </tr>
+          </tfoot>
+        </table>
+      </section>
+
+      <p><a href="https://bulbapedia.bulbagarden.net/wiki/Squirtle_(Pok%C3%A9mon)" target="_blank" rel="noopener">Ver
+          ficha completa en Bulbapedia</a>
+        (se abre en una pestaña nueva)</p>
+    </article>
+  </main>
+
+  <footer>
+    <p><small>Proyecto académico del curso Desarrollo de Aplicaciones Web
+        (<abbr title="Curso de Informática 0137">CI-0137</abbr>),
+        Escuela de Ciencias de la Computación e Informática,
+        <abbr title="Universidad de Costa Rica">UCR</abbr>.
+        <time datetime="2026">2026</time>.</small></p>
+
+    <p><small>Pokémon y sus personajes son marcas registradas de Nintendo,
+        Game Freak y The Pokémon Company. Este sitio no tiene ninguna relación con
+        ellos y se usa únicamente con fines educativos.</small></p>
+
+    <p><small>Ilustraciones y sprites tomados del repositorio
+        <a href="https://github.com/PokeAPI/sprites" target="_blank" rel="noopener">PokeAPI/sprites</a>.
+        Datos de referencia consultados en
+        <a href="https://pokemondb.net/" target="_blank" rel="noopener">Pokémon Database</a>.</small></p>
+  </footer>
+
+</body>
+
+</html>

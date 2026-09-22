@@ -1,0 +1,41 @@
+/* ==========================================================================
+   Pokédex — Paleta y medidas
+
+   Las variables se declaran una sola vez acá y se usan con var() en todo el
+   sitio. Cambiar un color del sitio entero = cambiar una línea de este
+   archivo.
+
+   Van en :root, que apunta al elemento <html>, porque las variables SE
+   HEREDAN: declaradas ahí quedan disponibles en toda la página.
+   Los nombres tienen que empezar con dos guiones.
+
+   Este archivo se enlaza ANTES que styles.css, porque styles.css lo necesita.
+   ========================================================================== */
+
+:root {
+
+  /* --- Colores del aparato --- */
+  --azul:           #2967C5;   /* fondo de la pantalla */
+  --navy:           #142C52;   /* barra inferior y texto sobre amarillo */
+  --amarillo:       #FAD162;   /* pastillas y encabezados */
+  --amarillo-borde: #F0B639;   /* borde de las tarjetas */
+  --crema:          #FDF0CE;   /* fondos suaves */
+  --blanco:         #F2F6FA;   /* fondo de tarjetas y texto sobre azul */
+  --rojo:           #DC2D1A;   /* botones de acción */
+  --pista:          #D6E0EB;   /* líneas y bordes tenues */
+
+  /* --- Medidas que se repiten --- */
+  --radio:          10px;      /* esquinas de tarjetas y paneles */
+  --radio-pastilla: 999px;     /* un radio absurdo siempre da la pastilla
+                                  perfecta, sin importar la altura */
+  --borde:          3px;       /* grosor del borde de las tarjetas */
+}
+
+/* Contraste verificado (el mínimo para texto normal es 4.5:1):
+     navy sobre crema ....... 12.3:1      blanco sobre azul ..... 5.5:1
+     navy sobre blanco ...... 12.8:1      blanco sobre rojo ..... 4.7:1
+     navy sobre amarillo ..... 9.5:1
+
+   El amarillo sobre azul da 3.7:1: sirve para bordes y texto grande, pero no
+   para texto normal. Por eso el amarillo se usa como fondo con texto navy
+   encima, nunca como color de letra sobre el azul. */

@@ -1,0 +1,211 @@
+/* ==========================================================================
+   Pokédex — CI-0137
+   Hoja de estilos del sitio
+
+   Los colores y las medidas salen de tokens.css, que se enlaza antes que
+   este archivo.
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. Base
+   -------------------------------------------------------------------------- */
+
+/* El asterisco son todos los elementos; los dos pseudo-elementos se agregan
+   aparte porque el asterisco no los alcanza.
+
+   border-box hace que width incluya el relleno y el borde, en vez de medir
+   solo el contenido. Sin esto, una caja de width: 300px con padding: 20px y
+   border: 2px mide 344 en pantalla. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Estas tres propiedades se heredan: declaradas una vez en body bajan solas
+   a toda la página. Regla para acordarse: lo que tiene que ver con el texto
+   se hereda; lo que tiene que ver con la caja no. */
+body {
+  font-family: Verdana, Geneva, sans-serif;
+  background: var(--azul);
+  color: var(--blanco);
+}
+
+/* Los enlaces no toman el color de body: un valor heredado pierde contra
+   cualquier regla que apunte directamente al elemento, y la hoja del
+   navegador tiene una para "a". Hay que decírselo aparte. */
+a {
+  color: var(--blanco);
+}
+
+
+/* --------------------------------------------------------------------------
+   2. Logo
+   -------------------------------------------------------------------------- */
+
+/* La pastilla amarilla no está dentro de la imagen: la dibuja el CSS acá.
+
+   display: inline-block es necesario porque un enlace es un elemento de
+   línea, y a esos el relleno vertical no les agranda la caja: el amarillo se
+   derramaría sobre las líneas de arriba y abajo. inline-block se comporta
+   como caja sin dejar de acomodarse en la línea.
+
+   line-height: 0 saca el hueco que deja la línea base del texto debajo de la
+   imagen. Sin eso la pastilla se ve descentrada. */
+.logo {
+  display: inline-block;
+  background: var(--amarillo);
+  border: var(--borde) solid var(--navy);
+  border-radius: var(--radio-pastilla);
+  padding: 0.35rem 1.1rem;
+  line-height: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. Lista de Pokémon
+   -------------------------------------------------------------------------- */
+
+/* La viñeta y la sangría son dos cosas distintas que pone el navegador.
+   Quitar una no quita la otra. */
+.pokemon-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* Las cuatro capas de la caja, en orden de adentro hacia afuera: contenido,
+   relleno, borde y margen.
+
+   El relleno está adentro y se pinta con el fondo; el margen está afuera y
+   siempre es transparente. Por eso el relleno separa el texto del borde, y el
+   margen separa una tarjeta de la siguiente.
+
+   Ojo: entre dos tarjetas no hay 2rem de separación sino 1rem. Los márgenes
+   verticales adyacentes no se suman, se fusionan y gana el mayor. A eso se le
+   llama colapso de márgenes, y es a propósito. */
+.pokemon-card {
+  background: var(--blanco);
+  color: var(--navy);
+  border: var(--borde) solid var(--amarillo-borde);
+  border-radius: var(--radio);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* El color se hereda dentro de la tarjeta, pero el enlace no lo toma */
+.pokemon-card a {
+  color: var(--navy);
+}
+
+.pokemon-card__number {
+  color: #60646A;
+  font-size: 0.85rem;
+}
+
+.pokemon-card__name {
+  font-weight: bold;
+}
+
+/* La paginación ya lleva el número en el texto del enlace: el marcador del
+   <ol> lo estaba repitiendo. */
+.paginacion {
+  list-style: none;
+  padding-left: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   4. Tabla de estadísticas
+   -------------------------------------------------------------------------- */
+
+/* Por defecto cada celda tiene su propio borde y hay separación entre ellas,
+   así que donde dos celdas se tocan aparecen dos líneas. collapse las fusiona
+   en una sola. */
+.stats-table {
+  border-collapse: collapse;
+  background: var(--blanco);
+  color: var(--navy);
+}
+
+/* La coma es una lista de selectores: aplicá esto a los dos. */
+.stats-table th,
+.stats-table td {
+  border: 1px solid var(--pista);
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+}
+
+.stats-table__total {
+  font-weight: bold;
+  background: var(--crema);
+}
+
+
+/* --------------------------------------------------------------------------
+   5. Encabezado y pie
+   -------------------------------------------------------------------------- */
+
+/* Sin clase: header y footer ya se identifican por su propia etiqueta. Esa es
+  la ventaja de haber usado HTML semántico en vez de div para todo. */
+header {
+  padding: 1rem 1.5rem;
+}
+
+/* Acá se ve la diferencia entre relleno y margen, porque hay fondo: el navy
+   llega hasta donde termina el relleno y se corta ahí; el margen queda
+   afuera, transparente. */
+footer {
+  background: var(--navy);
+  color: var(--blanco);
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* El pie tiene fondo oscuro y adentro hay enlaces: necesitan su propio color.
+   Cada vez que le cambies el fondo a una caja, revisá el texto de adentro. */
+footer a {
+  color: var(--amarillo);
+}
+
+
+/* --------------------------------------------------------------------------
+   6. Estados
+   -------------------------------------------------------------------------- */
+
+/* Una pseudo-clase selecciona un elemento que ya existe cuando está en cierto
+   estado, y lleva UN dos puntos. Un pseudo-elemento crea una caja nueva que
+   no está en el HTML, y lleva DOS.
+
+   :hover es el mouse encima. :focus-within es el foco del teclado en algo de
+   adentro, y hace falta porque quien navega con teclado no tiene puntero: sin
+   esta regla, esa persona nunca sabe dónde está parada. */
+.pokemon-card:hover,
+.pokemon-card:focus-within {
+  border-color: var(--navy);
+  background: var(--crema);
+}
+
+.pokemon-card a:hover {
+  text-decoration: underline;
+}
+
+/* El anillo de foco nunca se quita sin poner algo en su lugar: es lo único
+   que le indica a una persona con teclado dónde está. */
+a:focus-visible {
+  outline: 3px solid var(--amarillo);
+  outline-offset: 2px;
+}
+
+/* Un pseudo-elemento: esta flecha no está en el HTML, la inventó el CSS.
+   content es obligatorio; sin él no se dibuja nada, aunque le pongas color.
+
+   Sirve para decoración, nunca para información que haga falta entender: los
+   lectores de pantalla a veces leen el content y a veces no, según el
+   navegador. Acá la flecha solo refuerza algo que el texto ya dice.
+
+   El selector entre corchetes busca por atributo: los enlaces que abren en
+   pestaña nueva. */
+a[target="_blank"]::after {
+  content: " ↗";
+}
