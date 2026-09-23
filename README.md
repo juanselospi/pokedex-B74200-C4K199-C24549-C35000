@@ -1,11 +1,28 @@
 # Pokédex — CI-0137
 
-Proyecto de referencia del curso **Desarrollo de Aplicaciones Web**, Escuela de
+Laboratorio 1 del curso Desarrollo de Aplicaciones Web, Escuela de
 Ciencias de la Computación e Informática, Universidad de Costa Rica.
 
-Este repositorio se va actualizando clase a clase. Y su objetivo es que, en caso
-de que se quedan botados en algún punto o quieran comparar su código con el que
-desarrollamos durante la clase, puedan acceder al mismo de forma sencilla.
+## Integrantes
+
+| Nombre         | Carné   |
+| -------------- | ------- |
+| Jeferson Marín | C24549  |
+| Agustín Soto   | C4K199  |
+| Albin Monge    | C35000  |
+| Juan Loaiza    | B74200  |
+
+## Sitio publicado
+
+[Link al sitio en github pages](https://juanselospi.github.io/pokedex-B74200-C4K199-C24549-C35000/)
+
+## Puntos extra realizados
+
+- **Formulario para editar el entrenador:** el botón *Editar perfil* abre un
+  diálogo con un formulario para cambiar nombre, edad, ciudad, estatura y
+  biografía, con campos etiquetados, agrupados y botones de guardar y cancelar.
+
+---
 
 ## Qué hay acá
 
