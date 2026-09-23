@@ -224,7 +224,104 @@
     </dialog>
 
     <dialog id="capturados">
-        <!-- Persona 4 - Extra -->
+        <h2>Pokémon capturados</h2>
+
+        <p>Seleccioná los que querés en tu equipo o marcalos como favoritos.</p>
+
+        <form>
+
+            <label for="buscar">Buscar por nombre</label>
+            <input type="search" id="buscar" name="buscar">
+
+            <label for="tipo">Tipo</label>
+            <select id="tipo" name="tipo">
+                <option value="">Todos</option>
+                <option value="agua">Agua</option>
+                <option value="planta">Planta</option>
+                <option value="fuego">Fuego</option>
+                <option value="electrico">Eléctrico</option>
+            </select>
+
+            <button type="submit">Buscar</button>
+
+            <ul class="pokemon-capturados">
+
+                <li class="pokemon-capturado">
+                    <input class="pokemon-checkbox" type="checkbox" id="squirtle" name="pokemon" value="squirtle">
+
+                    <label for="squirtle">
+                        <img src="assets/squirtle.png" alt="Squirtle">
+                        #007 Squirtle
+                    </label>
+
+                    <input class="favorito-checkbox" type="checkbox" id="fav-squirtle" name="favorito" value="squirtle">
+
+                    <label for="fav-squirtle">Favorito</label>
+                </li>
+
+                <li class="pokemon-capturado">
+                    <input class="pokemon-checkbox" type="checkbox" id="bulbasaur" name="pokemon" value="bulbasaur">
+
+                    <label for="bulbasaur">
+                        <img src="assets/bulbasaur.png" alt="Bulbasaur">
+                        #001 Bulbasaur
+                    </label>
+
+                    <input class="favorito-checkbox" type="checkbox" id="fav-bulbasaur" name="favorito"
+                        value="bulbasaur">
+
+                    <label for="fav-bulbasaur">Favorito</label>
+                </li>
+
+                <li class="pokemon-capturado">
+                    <input class="pokemon-checkbox" type="checkbox" id="charmander" name="pokemon" value="charmander">
+
+                    <label for="charmander">
+                        <img src="assets/charmander.png" alt="Charmander">
+                        #004 Charmander
+                    </label>
+
+                    <input class="favorito-checkbox" type="checkbox" id="fav-charmander" name="favorito"
+                        value="charmander">
+
+                    <label for="fav-charmander">Favorito</label>
+                </li>
+
+                <li class="pokemon-capturado">
+                    <input class="pokemon-checkbox" type="checkbox" id="pikachu" name="pokemon" value="pikachu">
+
+                    <label for="pikachu">
+                        <img src="assets/pikachu.png" alt="Pikachu">
+                        #025 Pikachu
+                    </label>
+
+                    <input class="favorito-checkbox" type="checkbox" id="fav-pikachu" name="favorito" value="pikachu">
+
+                    <label for="fav-pikachu">Favorito</label>
+                </li>
+
+                <li class="pokemon-capturado">
+                    <input class="pokemon-checkbox" type="checkbox" id="charizard" name="pokemon" value="charizard">
+
+                    <label for="charizard">
+                        <img src="assets/charizard.png" alt="Charizard">
+                        #006 Charizard
+                    </label>
+
+                    <input class="favorito-checkbox" type="checkbox" id="fav-charizard" name="favorito"
+                        value="charizard">
+
+                    <label for="fav-charizard">Favorito</label>
+                </li>
+
+            </ul>
+
+            <button type="button">Marcar favorito</button>
+            <button type="button">Agregar al equipo</button>
+
+        </form>
+
+        <button type="button">Cerrar</button>
     </dialog>
 
 </main>
