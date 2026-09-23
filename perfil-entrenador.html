@@ -250,7 +250,7 @@
 
         <p>Valores base tomados de la Pokédex.</p>
 
-        <button type="button">Cerrar</button>
+        <button type="button" command="close" commandfor="estadisticas">Cerrar</button>
     </dialog>
 
     <dialog id="capturados">
@@ -351,13 +351,13 @@
 
         </form>
 
-        <button type="button">Cerrar</button>
+        <button type="button" command="close" commandfor="capturados">Cerrar</button>
     </dialog>
 
     <dialog id="favoritos">
         <!-- Persona 3 -->
         <h2>Favoritos</h2>
-        <button type="button" command="close" commandfor="favoritos">X</button>
+        <button type="button" command="close" commandfor="favoritos" aria-label="Cerrar Favoritos">X</button>
         
         <p>4 Pokémon marcados como favoritos</p>
 
@@ -397,7 +397,7 @@
         </ul>
         
         <p>
-            <button type="button" command="close" commandfor="favoritos">Agregar desde capturados</button>
+            <button type="button" command="show-modal" commandfor="capturados">Agregar desde capturados</button>
             <button type="button" command="close" commandfor="favoritos">Cerrar</button>
         </p>
     </dialog>
@@ -428,16 +428,16 @@
             <button type="button" commandfor="editar-perfil" command="show-modal">Editar Perfil</button>
 
             <li>Equipo Pokemon</li>
-            <button type="button" commandfor="equipo-pokemon" command="show-modal">Equipo Pokemon</button>
+            <button type="button" commandfor="team" command="show-modal">Equipo Pokemon</button>
 
             <li>Pokemon Capturados</li>
-            <button type="button" commandfor="poekmon-capturados" command="show-modal">Pokemon Capturados</button>
+            <button type="button" commandfor="capturados" command="show-modal">Pokemon Capturados</button>
 
             <li>Favoritos</li>
             <button type="button" commandfor="favoritos" command="show-modal">Favoritos</button>
 
             <li>Estadísticas</li>
-            <button type="button" commandfor="estadísticas" command="show-modal">Estadísticas</button>
+            <button type="button" commandfor="estadisticas" command="show-modal">Estadísticas</button>
 
     </main>
 
