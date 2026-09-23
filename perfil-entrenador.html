@@ -1,8 +1,42 @@
-<main>
+<!DOCTYPE html>
+<html lang="es">
 
-    <section id="perfil">
-        <!-- Persona 1 -->
-    </section>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pokédex - Lista de Pokémon</title>
+
+  <link rel="icon" type="image/svg+xml" href="assets/pokeball.svg">
+  <link rel="icon" type="image/png" href="assets/pokeball.png">
+  <!-- favicon.ico vive en la raiz: el navegador lo pide solo, sin <link> -->
+
+  <!-- Hoja de estilos del sitio. Mismo elemento <link> que el favicon;
+       lo que cambia es rel, que dice qué relación tiene el archivo con el documento. -->
+
+  <!--   
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="styles.css">
+  -->
+</head>
+
+<body>
+
+    <header>
+        <p>
+            <a class="logo" href="./">
+                <img src="assets/logo-pokedex.svg" alt="Pokédex" width="156" height="40">
+            </a>
+        </p>
+
+        <nav>
+            <ul>
+                <li><a href="./" accesskey="p">Pokédex</a></li>
+                <li><a href="perfil-entrenador.html">Perfil de entrenador</a></li>
+                <li><a href="acerca-de.html">Acerca de</a></li>
+                <li><a href="configuracion.html">Configuración</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <dialog id="editar-perfil" aria-labelledby="editar-perfil-titulo">
         <h2 id="editar-perfil-titulo">Editar perfil</h2>
@@ -105,10 +139,6 @@
                 <button>Cerrar</button>
             </form>
         </footer>
-    </dialog>
-
-    <dialog id="favoritos">
-        <!-- Persona 3 -->
     </dialog>
 
     <dialog id="estadisticas">
@@ -324,4 +354,63 @@
         <button type="button">Cerrar</button>
     </dialog>
 
-</main>
+    <main>
+        <h1>Perfil de Entrenador</h1>
+            <section id="perfil">
+                <a class="trainer">
+                    <img class="trainer-card_image" src="assets/entrenador.png" alt="trainer-picture" width="400" height="400">
+                    <p>#001 Red</p>
+                </a>
+                
+                <h2>Datos de Entrenador</h2>
+                <ul>
+                    <li>Edad: 11 años</li>
+                    <li>Ciudad origen: Pueblo Paleta</li>
+                    <li>Altura: 150cm</li>
+                    
+                    <p>Biografía de Entrenador</p>
+                    <p>
+                        Aqui va la biografía
+                    </p>
+                </ul>
+
+            </section>
+
+            <li>Editar Perfil</li>
+            <button type="button" commandfor="editar-perfil" command="show-modal">Editar Perfil</button>
+
+            <li>Equipo Pokemon</li>
+            <button type="button" commandfor="equipo-pokemon" command="show-modal">Equipo Pokemon</button>
+
+            <li>Pokemon Capturados</li>
+            <button type="button" commandfor="poekmon-capturados" command="show-modal">Pokemon Capturados</button>
+
+            <li>Favoritos</li>
+            <button type="button" commandfor="poekmon-favoritos" command="show-modal">Favoritos</button>
+
+            <li>Estadísticas</li>
+            <button type="button" commandfor="estadísticas" command="show-modal">Estadísticas</button>
+
+    </main>
+
+
+    <footer>
+        <p><small>Proyecto académico del curso Desarrollo de Aplicaciones Web
+            (<abbr title="Curso de Informática 0137">CI-0137</abbr>),
+            Escuela de Ciencias de la Computación e Informática,
+            <abbr title="Universidad de Costa Rica">UCR</abbr>.
+            <time datetime="2026">2026</time>.</small></p>
+
+        <p><small>Pokémon y sus personajes son marcas registradas de Nintendo,
+            Game Freak y The Pokémon Company. Este sitio no tiene ninguna relación con
+            ellos y se usa únicamente con fines educativos.</small></p>
+
+        <p><small>Ilustraciones y sprites tomados del repositorio
+            <a href="https://github.com/PokeAPI/sprites" target="_blank" rel="noopener">PokeAPI/sprites</a>.
+            Datos de referencia consultados en
+            <a href="https://pokemondb.net/" target="_blank" rel="noopener">Pokémon Database</a>.</small></p>
+    </footer>
+
+</body>
+
+</html>
