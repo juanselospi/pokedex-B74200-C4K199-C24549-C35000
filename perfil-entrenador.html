@@ -1,63 +1,144 @@
-<main>
+<!DOCTYPE html>
+<html lang="es">
 
-    <section id="perfil">
-        <!-- Persona 1 -->
-    </section>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pokédex - Lista de Pokémon</title>
 
-    <dialog id="editar-perfil">
-        <!-- Persona 2 - Extra -->
+  <link rel="icon" type="image/svg+xml" href="assets/pokeball.svg">
+  <link rel="icon" type="image/png" href="assets/pokeball.png">
+  <!-- favicon.ico vive en la raiz: el navegador lo pide solo, sin <link> -->
+
+  <!-- Hoja de estilos del sitio. Mismo elemento <link> que el favicon;
+       lo que cambia es rel, que dice qué relación tiene el archivo con el documento. -->
+
+  <!--   
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="styles.css">
+  -->
+</head>
+
+<body>
+
+    <header>
+        <p>
+            <a class="logo" href="./">
+                <img src="assets/logo-pokedex.svg" alt="Pokédex" width="156" height="40">
+            </a>
+        </p>
+
+        <nav>
+            <ul>
+                <li><a href="./" accesskey="p">Pokédex</a></li>
+                <li><a href="perfil-entrenador.html">Perfil de entrenador</a></li>
+                <li><a href="acerca-de.html">Acerca de</a></li>
+                <li><a href="configuracion.html">Configuración</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <dialog id="editar-perfil" aria-labelledby="editar-perfil-titulo">
+        <h2 id="editar-perfil-titulo">Editar perfil</h2>
+
+        <form method="dialog">
+            <fieldset>
+                <legend>Datos personales</legend>
+
+                <p>
+                    <label for="editar-nombre">Nombre</label>
+                    <input type="text" id="editar-nombre" name="nombre" value="Red" required>
+                </p>
+
+                <p>
+                    <label for="editar-edad">Edad (años)</label>
+                    <input type="number" id="editar-edad" name="edad" value="11" min="5" max="99" required>
+                </p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Origen y medidas</legend>
+
+                <p>
+                    <label for="editar-ciudad">Ciudad de origen</label>
+                    <input type="text" id="editar-ciudad" name="ciudad" value="Pueblo Paleta" required>
+                </p>
+
+                <p>
+                    <label for="editar-estatura">Estatura (m)</label>
+                    <input type="number" id="editar-estatura" name="estatura" value="1.50" min="0.50" max="2.50" step="0.01" required>
+                </p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Sobre mí</legend>
+
+                <p>
+                    <label for="editar-bio">Biografía</label>
+                    <textarea id="editar-bio" name="bio" rows="4">Aqui va la biografia</textarea>
+                </p>
+            </fieldset>
+
+            <p>
+                <button type="submit">Guardar</button>
+                <button type="submit" value="cancelar" formnovalidate>Cancelar</button>
+            </p>
+        </form>
     </dialog>
 
-    <dialog id="team">
-        <!-- Persona 2 -->
-    </dialog>
+    <dialog id="team" aria-labelledby="team-titulo" closedby="any">
+        <header>
+            <h2 id="team-titulo">Team Pokémon</h2>
+            <form method="dialog">
+                <button aria-label="Cerrar Team Pokémon">✕</button>
+            </form>
+        </header>
 
-    <dialog id="favoritos">
-        <!-- Persona 3 -->
-        <h2>Favoritos</h2>
-        <button type="button" command="close" commandfor="favoritos">X</button>
-        
-        <p>4 Pokémon marcados como favoritos</p>
+        <p>5 de 6 espacios ocupados</p>
 
-        <ul class="pokemon-list">
-            <li class="pokemon-card">
-                <a class="pokemon-card__link" href="detalle-pokemon-bulbasaur.html">
-                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
-                    <img class="pokemon-card__image" src="assets/bulbasaur.png" alt="Bulbasaur" width="96" height="96">
-                    <span class="pokemon-card__number">#001</span>
-                    <span class="pokemon-card__name">Bulbasaur</span>
-                </a>
+        <ul>
+            <li>
+                <img src="assets/bulbasaur.png" alt="Bulbasaur" width="96" height="96">
+                <p>#001</p>
+                <h3>Bulbasaur</h3>
+                <button type="button" aria-label="Quitar a Bulbasaur del equipo">Quitar</button>
             </li>
-            <li class="pokemon-card">
-                <a class="pokemon-card__link" href="detalle-pokemon-pikachu.html">
-                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
-                    <img class="pokemon-card__image" src="assets/pikachu.png" alt="Pikachu" width="96" height="96">
-                    <span class="pokemon-card__number">#002</span>
-                    <span class="pokemon-card__name">Pikachu</span>
-                </a>
+
+            <li>
+                <img src="assets/charmander.png" alt="Charmander" width="96" height="96">
+                <p>#004</p>
+                <h3>Charmander</h3>
+                <button type="button" aria-label="Quitar a Charmander del equipo">Quitar</button>
             </li>
-            <li class="pokemon-card">
-                <a class="pokemon-card__link" href="detalle-pokemon-charmander.html">
-                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
-                    <img class="pokemon-card__image" src="assets/charmander.png".png" alt="Charmander" width="96" height="96">
-                    <span class="pokemon-card__number">#003</span>
-                    <span class="pokemon-card__name">Charmander</span>
-                </a>
+
+            <li>
+                <img src="assets/charizard.png" alt="Charizard" width="96" height="96">
+                <p>#006</p>
+                <h3>Charizard</h3>
+                <button type="button" aria-label="Quitar a Charizard del equipo">Quitar</button>
             </li>
-            <li class="pokemon-card">
-                <a class="pokemon-card__link" href="detalle-pokemon-charizard.html">
-                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
-                    <img class="pokemon-card__image" src="assets/charizard.png" alt="Charizard" width="96" height="96">
-                    <span class="pokemon-card__number">#004</span>
-                    <span class="pokemon-card__name">Charizard</span>
-                </a>
+
+            <li>
+                <img src="assets/squirtle.png" alt="Squirtle" width="96" height="96">
+                <p>#007</p>
+                <h3>Squirtle</h3>
+                <button type="button" aria-label="Quitar a Squirtle del equipo">Quitar</button>
+            </li>
+
+            <li>
+                <img src="assets/pikachu.png" alt="Pikachu" width="96" height="96">
+                <p>#025</p>
+                <h3>Pikachu</h3>
+                <button type="button" aria-label="Quitar a Pikachu del equipo">Quitar</button>
             </li>
         </ul>
-        
-        <p>
-            <button type="button" command="close" commandfor="favoritos">Agregar desde capturados</button>
-            <button type="button" command="close" commandfor="favoritos">Cerrar</button>
-        </p>
+
+        <footer>
+            <button type="button" commandfor="capturados" command="show-modal">Agregar desde capturados</button>
+            <form method="dialog">
+                <button>Cerrar</button>
+            </form>
+        </footer>
     </dialog>
 
     <dialog id="estadisticas">
@@ -173,7 +254,211 @@
     </dialog>
 
     <dialog id="capturados">
-        <!-- Persona 4 - Extra -->
+        <h2>Pokémon capturados</h2>
+
+        <p>Seleccioná los que querés en tu equipo o marcalos como favoritos.</p>
+
+        <form>
+
+            <label for="buscar">Buscar por nombre</label>
+            <input type="search" id="buscar" name="buscar">
+
+            <label for="tipo">Tipo</label>
+            <select id="tipo" name="tipo">
+                <option value="">Todos</option>
+                <option value="agua">Agua</option>
+                <option value="planta">Planta</option>
+                <option value="fuego">Fuego</option>
+                <option value="electrico">Eléctrico</option>
+            </select>
+
+            <button type="submit">Buscar</button>
+
+            <ul class="pokemon-capturados">
+
+                <li class="pokemon-capturado">
+                    <input class="pokemon-checkbox" type="checkbox" id="squirtle" name="pokemon" value="squirtle">
+
+                    <label for="squirtle">
+                        <img src="assets/squirtle.png" alt="Squirtle">
+                        #007 Squirtle
+                    </label>
+
+                    <input class="favorito-checkbox" type="checkbox" id="fav-squirtle" name="favorito" value="squirtle">
+
+                    <label for="fav-squirtle">Favorito</label>
+                </li>
+
+                <li class="pokemon-capturado">
+                    <input class="pokemon-checkbox" type="checkbox" id="bulbasaur" name="pokemon" value="bulbasaur">
+
+                    <label for="bulbasaur">
+                        <img src="assets/bulbasaur.png" alt="Bulbasaur">
+                        #001 Bulbasaur
+                    </label>
+
+                    <input class="favorito-checkbox" type="checkbox" id="fav-bulbasaur" name="favorito"
+                        value="bulbasaur">
+
+                    <label for="fav-bulbasaur">Favorito</label>
+                </li>
+
+                <li class="pokemon-capturado">
+                    <input class="pokemon-checkbox" type="checkbox" id="charmander" name="pokemon" value="charmander">
+
+                    <label for="charmander">
+                        <img src="assets/charmander.png" alt="Charmander">
+                        #004 Charmander
+                    </label>
+
+                    <input class="favorito-checkbox" type="checkbox" id="fav-charmander" name="favorito"
+                        value="charmander">
+
+                    <label for="fav-charmander">Favorito</label>
+                </li>
+
+                <li class="pokemon-capturado">
+                    <input class="pokemon-checkbox" type="checkbox" id="pikachu" name="pokemon" value="pikachu">
+
+                    <label for="pikachu">
+                        <img src="assets/pikachu.png" alt="Pikachu">
+                        #025 Pikachu
+                    </label>
+
+                    <input class="favorito-checkbox" type="checkbox" id="fav-pikachu" name="favorito" value="pikachu">
+
+                    <label for="fav-pikachu">Favorito</label>
+                </li>
+
+                <li class="pokemon-capturado">
+                    <input class="pokemon-checkbox" type="checkbox" id="charizard" name="pokemon" value="charizard">
+
+                    <label for="charizard">
+                        <img src="assets/charizard.png" alt="Charizard">
+                        #006 Charizard
+                    </label>
+
+                    <input class="favorito-checkbox" type="checkbox" id="fav-charizard" name="favorito"
+                        value="charizard">
+
+                    <label for="fav-charizard">Favorito</label>
+                </li>
+
+            </ul>
+
+            <button type="button">Marcar favorito</button>
+            <button type="button">Agregar al equipo</button>
+
+        </form>
+
+        <button type="button">Cerrar</button>
     </dialog>
 
-</main>
+    <dialog id="favoritos">
+        <!-- Persona 3 -->
+        <h2>Favoritos</h2>
+        <button type="button" command="close" commandfor="favoritos">X</button>
+        
+        <p>4 Pokémon marcados como favoritos</p>
+
+        <ul class="pokemon-list">
+            <li class="pokemon-card">
+                <a class="pokemon-card__link" href="detalle-pokemon-bulbasaur.html">
+                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
+                    <img class="pokemon-card__image" src="assets/bulbasaur.png" alt="Bulbasaur" width="96" height="96">
+                    <span class="pokemon-card__number">#001</span>
+                    <span class="pokemon-card__name">Bulbasaur</span>
+                </a>
+            </li>
+            <li class="pokemon-card">
+                <a class="pokemon-card__link" href="detalle-pokemon-pikachu.html">
+                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
+                    <img class="pokemon-card__image" src="assets/pikachu.png" alt="Pikachu" width="96" height="96">
+                    <span class="pokemon-card__number">#002</span>
+                    <span class="pokemon-card__name">Pikachu</span>
+                </a>
+            </li>
+            <li class="pokemon-card">
+                <a class="pokemon-card__link" href="detalle-pokemon-charmander.html">
+                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
+                    <img class="pokemon-card__image" src="assets/charmander.png".png" alt="Charmander" width="96" height="96">
+                    <span class="pokemon-card__number">#003</span>
+                    <span class="pokemon-card__name">Charmander</span>
+                </a>
+            </li>
+            <li class="pokemon-card">
+                <a class="pokemon-card__link" href="detalle-pokemon-charizard.html">
+                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
+                    <img class="pokemon-card__image" src="assets/charizard.png" alt="Charizard" width="96" height="96">
+                    <span class="pokemon-card__number">#004</span>
+                    <span class="pokemon-card__name">Charizard</span>
+                </a>
+            </li>
+        </ul>
+        
+        <p>
+            <button type="button" command="close" commandfor="favoritos">Agregar desde capturados</button>
+            <button type="button" command="close" commandfor="favoritos">Cerrar</button>
+        </p>
+    </dialog>
+
+    <main>
+        <h1>Perfil de Entrenador</h1>
+            <section id="perfil">
+                <a class="trainer">
+                    <img class="trainer-card_image" src="assets/entrenador.png" alt="trainer-picture" width="400" height="400">
+                    <p>#001 Red</p>
+                </a>
+                
+                <h2>Datos de Entrenador</h2>
+                <ul>
+                    <li>Edad: 11 años</li>
+                    <li>Ciudad origen: Pueblo Paleta</li>
+                    <li>Altura: 150cm</li>
+                    
+                    <p>Biografía de Entrenador</p>
+                    <p>
+                        Aqui va la biografía
+                    </p>
+                </ul>
+
+            </section>
+
+            <li>Editar Perfil</li>
+            <button type="button" commandfor="editar-perfil" command="show-modal">Editar Perfil</button>
+
+            <li>Equipo Pokemon</li>
+            <button type="button" commandfor="equipo-pokemon" command="show-modal">Equipo Pokemon</button>
+
+            <li>Pokemon Capturados</li>
+            <button type="button" commandfor="poekmon-capturados" command="show-modal">Pokemon Capturados</button>
+
+            <li>Favoritos</li>
+            <button type="button" commandfor="favoritos" command="show-modal">Favoritos</button>
+
+            <li>Estadísticas</li>
+            <button type="button" commandfor="estadísticas" command="show-modal">Estadísticas</button>
+
+    </main>
+
+
+    <footer>
+        <p><small>Proyecto académico del curso Desarrollo de Aplicaciones Web
+            (<abbr title="Curso de Informática 0137">CI-0137</abbr>),
+            Escuela de Ciencias de la Computación e Informática,
+            <abbr title="Universidad de Costa Rica">UCR</abbr>.
+            <time datetime="2026">2026</time>.</small></p>
+
+        <p><small>Pokémon y sus personajes son marcas registradas de Nintendo,
+            Game Freak y The Pokémon Company. Este sitio no tiene ninguna relación con
+            ellos y se usa únicamente con fines educativos.</small></p>
+
+        <p><small>Ilustraciones y sprites tomados del repositorio
+            <a href="https://github.com/PokeAPI/sprites" target="_blank" rel="noopener">PokeAPI/sprites</a>.
+            Datos de referencia consultados en
+            <a href="https://pokemondb.net/" target="_blank" rel="noopener">Pokémon Database</a>.</small></p>
+    </footer>
+
+</body>
+
+</html>
