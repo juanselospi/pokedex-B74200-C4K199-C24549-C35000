@@ -354,6 +354,54 @@
         <button type="button">Cerrar</button>
     </dialog>
 
+    <dialog id="favoritos">
+        <!-- Persona 3 -->
+        <h2>Favoritos</h2>
+        <button type="button" command="close" commandfor="favoritos">X</button>
+        
+        <p>4 Pokémon marcados como favoritos</p>
+
+        <ul class="pokemon-list">
+            <li class="pokemon-card">
+                <a class="pokemon-card__link" href="detalle-pokemon-bulbasaur.html">
+                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
+                    <img class="pokemon-card__image" src="assets/bulbasaur.png" alt="Bulbasaur" width="96" height="96">
+                    <span class="pokemon-card__number">#001</span>
+                    <span class="pokemon-card__name">Bulbasaur</span>
+                </a>
+            </li>
+            <li class="pokemon-card">
+                <a class="pokemon-card__link" href="detalle-pokemon-pikachu.html">
+                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
+                    <img class="pokemon-card__image" src="assets/pikachu.png" alt="Pikachu" width="96" height="96">
+                    <span class="pokemon-card__number">#002</span>
+                    <span class="pokemon-card__name">Pikachu</span>
+                </a>
+            </li>
+            <li class="pokemon-card">
+                <a class="pokemon-card__link" href="detalle-pokemon-charmander.html">
+                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
+                    <img class="pokemon-card__image" src="assets/charmander.png".png" alt="Charmander" width="96" height="96">
+                    <span class="pokemon-card__number">#003</span>
+                    <span class="pokemon-card__name">Charmander</span>
+                </a>
+            </li>
+            <li class="pokemon-card">
+                <a class="pokemon-card__link" href="detalle-pokemon-charizard.html">
+                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
+                    <img class="pokemon-card__image" src="assets/charizard.png" alt="Charizard" width="96" height="96">
+                    <span class="pokemon-card__number">#004</span>
+                    <span class="pokemon-card__name">Charizard</span>
+                </a>
+            </li>
+        </ul>
+        
+        <p>
+            <button type="button" command="close" commandfor="favoritos">Agregar desde capturados</button>
+            <button type="button" command="close" commandfor="favoritos">Cerrar</button>
+        </p>
+    </dialog>
+
     <main>
         <h1>Perfil de Entrenador</h1>
             <section id="perfil">
@@ -386,7 +434,7 @@
             <button type="button" commandfor="poekmon-capturados" command="show-modal">Pokemon Capturados</button>
 
             <li>Favoritos</li>
-            <button type="button" commandfor="poekmon-favoritos" command="show-modal">Favoritos</button>
+            <button type="button" commandfor="favoritos" command="show-modal">Favoritos</button>
 
             <li>Estadísticas</li>
             <button type="button" commandfor="estadísticas" command="show-modal">Estadísticas</button>
