@@ -1,213 +1,257 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pokédex - Lista de Pokémon</title>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pokédex - Lista de Pokémon</title>
 
-  <link rel="icon" type="image/svg+xml" href="assets/pokeball.svg">
-  <link rel="icon" type="image/png" href="assets/pokeball.png">
-  <!-- favicon.ico vive en la raiz: el navegador lo pide solo, sin <link> -->
+    <link rel="icon" type="image/svg+xml" href="assets/pokeball.svg">
+    <link rel="icon" type="image/png" href="assets/pokeball.png">
+    <!-- favicon.ico vive en la raiz: el navegador lo pide solo, sin <link> -->
 
-  <!-- Hoja de estilos del sitio. Mismo elemento <link> que el favicon;
-       lo que cambia es rel, que dice qué relación tiene el archivo con el documento. -->
+    <!-- Hoja de estilos del sitio. Mismo elemento <link> que el favicon;
+        lo que cambia es rel, que dice qué relación tiene el archivo con el documento. -->
+    <!-- Tipografías (Google Fonts): Fredoka para títulos y Figtree para el texto.
+        preconnect abre la conexión con anticipación para que la fuente llegue antes.
+        display=swap muestra el texto enseguida con la fuente de respaldo y la cambia al llegar. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fredoka:wght@500;600;700&display=swap">
 
-  <!--   
-  <link rel="stylesheet" href="tokens.css">
-  <link rel="stylesheet" href="styles.css">
-  -->
-</head>
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
 
-<body>
+  <body>
 
-  <header>
-    <p>
-      <a class="logo" href="./">
-        <img src="assets/logo-pokedex.svg" alt="Pokédex" width="156" height="40">
-      </a>
-    </p>
+    <header>
+      <p>
+        <a class="logo" href="./">
+          <img src="assets/logo-pokedex.svg" alt="Pokédex" width="156" height="40">
+        </a>
+      </p>
 
-    <nav>
-      <ul>
-        <li><a href="./" accesskey="p">Pokédex</a></li>
-        <li><a href="perfil-entrenador.html">Perfil de entrenador</a></li>
-        <li><a href="acerca-de.html">Acerca de</a></li>
-        <li><a href="configuracion.html">Configuración</a></li>
-      </ul>
-    </nav>
-  </header>
+      <!--
+        Menú principal del sitio. Se usa <nav> porque es un bloque de navegación,
+        y adentro una lista <ul> (no ordenada) porque el orden de estos enlaces
+        no importa para el significado, solo para el diseño.
+        Cada enlace <a> lleva a otra página (cambia la URL); no confundir con
+        un <button>, que sirve para ejecutar una acción en la misma página
+        (como enviar un formulario), no para navegar.
+      -->
+      <nav>
+        <ul>
+          <li><a href="./" accesskey="p" aria-current="page">Pokédex</a></li>
+          <li><a href="perfil-entrenador.html">Perfil de entrenador</a></li>
+          <li><a href="acerca-de.html">Acerca de</a></li>
+          <li><a href="configuracion.html">Configuración</a></li>
+        </ul>
+      </nav>
+    </header>
 
-  <main>
-    <h1>Lista de Pokémon</h1>
+    <main>
+      <h1>Lista de Pokémon</h1>
 
-    <section id="buscador" class="buscador">
-      <h2>Buscar y filtrar</h2>
-      <p>Buscá por nombre o filtrá por tipo para encontrar un Pokémon más rápido.</p>
+      <section id="buscador" class="buscador">
+        <h2>Buscar y filtrar</h2>
+        <p>Buscá por nombre o filtrá por tipo para encontrar un Pokémon más rápido.</p>
 
-      <search>
-        <form class="buscador" action="./" method="get">
-          <fieldset>
-            <legend>Criterios de búsqueda</legend>
-
-            <label for="nombre">Nombre</label>
-            <input type="search" id="nombre" name="nombre">
-
-            <label for="tipo">Tipo</label>
-            <select id="tipo" name="tipo">
-              <option value="">Todos los tipos</option>
-              <option value="planta">Planta</option>
-              <option value="fuego">Fuego</option>
-              <option value="agua">Agua</option>
-              <option value="electrico">Eléctrico</option>
-              <option value="veneno">Veneno</option>
-              <option value="volador">Volador</option>
-            </select>
-
-            <label for="orden">Ordenar por</label>
-            <select id="orden" name="orden">
-              <option value="numero-asc" selected>Número (menor a mayor)</option>
-              <option value="numero-desc">Número (mayor a menor)</option>
-              <option value="nombre-asc">Nombre (A-Z)</option>
-              <option value="nombre-desc">Nombre (Z-A)</option>
-              <option value="tamano-desc">Tamaño (más alto primero)</option>
-              <option value="tamano-asc">Tamaño (más bajo primero)</option>
-            </select>
-
-            <button type="submit">Buscar</button>
-
-            <p>
-              <input type="checkbox" id="solo-capturados" name="solo-capturados" value="si">
-              <label for="solo-capturados">Mostrar solo los que ya capturé</label>
-            </p>
-
+        <!--
+          <search> es un elemento semántico: le dice al navegador "aquí adentro
+          hay un buscador". El formulario usa method="get" porque solo estamos
+          pidiendo datos filtrados (no modificando nada en un servidor); por eso
+          los valores del formulario van a aparecer en la URL cuando se envíe.
+        -->
+        <search>
+          <form class="buscador" action="./" method="get">
+            <!-- <fieldset> agrupa campos relacionados y <legend> le pone
+                un título al grupo, para que quede claro (y accesible con
+                lectores de pantalla) que todo esto es "una sola sección". -->
             <fieldset>
-              <legend>Etapa evolutiva</legend>
+              <legend>Criterios de búsqueda</legend>
 
-              <input type="radio" id="etapa-todas" name="etapa" value="todas" checked>
-              <label for="etapa-todas">Todas</label>
+              <!-- <label for="nombre"> conecta este texto con el input de abajo
+                  (mismo id). Así, al hacer clic en la palabra "Nombre" también
+                  se activa el campo, y los lectores de pantalla lo anuncian bien. -->
+              <label for="nombre">Nombre</label>
+              <input type="search" id="nombre" name="nombre">
 
-              <input type="radio" id="etapa-inicial" name="etapa" value="inicial">
-              <label for="etapa-inicial">Solo formas iniciales</label>
+              <!-- <select> sirve cuando el usuario debe escoger UNA opción entre
+                  varias ya definidas por nosotros (no puede escribir libre). -->
+              <label for="tipo">Tipo</label>
+              <select id="tipo" name="tipo">
+                <option value="">Todos los tipos</option>
+                <option value="planta">Planta</option>
+                <option value="fuego">Fuego</option>
+                <option value="agua">Agua</option>
+                <option value="electrico">Eléctrico</option>
+                <option value="veneno">Veneno</option>
+                <option value="volador">Volador</option>
+              </select>
 
-              <input type="radio" id="etapa-final" name="etapa" value="final">
-              <label for="etapa-final">Solo formas finales</label>
+              <label for="orden">Ordenar por</label>
+              <select id="orden" name="orden">
+                <option value="numero-asc" selected>Número (menor a mayor)</option>
+                <option value="numero-desc">Número (mayor a menor)</option>
+                <option value="nombre-asc">Nombre (A-Z)</option>
+                <option value="nombre-desc">Nombre (Z-A)</option>
+                <option value="tamano-desc">Tamaño (más alto primero)</option>
+                <option value="tamano-asc">Tamaño (más bajo primero)</option>
+              </select>
+
+              <!-- Este <button type="submit"> SÍ es un botón real: su trabajo es
+                  enviar el formulario, no llevar a otra página. Por eso no es
+                  un <a>, aunque visualmente se le pueda poner apariencia de enlace. -->
+              <button type="submit" class="boton boton--rojo">Buscar</button>
+
+              <!-- Checkbox: se puede marcar o desmarcar de forma independiente,
+                  sin afectar a otros campos. Sirve para opciones de "sí o no". -->
+              <p>
+                <input type="checkbox" id="solo-capturados" name="solo-capturados" value="si">
+                <label for="solo-capturados">Mostrar solo los que ya capturé</label>
+              </p>
+
+              <!-- Radio buttons: al compartir el mismo name="etapa", el navegador
+                  permite marcar solo UNO de los tres a la vez (son mutuamente
+                  excluyentes). Por eso sirven para "elegir una sola opción",
+                  a diferencia del checkbox de arriba. -->
+              <fieldset>
+                <legend>Etapa evolutiva</legend>
+
+                <input type="radio" id="etapa-todas" name="etapa" value="todas" checked>
+                <label for="etapa-todas">Todas</label>
+
+                <input type="radio" id="etapa-inicial" name="etapa" value="inicial">
+                <label for="etapa-inicial">Solo formas iniciales</label>
+
+                <input type="radio" id="etapa-final" name="etapa" value="final">
+                <label for="etapa-final">Solo formas finales</label>
+              </fieldset>
             </fieldset>
-          </fieldset>
-        </form>
-      </search>
-    </section>
+          </form>
+        </search>
+      </section>
 
-    <section id="lista-pokemon">
-      <ul class="pokemon-list">
-        <li class="pokemon-card">
-          <a class="pokemon-card__link" href="detalle-pokemon-bulbasaur.html">
-            <img class="pokemon-card__image" src="assets/bulbasaur.png" alt="Bulbasaur" width="96" height="96">
-            <span class="pokemon-card__number">#001</span>
-            <span class="pokemon-card__name">Bulbasaur</span>
-          </a>
-        </li>
+      <section id="lista-pokemon">
+        <!-- Lista no ordenada (<ul>): el orden en que aparecen las tarjetas
+            no cambia el significado de la lista, solo el diseño. Cada tarjeta
+            es un <a> que envuelve toda la tarjeta, así que hacer clic en
+            cualquier parte (imagen, número o nombre) lleva al detalle. -->
+        <ul class="pokemon-list">
+          <li class="pokemon-card">
+            <a class="pokemon-card__link" href="detalle-pokemon-bulbasaur.html">
+              <img class="pokemon-card__image" src="assets/bulbasaur.png" alt="Bulbasaur" width="96" height="96">
+              <span class="pokemon-card__number">#001</span>
+              <span class="pokemon-card__name">Bulbasaur</span>
+            </a>
+          </li>
 
-        <li class="pokemon-card">
-          <a class="pokemon-card__link" href="detalle-pokemon-ivysaur.html">
-            <img class="pokemon-card__image" src="assets/ivysaur.png" alt="Ivysaur" width="96" height="96">
-            <span class="pokemon-card__number">#002</span>
-            <span class="pokemon-card__name">Ivysaur</span>
-          </a>
-        </li>
+          <li class="pokemon-card">
+            <a class="pokemon-card__link" href="detalle-pokemon-ivysaur.html">
+              <img class="pokemon-card__image" src="assets/ivysaur.png" alt="Ivysaur" width="96" height="96">
+              <span class="pokemon-card__number">#002</span>
+              <span class="pokemon-card__name">Ivysaur</span>
+            </a>
+          </li>
 
-        <li class="pokemon-card">
-          <a class="pokemon-card__link" href="detalle-pokemon-venusaur.html">
-            <img class="pokemon-card__image" src="assets/venusaur.png" alt="Venusaur" width="96" height="96">
-            <span class="pokemon-card__number">#003</span>
-            <span class="pokemon-card__name">Venusaur</span>
-          </a>
-        </li>
+          <li class="pokemon-card">
+            <a class="pokemon-card__link" href="detalle-pokemon-venusaur.html">
+              <img class="pokemon-card__image" src="assets/venusaur.png" alt="Venusaur" width="96" height="96">
+              <span class="pokemon-card__number">#003</span>
+              <span class="pokemon-card__name">Venusaur</span>
+            </a>
+          </li>
 
-        <li class="pokemon-card">
-          <a class="pokemon-card__link" href="detalle-pokemon-charmander.html">
-            <img class="pokemon-card__image" src="assets/charmander.png" alt="Charmander" width="96" height="96">
-            <span class="pokemon-card__number">#004</span>
-            <span class="pokemon-card__name">Charmander</span>
-          </a>
-        </li>
+          <li class="pokemon-card">
+            <a class="pokemon-card__link" href="detalle-pokemon-charmander.html">
+              <img class="pokemon-card__image" src="assets/charmander.png" alt="Charmander" width="96" height="96">
+              <span class="pokemon-card__number">#004</span>
+              <span class="pokemon-card__name">Charmander</span>
+            </a>
+          </li>
 
-        <li class="pokemon-card">
-          <a class="pokemon-card__link" href="detalle-pokemon-charmeleon.html">
-            <img class="pokemon-card__image" src="assets/charmeleon.png" alt="Charmeleon" width="96" height="96">
-            <span class="pokemon-card__number">#005</span>
-            <span class="pokemon-card__name">Charmeleon</span>
-          </a>
-        </li>
+          <li class="pokemon-card">
+            <a class="pokemon-card__link" href="detalle-pokemon-charmeleon.html">
+              <img class="pokemon-card__image" src="assets/charmeleon.png" alt="Charmeleon" width="96" height="96">
+              <span class="pokemon-card__number">#005</span>
+              <span class="pokemon-card__name">Charmeleon</span>
+            </a>
+          </li>
 
-        <li class="pokemon-card">
-          <a class="pokemon-card__link" href="detalle-pokemon-charizard.html">
-            <img class="pokemon-card__image" src="assets/charizard.png" alt="Charizard" width="96" height="96">
-            <span class="pokemon-card__number">#006</span>
-            <span class="pokemon-card__name">Charizard</span>
-          </a>
-        </li>
+          <li class="pokemon-card">
+            <a class="pokemon-card__link" href="detalle-pokemon-charizard.html">
+              <img class="pokemon-card__image" src="assets/charizard.png" alt="Charizard" width="96" height="96">
+              <span class="pokemon-card__number">#006</span>
+              <span class="pokemon-card__name">Charizard</span>
+            </a>
+          </li>
 
-        <li class="pokemon-card">
-          <a class="pokemon-card__link" href="detalle-pokemon-squirtle.html">
-            <img class="pokemon-card__image" src="assets/squirtle.png" alt="Squirtle" width="96" height="96">
-            <span class="pokemon-card__number">#007</span>
-            <span class="pokemon-card__name">Squirtle</span>
-          </a>
-        </li>
+          <li class="pokemon-card">
+            <a class="pokemon-card__link" href="detalle-pokemon-squirtle.html">
+              <img class="pokemon-card__image" src="assets/squirtle.png" alt="Squirtle" width="96" height="96">
+              <span class="pokemon-card__number">#007</span>
+              <span class="pokemon-card__name">Squirtle</span>
+            </a>
+          </li>
 
-        <li class="pokemon-card">
-          <a class="pokemon-card__link" href="detalle-pokemon-wartortle.html">
-            <img class="pokemon-card__image" src="assets/wartortle.png" alt="Wartortle" width="96" height="96">
-            <span class="pokemon-card__number">#008</span>
-            <span class="pokemon-card__name">Wartortle</span>
-          </a>
-        </li>
+          <li class="pokemon-card">
+            <a class="pokemon-card__link" href="detalle-pokemon-wartortle.html">
+              <img class="pokemon-card__image" src="assets/wartortle.png" alt="Wartortle" width="96" height="96">
+              <span class="pokemon-card__number">#008</span>
+              <span class="pokemon-card__name">Wartortle</span>
+            </a>
+          </li>
 
-        <li class="pokemon-card">
-          <a class="pokemon-card__link" href="detalle-pokemon-blastoise.html">
-            <img class="pokemon-card__image" src="assets/blastoise.png" alt="Blastoise" width="96" height="96">
-            <span class="pokemon-card__number">#009</span>
-            <span class="pokemon-card__name">Blastoise</span>
-          </a>
-        </li>
+          <li class="pokemon-card">
+            <a class="pokemon-card__link" href="detalle-pokemon-blastoise.html">
+              <img class="pokemon-card__image" src="assets/blastoise.png" alt="Blastoise" width="96" height="96">
+              <span class="pokemon-card__number">#009</span>
+              <span class="pokemon-card__name">Blastoise</span>
+            </a>
+          </li>
 
-        <li class="pokemon-card">
-          <a class="pokemon-card__link" href="detalle-pokemon-pikachu.html">
-            <img class="pokemon-card__image" src="assets/pikachu.png" alt="Pikachu" width="96" height="96">
-            <span class="pokemon-card__number">#025</span>
-            <span class="pokemon-card__name">Pikachu</span>
-          </a>
-        </li>
-      </ul>
-    </section>
+          <li class="pokemon-card">
+            <a class="pokemon-card__link" href="detalle-pokemon-pikachu.html">
+              <img class="pokemon-card__image" src="assets/pikachu.png" alt="Pikachu" width="96" height="96">
+              <span class="pokemon-card__number">#025</span>
+              <span class="pokemon-card__name">Pikachu</span>
+            </a>
+          </li>
+        </ul>
+      </section>
 
-    <nav id="paginacion">
-      <ol class="paginacion">
-        <li><a href="./">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-      </ol>
-    </nav>
-  </main>
+      <!-- aria-current="page" marca la página actual: lo lee el lector de pantalla
+          y el CSS se engancha de ese mismo atributo para pintarla de amarillo. -->
+      <!-- Acá sí usamos <ol> (lista ordenada) en vez de <ul>: el orden de las
+          páginas SÍ tiene significado (la página 2 va después de la 1),
+          así que es el elemento correcto para esta lista. -->
+      <nav id="paginacion">
+        <ol class="paginacion">
+          <li><a href="./" aria-current="page">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+        </ol>
+      </nav>
+    </main>
 
-  <footer>
-    <p><small>Proyecto académico del curso Desarrollo de Aplicaciones Web
-        (<abbr title="Curso de Informática 0137">CI-0137</abbr>),
-        Escuela de Ciencias de la Computación e Informática,
-        <abbr title="Universidad de Costa Rica">UCR</abbr>.
-        <time datetime="2026">2026</time>.</small></p>
+    <footer>
+      <p><small>Proyecto académico del curso Desarrollo de Aplicaciones Web
+          (<abbr title="Curso de Informática 0137">CI-0137</abbr>),
+          Escuela de Ciencias de la Computación e Informática,
+          <abbr title="Universidad de Costa Rica">UCR</abbr>.
+          <time datetime="2026">2026</time>.</small></p>
 
-    <p><small>Pokémon y sus personajes son marcas registradas de Nintendo,
-        Game Freak y The Pokémon Company. Este sitio no tiene ninguna relación con
-        ellos y se usa únicamente con fines educativos.</small></p>
+      <p><small>Pokémon y sus personajes son marcas registradas de Nintendo,
+          Game Freak y The Pokémon Company. Este sitio no tiene ninguna relación con
+          ellos y se usa únicamente con fines educativos.</small></p>
 
-    <p><small>Ilustraciones y sprites tomados del repositorio
-        <a href="https://github.com/PokeAPI/sprites" target="_blank" rel="noopener">PokeAPI/sprites</a>.
-        Datos de referencia consultados en
-        <a href="https://pokemondb.net/" target="_blank" rel="noopener">Pokémon Database</a>.</small></p>
-  </footer>
+      <p><small>Ilustraciones y sprites tomados del repositorio
+          <a href="https://github.com/PokeAPI/sprites" target="_blank" rel="noopener">PokeAPI/sprites</a>.
+          Datos de referencia consultados en
+          <a href="https://pokemondb.net/" target="_blank" rel="noopener">Pokémon Database</a>.</small></p>
+    </footer>
 
-</body>
+  </body>
 
 </html>

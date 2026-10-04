@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Demo — Elementos de texto en HTML</title>
+    <link rel="icon" type="image/svg+xml" href="assets/pokeball.svg">
+    <link rel="icon" type="image/png" href="assets/pokeball.png">
+    <!-- favicon.ico vive en la raiz: el navegador lo pide solo, sin <link> -->
+  </head>
+
+  <body>
+
+    <!--
+      ==========================================================================
+      Esta página NO tiene ni una línea de CSS. A propósito.
+      Todo lo que ven acá es cómo el navegador dibuja el HTML por defecto.
+      Cuando lleguemos a CSS, cada una de estas apariencias se puede cambiar.
+      ==========================================================================
+    -->
+
+    <header>
+      <p><img src="assets/logo-pokedex.svg" alt="Pokédex" width="180" height="48"></p>
+      <p><a href="./">&larr; Volver a la Pokédex</a></p>
+    </header>
+
+    <main>
+
+      <h1>Demo: elementos de texto</h1>
+
+      <p>Esta página existe solo para <em>ver</em> cómo se comporta cada elemento en
+        el navegador. Varias de estas cosas no las vamos a usar en la Pokédex, pero
+        las van a encontrar en código ajeno toda su vida.</p>
+
+      <nav>
+        <h2>Contenido</h2>
+        <ol>
+          <li><a href="#parrafos">Párrafos y el párrafo vacío</a></li>
+          <li><a href="#nbsp">Espacio no divisible</a></li>
+          <li><a href="#br-hr">Cambio de línea y separación temática</a></li>
+          <li><a href="#pre">Texto preformateado</a></li>
+          <li><a href="#frase">Elementos de frase</a></li>
+          <li><a href="#sub-sup">Subíndices y superíndices</a></li>
+          <li><a href="#time">Fechas y horas</a></li>
+          <li><a href="#details">Detalles desplegables sin JavaScript</a></li>
+          <li><a href="#obsoletos">Lo que ya no se usa</a></li>
+        </ol>
+      </nav>
+
+      <hr>
+
+      <!-- ====================================================== -->
+      <section id="parrafos">
+        <h2>1. Párrafos y el párrafo vacío</h2>
+
+        <p>Este es un párrafo normal. El navegador le pone un margen arriba y abajo
+          por su cuenta, sin que nadie se lo pida.</p>
+
+        <p>Este es otro párrafo. Fíjense en el espacio que hay entre este y el
+          anterior: eso lo puso el navegador, no nosotros.</p>
+
+        <h3>El experimento del párrafo vacío</h3>
+
+        <p>Abajo hay <strong>tres</strong> párrafos vacíos entre estas dos líneas.
+          Miren cuánto espacio agregan.</p>
+
+        <p></p>
+        <p></p>
+        <p></p>
+
+        <p>Cero. Ninguno. La especificación le dice al navegador que ignore los
+          párrafos vacíos, así que escribirlos para "hacer espacio" simplemente no
+          funciona. Si lo que quieren es separación, eso es CSS.</p>
+
+        <h3>El truco viejo (que sí funciona, y que igual está mal)</h3>
+
+        <p>Alguna gente descubrió que si el párrafo tiene adentro un espacio no
+          divisible, deja de estar vacío y el navegador ya no lo ignora. Abajo hay tres
+          párrafos con <code>&amp;nbsp;</code> adentro:</p>
+
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+
+        <p>Ahora sí hay espacio. Y sin embargo está mal: estamos usando estructura
+          (párrafos) para conseguir apariencia (espacio en blanco). Es el ejemplo
+          clásico de por qué existe la separación entre HTML y CSS. Si ven esto en
+          código heredado, ya saben qué es y por qué hay que sacarlo.</p>
+      </section>
+
+      <hr>
+
+      <!-- ====================================================== -->
+      <section id="nbsp">
+        <h2>2. Espacio no divisible</h2>
+
+        <p>Cuando un párrafo no cabe en el ancho de la ventana, el navegador corta
+          la línea donde encuentra un espacio. A veces eso separa cosas que no deberían
+          separarse.</p>
+
+        <p><strong>Cómo probarlo:</strong> agarren el borde de la ventana del
+          navegador y háganla angosta de a poco. Vigilen los dos teléfonos.</p>
+
+        <h3>Con espacio normal</h3>
+
+        <p>Para reportar un Pokémon perdido llame al Centro Pokémon al número
+          (506) 2222-3333 y pregunte por la enfermera Joy, que atiende las
+          veinticuatro horas del día todos los días del año sin excepción alguna.</p>
+
+        <h3>Con espacio no divisible</h3>
+
+        <p>Para reportar un Pokémon perdido llame al Centro Pokémon al número
+          (506)&nbsp;2222-3333 y pregunte por la enfermera Joy, que atiende las
+          veinticuatro horas del día todos los días del año sin excepción alguna.</p>
+
+        <p>En el primero, el código de país se puede quedar solo al final de una
+          línea y el resto del número se va a la siguiente. En el segundo no: el
+          <code>&amp;nbsp;</code> es un espacio que se ve como espacio pero que el
+          navegador no puede usar para cortar.
+        </p>
+
+        <p>La entidad <code>&amp;nbsp;</code> funciona en HTML. Su equivalente
+          numérico, que funciona en cualquier variante, es
+          <code>&amp;#160;</code>: (506)&#160;2222-3333.
+        </p>
+      </section>
+
+      <hr>
+
+      <!-- ====================================================== -->
+      <section id="br-hr">
+        <h2>3. Cambio de línea y separación temática</h2>
+
+        <h3>&lt;br&gt; — cortar la línea sin abrir párrafo</h3>
+
+        <p>Sirve cuando el corte de línea es parte del contenido, como en una
+          dirección o en un poema. No sirve para separar párrafos: para eso están
+          los párrafos.</p>
+
+        <p>Centro Pokémon de Ciudad Verde<br>
+          Avenida Central, contiguo al Gimnasio<br>
+          Región de Kanto</p>
+
+        <p>Comparen con lo mismo escrito sin <code>&lt;br&gt;</code>, donde todo
+          cae en el mismo renglón aunque yo lo haya escrito en tres líneas en el
+          editor:</p>
+
+        <p>Centro Pokémon de Ciudad Verde
+          Avenida Central, contiguo al Gimnasio
+          Región de Kanto</p>
+
+        <p>Ahí está la primera lección grande del día: <strong>el HTML ignora los
+            saltos de línea que ustedes escriben</strong>. Varios espacios seguidos se
+          colapsan en uno solo, y los enter se vuelven espacios.</p>
+
+        <h3>&lt;hr&gt; — separación temática</h3>
+
+        <p>Todas las rayas que dividen las secciones de esta página son
+          <code>&lt;hr&gt;</code>. Antes se usaba como decoración; hoy significa un
+          cambio de tema, y su apariencia se controla con CSS.
+        </p>
+      </section>
+
+      <hr>
+
+      <!-- ====================================================== -->
+      <section id="pre">
+        <h2>4. Texto preformateado</h2>
+
+        <p>El elemento <code>&lt;pre&gt;</code> es la excepción a la regla anterior:
+          ahí adentro los espacios y los saltos de línea se respetan tal cual, y el
+          texto se dibuja con una tipografía monoespaciada (todas las letras miden lo
+          mismo).</p>
+
+        <pre>
+      ,ad8888ba,
+      d8"'    `"8b
+    d8'        `8b
+    88          88
+    88          88
+    Y8,        ,8P
+      Y8a.    .a8P
+      `"Y8888Y"'
+      </pre>
+
+        <p>Ese dibujo depende completamente de que cada espacio quede donde está.
+          En un párrafo normal se desarmaría por completo.</p>
+
+        <h3>El detalle importante: los tres caracteres especiales</h3>
+
+        <p>Dentro de <code>&lt;pre&gt;</code> el navegador <em>sigue</em>
+          interpretando etiquetas HTML. Si quieren mostrar código, tienen que escapar
+          tres caracteres: <code>&lt;</code> se escribe <code>&amp;lt;</code>,
+          <code>&gt;</code> se escribe <code>&amp;gt;</code>, y <code>&amp;</code> se
+          escribe <code>&amp;amp;</code>.
+        </p>
+
+        <p>Así se ve una tarjeta de Pokémon mostrada como código:</p>
+
+        <pre><code>&lt;li class="pokemon-card"&gt;
+      &lt;a href="detalle-pokemon-squirtle.html"&gt;
+        &lt;img src="assets/squirtle.png" alt="Squirtle"&gt;
+        &lt;span&gt;#007&lt;/span&gt; Squirtle
+      &lt;/a&gt;
+    &lt;/li&gt;</code></pre>
+
+        <p>Si no escaparan esos caracteres, el navegador dibujaría la tarjeta en
+          lugar de mostrarles el código. Noten además que van dos elementos juntos:
+          <code>&lt;pre&gt;</code> conserva el formato y <code>&lt;code&gt;</code> dice
+          que el contenido es código.
+        </p>
+      </section>
+
+      <hr>
+
+      <!-- ====================================================== -->
+      <section id="frase">
+        <h2>5. Elementos de frase</h2>
+
+        <p>Afectan a unas pocas palabras dentro de un párrafo, no al párrafo
+          entero. Cada uno dice <em>qué es</em> ese pedacito de texto.</p>
+
+        <h3>Los dos que van a usar siempre</h3>
+
+        <p>La llama de la cola de Charmander <em>nunca</em> debe apagarse: si se
+          apaga, el Pokémon <strong>muere</strong>.</p>
+
+        <p><code>&lt;em&gt;</code> es énfasis (el navegador lo pone en itálica) y
+          <code>&lt;strong&gt;</code> es énfasis fuerte, importancia o urgencia (lo
+          pone en negrita). Léanlo en voz alta y van a oír la diferencia: en
+          <em>nunca</em> uno cambia el tono; en <strong>muere</strong> uno sube la
+          voz.
+        </p>
+
+        <h3>Abreviaturas</h3>
+
+        <p>Pasen el mouse por encima y esperen un segundo: los
+          <abbr title="Puntos de Salud">PS</abbr> de Squirtle son 44, y su
+          <abbr title="Ataque Especial">AT. ESP.</abbr> es 50. Esta Pokédex es un
+          proyecto de la <abbr title="Universidad de Costa Rica">UCR</abbr>.
+        </p>
+
+        <p>El atributo <code>title</code> es lo que aparece en el globito. Ojo con
+          una limitación real: en un celular o una tablet no hay mouse, así que ese
+          globito nunca aparece. Por eso, si la abreviatura es importante para
+          entender el texto, conviene escribirla completa la primera vez.</p>
+
+        <h3>Los de documentación técnica</h3>
+
+        <p>Un <dfn>Pokémon de tipo Agua</dfn> es aquel cuyos ataques principales
+          usan agua y que resiste bien al fuego.</p>
+
+        <p>Para ver el código fuente de esta página presione
+          <kbd>Ctrl</kbd> + <kbd>U</kbd>, o <kbd>Cmd</kbd> + <kbd>Opt</kbd> +
+          <kbd>U</kbd> en Mac.
+        </p>
+
+        <p>La función <code>calcularDanio()</code> recibe la variable
+          <var>nivel</var> y devuelve el daño estimado.
+        </p>
+
+        <p>Al ejecutar el programa la consola imprime:
+          <samp>Squirtle usó Pistola Agua. ¡Es muy eficaz!</samp>
+        </p>
+
+        <p>Los datos de esta ficha fueron tomados de
+          <cite>Pokémon Database</cite>.
+        </p>
+
+        <p>Repasando: <code>&lt;dfn&gt;</code> marca un término que se está
+          definiendo, <code>&lt;kbd&gt;</code> lo que el usuario teclea,
+          <code>&lt;code&gt;</code> código, <code>&lt;var&gt;</code> una variable,
+          <code>&lt;samp&gt;</code> la salida de un programa y
+          <code>&lt;cite&gt;</code> el título de una obra o fuente.
+        </p>
+
+        <h3>Comparación: &lt;strong&gt; contra &lt;b&gt;</h3>
+
+        <p>Esta palabra usa <strong>strong</strong> y esta usa <b>b</b>. Se ven
+          idénticas, y sin embargo no significan lo mismo:
+          <code>&lt;strong&gt;</code> dice "esto es importante";
+          <code>&lt;b&gt;</code> dice "esto va destacado visualmente, pero sin
+          importancia extra" (un nombre de producto, la primera frase de un
+          artículo). Lo mismo pasa entre <em>em</em> y <i>i</i>. En la duda, usen
+          <code>&lt;strong&gt;</code> y <code>&lt;em&gt;</code>: un lector de
+          pantalla puede cambiar la entonación con esos, con los otros no.
+        </p>
+      </section>
+
+      <hr>
+
+      <!-- ====================================================== -->
+      <section id="sub-sup">
+        <h2>6. Subíndices y superíndices</h2>
+
+        <p>Squirtle fue el 7<sup>mo</sup> Pokémon registrado en esta Pokédex.</p>
+
+        <p>Squirtle was the 7<sup>th</sup> Pokémon added to this Pokédex.</p>
+
+        <p>El agua que dispara es H<sub>2</sub>O común y corriente.</p>
+
+        <p>Si tuviéramos que calcular el área de su caparazón usaríamos
+          x<sup>2</sup> + y<sup>2</sup>.</p>
+
+        <p><code>&lt;sup&gt;</code> sube el texto y <code>&lt;sub&gt;</code> lo
+          baja. Sirven para ordinales, fórmulas químicas y notación científica.</p>
+      </section>
+
+      <hr>
+
+      <!-- ====================================================== -->
+      <section id="time">
+        <h2>7. Fechas y horas</h2>
+
+        <p>Esta ficha se publicó el
+          <time datetime="2026-09-01">1 de setiembre de 2026</time>.
+        </p>
+
+        <p>El Gimnasio abre <time datetime="09:00">a las nueve de la mañana</time>
+          y cierra <time datetime="18:30">a las seis y media</time>.</p>
+
+        <p>El torneo regional será el
+          <time datetime="2026-11-15T14:00">15 de noviembre a las 2 p.m.</time>
+        </p>
+
+        <p>Miren bien: <strong>no se ve distinto</strong>. Y ese es justamente el
+          punto. El contenido lo escriben como quieran —"1 de setiembre", "1/9/26",
+          "el lunes pasado"— y el atributo <code>datetime</code> lleva el formato que
+          entiende la computadora. Eso le permite a un buscador indexar la fecha
+          correcta, a un navegador ofrecer "agregar al calendario", o a un programa
+          convertir la hora a otro huso horario. Es información para las máquinas,
+          no para el ojo.</p>
+      </section>
+
+      <hr>
+
+      <!-- ====================================================== -->
+      <section id="details">
+        <h2>8. Detalles desplegables sin JavaScript</h2>
+
+        <p>Casi todo lo que vimos hasta ahora es texto quieto. Estos dos elementos
+          son distintos: hacen algo cuando el usuario hace clic, y no hay una sola
+          línea de JavaScript en esta página.</p>
+
+        <details>
+          <summary>¿Qué come un Squirtle?</summary>
+          <p>Principalmente peces pequeños y algas. En cautiverio se le puede dar
+            alimento preparado para Pokémon de tipo Agua.</p>
+        </details>
+
+        <details>
+          <summary>¿Por qué se esconde en su caparazón?</summary>
+          <p>Es su defensa principal. Además, desde adentro puede disparar agua a
+            presión sin exponerse, lo que lo convierte en un contraatacante difícil
+            de acertar.</p>
+        </details>
+
+        <details open>
+          <summary>Este viene abierto desde el inicio</summary>
+          <p>Con el atributo <code>open</code> el contenido aparece desplegado al
+            cargar la página. Sin el atributo, empieza cerrado.</p>
+        </details>
+
+        <p>El elemento <code>&lt;details&gt;</code> es el contenedor; el
+          <code>&lt;summary&gt;</code> es la parte visible siempre, la que funciona
+          como botón. Todo lo demás que pongan adentro se muestra u oculta al hacer
+          clic. El triangulito lo dibuja el navegador.
+        </p>
+
+        <h3>Por qué esto importa más de lo que parece</h3>
+
+        <p>Un acordeón hecho a mano necesita: un <code>div</code> que parezca
+          botón, JavaScript para abrir y cerrar, manejo del teclado para que se pueda
+          usar con <kbd>Tab</kbd> y <kbd>Enter</kbd>, y atributos extra para que un
+          lector de pantalla anuncie si está abierto o cerrado. Son unas cuantas
+          decenas de líneas, y es fácil equivocarse en la parte de accesibilidad.</p>
+
+        <p>Con <code>&lt;details&gt;</code> son dos etiquetas y el navegador se
+          encarga de todo eso. Pruébenlo ahora mismo: presionen <kbd>Tab</kbd> hasta
+          llegar a uno de los triangulitos y luego <kbd>Enter</kbd>. Funciona, y
+          nadie lo programó.</p>
+
+        <p>Esta es una lección que vale para todo el curso:
+          <strong>antes de programar un comportamiento, revisen si el HTML ya lo
+            trae</strong>. Casi siempre la versión nativa es más corta, más rápida y
+          más accesible que la que uno arma.
+        </p>
+      </section>
+
+      <hr>
+
+      <!-- ====================================================== -->
+      <section id="obsoletos">
+        <h2>9. Lo que ya no se usa</h2>
+
+        <p>Van a encontrar estos elementos en tutoriales viejos y en código
+          heredado. Todavía funcionan en los navegadores, pero fueron
+          <strong>eliminados</strong> del estándar: el validador del W3C los marca
+          como error.
+        </p>
+
+        <h3>&lt;acronym&gt;</h3>
+
+        <p>HTML 4 distinguía entre abreviatura (<code>&lt;abbr&gt;</code>, como
+          "Dr." o "etc.") y acrónimo (<code>&lt;acronym&gt;</code>, una abreviatura
+          que se lee como palabra, como "láser" o "JSON"). HTML5 eliminó la
+          distinción, porque un acrónimo no deja de ser una abreviatura.</p>
+
+        <p><strong>Hoy se usa siempre <code>&lt;abbr&gt;</code></strong>, para los
+          dos casos. Si migran código viejo, es un buscar-y-reemplazar directo: los
+          dos elementos aceptan exactamente los mismos atributos.</p>
+
+        <h3>&lt;font&gt;, &lt;big&gt;, &lt;center&gt;</h3>
+
+        <p>Servían para cambiar tipografía, tamaño y alineación desde el HTML.
+          Fueron eliminados por la misma razón de fondo que ya vimos con el párrafo
+          vacío: son apariencia metida en la estructura. Todo eso es CSS.</p>
+      </section>
+
+    </main>
+
+    <hr>
+
+    <footer>
+      <p><small>Página de apoyo del curso Desarrollo de Aplicaciones Web
+          (<abbr title="Curso de Informática 0137">CI-0137</abbr>),
+          <abbr title="Universidad de Costa Rica">UCR</abbr>.
+          <time datetime="2026">2026</time>.</small></p>
+
+      <p><small>Pokémon y sus personajes son marcas registradas de Nintendo,
+          Game Freak y The Pokémon Company. Uso educativo únicamente.</small></p>
+    </footer>
+
+  </body>
+
+</html>

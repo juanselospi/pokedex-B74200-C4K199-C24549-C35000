@@ -1,0 +1,362 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Demo Filter y Backdrop</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  /* Layout: tres secciones apiladas (filter, Pokédex, backdrop-filter), cada una con controles arriba y resultado abajo. */
+  :root {
+    --bg: #f5f6f8;
+    --surface: #ffffff;
+    --stage: #eef0f5;
+    --fg: #1c2230;
+    --muted: #5d6679;
+    --line: #d9dde6;
+    --accent: #2f5bd9;
+    --accent-fg: #ffffff;
+    --glass: rgb(255 255 255 / 0.35);
+    --glass-line: rgb(255 255 255 / 0.6);
+    --font-body: "IBM Plex Sans", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12151c;
+      --surface: #1a1f2a;
+      --stage: #222836;
+      --fg: #e6e9f0;
+      --muted: #97a0b3;
+      --line: #2c3342;
+      --accent: #7c9cff;
+      --accent-fg: #0f1320;
+      --glass: rgb(20 24 40 / 0.4);
+      --glass-line: rgb(255 255 255 / 0.25);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12151c;
+    --surface: #1a1f2a;
+    --stage: #222836;
+    --fg: #e6e9f0;
+    --muted: #97a0b3;
+    --line: #2c3342;
+    --accent: #7c9cff;
+    --accent-fg: #0f1320;
+    --glass: rgb(20 24 40 / 0.4);
+    --glass-line: rgb(255 255 255 / 0.25);
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    padding-inline: 16px;
+    padding-block: 32px 56px;
+  }
+  main { max-width: 860px; margin-inline: auto; display: flex; flex-direction: column; gap: 44px; }
+  section { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.1rem); line-height: 1.15; margin: 0; text-wrap: balance; font-weight: 600; }
+  h2 { font-size: 1.3rem; line-height: 1.2; margin: 0; font-weight: 600; text-wrap: balance; }
+  p { margin: 0; max-width: 65ch; }
+  code, .mono { font-family: var(--font-mono); font-size: 0.86em; }
+  .lede, .note { color: var(--muted); }
+  .tag { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px; align-items: start; }
+
+  /* Controles */
+  .ctl { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .row { display: grid; grid-template-columns: 96px 1fr 64px; align-items: center; gap: 10px; }
+  .row label { font-weight: 500; }
+  .row input[type="range"] { min-width: 0; width: 100%; accent-color: var(--accent); }
+  .row output { font-family: var(--font-mono); font-size: 0.82rem; text-align: right; font-variant-numeric: tabular-nums; }
+  .check { display: flex; align-items: center; gap: 10px; }
+  .check input { width: 18px; height: 18px; accent-color: var(--accent); flex: none; }
+  input:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 8px; }
+  button {
+    font: inherit; font-weight: 500; cursor: pointer;
+    background: var(--surface); color: var(--fg);
+    border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px;
+  }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+
+  pre {
+    margin: 0; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.6;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+    padding: 12px 14px; overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere;
+  }
+
+  /* Escenarios */
+  .stage {
+    background: var(--stage); border-radius: 8px; padding: 20px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 24px 32px;
+  }
+  .fig { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .fig figcaption { font-size: 0.82rem; color: var(--muted); text-align: center; }
+  .cr { width: 150px; height: 150px; display: block; }
+  .cr.small { width: 120px; height: 120px; }
+
+  /* Pokédex */
+  .dex { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr)); gap: 12px; }
+  .dex button {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    padding: 12px 8px; background: var(--surface);
+  }
+  .dex .cr { width: 84px; height: 84px; transition: filter 0.25s; }
+  .dex button[aria-pressed="false"] .cr { filter: grayscale(1); }
+  .dex .n { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+  .dex .nm { font-weight: 600; }
+  .dex .st { font-size: 0.78rem; color: var(--muted); }
+
+  /* backdrop-filter */
+  .bd-stage {
+    position: relative; overflow: hidden; border-radius: 8px; min-height: 220px;
+    display: grid; place-items: center; padding: 20px;
+    background:
+      repeating-linear-gradient(90deg, #ff7a59 0 28px, #ffd23f 28px 56px, #3fc1a5 56px 84px, #4b7bec 84px 112px);
+  }
+  .bd-stage .glass {
+    backdrop-filter: blur(var(--b, 8px));
+    -webkit-backdrop-filter: blur(var(--b, 8px));
+    background: var(--glass);
+    border: 1px solid var(--glass-line);
+    border-radius: 10px; padding: 18px 22px; max-width: 320px;
+    color: var(--fg); text-align: center;
+  }
+  .bd-stage .glass strong { display: block; margin-bottom: 4px; }
+
+  dialog {
+    border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px;
+    background: var(--surface); color: var(--fg); max-width: min(92vw, 380px);
+  }
+  dialog::backdrop, [popover]::backdrop {
+    background: rgb(20 24 40 / 0.2);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  [popover] {
+    border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px;
+    background: var(--surface); color: var(--fg); max-width: min(92vw, 380px);
+  }
+  dialog h3, [popover] h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  dialog p, [popover] p { margin-bottom: 14px; }
+  .page-fill {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px;
+  }
+  @media (prefers-reduced-motion: reduce) { .dex .cr { transition: none; } }
+</style>
+
+<!-- Criaturas dibujadas para el demo: siempre es el mismo dibujo, nunca una segunda versión en gris. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="face">
+      <circle cx="39" cy="55" r="5.5" fill="#fff"/><circle cx="61" cy="55" r="5.5" fill="#fff"/>
+      <circle cx="40" cy="56" r="2.8" fill="#1c2230"/><circle cx="60" cy="56" r="2.8" fill="#1c2230"/>
+      <path d="M43 68q7 5 14 0" stroke="#1c2230" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </g>
+    <g id="c1"><path d="M50 22c22 0 34 16 34 36 0 16-14 26-34 26S16 74 16 58c0-20 12-36 34-36z" fill="#5fae5a"/><path d="M50 22c-6-10-2-16 10-18-2 8-4 14-10 18z" fill="#347f3b"/><use href="#face"/></g>
+    <g id="c2"><path d="M22 34l10 14M78 34l-10 14" stroke="#e8b400" stroke-width="7" stroke-linecap="round"/><ellipse cx="50" cy="60" rx="32" ry="26" fill="#ffd23f"/><path d="M80 66l12-10-4 14 10-2-14 18z" fill="#e8b400"/><use href="#face"/></g>
+    <g id="c3"><path d="M50 8C36 30 18 44 18 62c0 18 14 28 32 28s32-10 32-28C82 44 64 30 50 8z" fill="#4b9be8"/><path d="M34 70c2 8 8 12 14 12" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.6"/><use href="#face"/></g>
+    <g id="c4"><path d="M50 4c4 12 18 16 18 32H32c0-10 10-14 18-32z" fill="#ff8a3d"/><ellipse cx="50" cy="62" rx="32" ry="26" fill="#f2683c"/><use href="#face"/></g>
+    <g id="c5"><path d="M28 34L22 14l16 12zM72 34l6-20-16 12z" fill="#7a4fc4"/><ellipse cx="50" cy="60" rx="32" ry="28" fill="#9b6be0"/><use href="#face"/></g>
+    <g id="c6"><path d="M38 26L30 10M62 26l8-16" stroke="#7a5230" stroke-width="4" stroke-linecap="round"/><circle cx="30" cy="9" r="4" fill="#e0a84a"/><circle cx="70" cy="9" r="4" fill="#e0a84a"/><circle cx="50" cy="60" r="34" fill="#b07a45"/><ellipse cx="50" cy="74" rx="18" ry="10" fill="#d9a86c"/><use href="#face"/></g>
+  </defs>
+</svg>
+
+<main>
+  <header style="display:flex;flex-direction:column;gap:10px">
+    <h1>filter y backdrop-filter</h1>
+    <p class="lede">El navegador aplica el efecto al mostrar el elemento. El archivo de imagen no cambia. Todas las criaturas de esta página vienen del mismo dibujo en color.</p>
+  </header>
+
+  <!-- 1. filter -->
+  <section>
+    <h2>filter: varias funciones en una línea</h2>
+    <p>Mueva los controles. Las funciones se aplican en el orden en que están escritas, de izquierda a derecha, separadas por un espacio.</p>
+    <div class="two">
+      <div class="panel ctl">
+        <div class="row"><label for="f-blur">blur</label><input id="f-blur" type="range" min="0" max="12" step="0.5" value="0"><output id="o-blur">0px</output></div>
+        <div class="row"><label for="f-gray">grayscale</label><input id="f-gray" type="range" min="0" max="1" step="0.05" value="0"><output id="o-gray">0</output></div>
+        <div class="row"><label for="f-bright">brightness</label><input id="f-bright" type="range" min="0" max="2" step="0.05" value="1"><output id="o-bright">1</output></div>
+        <div class="row"><label for="f-cont">contrast</label><input id="f-cont" type="range" min="0" max="2" step="0.05" value="1"><output id="o-cont">1</output></div>
+        <div class="row"><label for="f-sepia">sepia</label><input id="f-sepia" type="range" min="0" max="1" step="0.05" value="0"><output id="o-sepia">0</output></div>
+        <div class="check"><input id="f-shadow" type="checkbox"><label for="f-shadow">drop-shadow(6px 8px 6px)</label></div>
+        <div class="btns">
+          <button type="button" data-preset="old">Foto vieja</button>
+          <button type="button" data-preset="bw">Blanco y negro</button>
+          <button type="button" data-preset="soft">Desenfocada</button>
+          <button type="button" data-preset="reset">Reiniciar</button>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+        <div class="stage">
+          <figure class="fig" style="margin:0"><svg class="cr" viewBox="0 0 100 100" id="live" role="img" aria-label="Criatura de ejemplo"><use href="#c2"/></svg><figcaption>Con el filtro</figcaption></figure>
+          <figure class="fig" style="margin:0"><svg class="cr" viewBox="0 0 100 100" role="img" aria-label="Criatura original"><use href="#c2"/></svg><figcaption>Original, sin tocar</figcaption></figure>
+        </div>
+        <pre id="code">filter: none;</pre>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>drop-shadow sigue la silueta</h2>
+    <p><code>box-shadow</code> dibuja la sombra del rectángulo invisible de la caja. <code>drop-shadow()</code> dibuja la de lo que realmente se ve.</p>
+    <div class="stage">
+      <figure class="fig" style="margin:0"><svg class="cr" viewBox="0 0 100 100" style="box-shadow: 6px 8px 10px rgb(0 0 0 / 0.45)" role="img" aria-label="Criatura con box-shadow"><use href="#c3"/></svg><figcaption><code>box-shadow</code>: sombra del rectángulo</figcaption></figure>
+      <figure class="fig" style="margin:0"><svg class="cr" viewBox="0 0 100 100" style="filter: drop-shadow(6px 8px 6px rgb(0 0 0 / 0.45))" role="img" aria-label="Criatura con drop-shadow"><use href="#c3"/></svg><figcaption><code>drop-shadow()</code>: sombra de la figura</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- 2. Pokédex -->
+  <section>
+    <h2>Un uso real: la Pokédex</h2>
+    <p>Toque una criatura para marcarla como capturada. Las que faltan se ven en gris con <code>grayscale(1)</code> sobre la misma imagen a color. No existe una segunda versión en blanco y negro.</p>
+    <div class="dex" id="dex"></div>
+    <pre>.card img { transition: filter .25s; }
+.card[aria-pressed="false"] img {
+  filter: grayscale(1);
+}</pre>
+  </section>
+
+  <!-- 3. backdrop-filter -->
+  <section>
+    <h2>backdrop-filter: difumina lo de atrás</h2>
+    <p><code>filter</code> difumina el elemento. <code>backdrop-filter</code> difumina lo que está detrás de él. Para que se note, el elemento necesita un fondo semitransparente. Mueva el control y mire las franjas detrás del vidrio.</p>
+    <div class="panel">
+      <div class="row" style="grid-template-columns: 96px 1fr 64px">
+        <label for="b-blur">blur</label><input id="b-blur" type="range" min="0" max="20" step="1" value="8"><output id="o-b">8px</output>
+      </div>
+    </div>
+    <div class="bd-stage">
+      <div class="glass" id="glass"><strong>Vidrio esmerilado</strong>Las franjas de atrás se difuminan. El texto de este cuadro no.</div>
+    </div>
+    <pre id="bd-code">.glass {
+  background: rgb(255 255 255 / .35);
+  backdrop-filter: blur(8px);
+}</pre>
+
+    <h2 style="margin-top:12px">Lo mismo en el ::backdrop</h2>
+    <p><code>&lt;dialog&gt;</code> y <code>popover</code> tienen su propia capa de fondo, <code>::backdrop</code>. Ahí va el efecto. Abra cada uno y mire esta página detrás.</p>
+    <div class="page-fill">
+      <div class="btns">
+        <button type="button" class="primary" id="open-dialog">Abrir dialog</button>
+        <button type="button" popovertarget="pop">Abrir popover</button>
+      </div>
+    </div>
+    <pre>dialog::backdrop,
+[popover]::backdrop {
+  background: rgb(20 24 40 / .2);
+  backdrop-filter: blur(6px);
+}</pre>
+
+    <dialog id="dlg" aria-labelledby="dlg-t">
+      <h3 id="dlg-t">Un dialog</h3>
+      <p>Todo lo que hay detrás de este cuadro está difuminado por el <code>::backdrop</code>.</p>
+      <div class="btns"><button type="button" class="primary" id="close-dialog">Cerrar</button></div>
+    </dialog>
+
+    <div id="pop" popover>
+      <h3>Un popover</h3>
+      <p>Mismo efecto en su propio <code>::backdrop</code>. Se cierra al tocar afuera o con Escape.</p>
+      <div class="btns"><button type="button" popovertarget="pop" popovertargetaction="hide">Cerrar</button></div>
+    </div>
+  </section>
+</main>
+
+<script>
+  (function () {
+    var $ = function (id) { return document.getElementById(id); };
+
+    // 1. filter en vivo
+    var ids = ["blur", "gray", "bright", "cont", "sepia"];
+    var live = $("live");
+    function build() {
+      var v = {};
+      ids.forEach(function (k) { v[k] = parseFloat($("f-" + k).value); });
+      $("o-blur").textContent = v.blur + "px";
+      $("o-gray").textContent = v.gray;
+      $("o-bright").textContent = v.bright;
+      $("o-cont").textContent = v.cont;
+      $("o-sepia").textContent = v.sepia;
+      var parts = [];
+      if (v.blur > 0) parts.push("blur(" + v.blur + "px)");
+      if (v.gray > 0) parts.push("grayscale(" + v.gray + ")");
+      if (v.bright !== 1) parts.push("brightness(" + v.bright + ")");
+      if (v.cont !== 1) parts.push("contrast(" + v.cont + ")");
+      if (v.sepia > 0) parts.push("sepia(" + v.sepia + ")");
+      if ($("f-shadow").checked) parts.push("drop-shadow(6px 8px 6px rgb(0 0 0 / .45))");
+      var value = parts.length ? parts.join(" ") : "none";
+      live.style.filter = value;
+      $("code").textContent = "filter: " + value + ";";
+    }
+    ids.forEach(function (k) { $("f-" + k).addEventListener("input", build); });
+    $("f-shadow").addEventListener("change", build);
+
+    var presets = {
+      old:   { blur: 0,   gray: 0, bright: 0.95, cont: 1.1, sepia: 0.9, shadow: false },
+      bw:    { blur: 0,   gray: 1, bright: 1,    cont: 1.15, sepia: 0,  shadow: false },
+      soft:  { blur: 4,   gray: 0, bright: 1.1,  cont: 0.9,  sepia: 0,  shadow: true },
+      reset: { blur: 0,   gray: 0, bright: 1,    cont: 1,    sepia: 0,  shadow: false }
+    };
+    document.querySelectorAll("[data-preset]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var p = presets[b.getAttribute("data-preset")];
+        ids.forEach(function (k) { $("f-" + k).value = p[k]; });
+        $("f-shadow").checked = p.shadow;
+        build();
+      });
+    });
+    build();
+
+    // 2. Pokédex
+    var list = [
+      { n: "001", name: "Musgo", id: "c1", got: true },
+      { n: "002", name: "Chispa", id: "c2", got: true },
+      { n: "003", name: "Marea", id: "c3", got: false },
+      { n: "004", name: "Ascua", id: "c4", got: false },
+      { n: "005", name: "Nébula", id: "c5", got: true },
+      { n: "006", name: "Roble", id: "c6", got: false }
+    ];
+    var dex = $("dex");
+    list.forEach(function (c) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-pressed", String(c.got));
+      b.innerHTML =
+        '<svg class="cr" viewBox="0 0 100 100" role="img" aria-label="' + c.name + '"><use href="#' + c.id + '"/></svg>' +
+        '<span class="n">#' + c.n + '</span><span class="nm">' + c.name + '</span><span class="st"></span>';
+      function label() { b.querySelector(".st").textContent = b.getAttribute("aria-pressed") === "true" ? "Capturada" : "Sin capturar"; }
+      b.addEventListener("click", function () {
+        b.setAttribute("aria-pressed", String(b.getAttribute("aria-pressed") !== "true"));
+        label();
+      });
+      label();
+      dex.appendChild(b);
+    });
+
+    // 3. backdrop-filter
+    var bb = $("b-blur");
+    function bd() {
+      var px = bb.value + "px";
+      $("o-b").textContent = px;
+      $("glass").style.setProperty("--b", px);
+      $("bd-code").textContent = ".glass {\n  background: rgb(255 255 255 / .35);\n  backdrop-filter: blur(" + px + ");\n}";
+    }
+    bb.addEventListener("input", bd);
+    bd();
+
+    var dlg = $("dlg");
+    $("open-dialog").addEventListener("click", function () {
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+    });
+    $("close-dialog").addEventListener("click", function () { dlg.close(); });
+    dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+  })();
+</script>
+
+</body></html>

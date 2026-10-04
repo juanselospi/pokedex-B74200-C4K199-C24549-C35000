@@ -1,0 +1,369 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Demo Transform</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  /* Layout: cuatro secciones apiladas, cada una con controles o código arriba y el resultado en un escenario gris abajo. */
+  :root {
+    --bg: #f5f6f8;
+    --surface: #ffffff;
+    --stage: #eef0f5;
+    --fg: #1c2230;
+    --muted: #5d6679;
+    --line: #d9dde6;
+    --ghost: #9aa3b8;
+    --accent: #2f5bd9;
+    --accent-fg: #ffffff;
+    --box: #dbe4fb;
+    --box-fg: #1b2e6b;
+    --box-edge: #2f5bd9;
+    --other: #e9e3d6;
+    --other-fg: #5b4a25;
+    --font-body: "IBM Plex Sans", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12151c;
+      --surface: #1a1f2a;
+      --stage: #222836;
+      --fg: #e6e9f0;
+      --muted: #97a0b3;
+      --line: #2c3342;
+      --ghost: #6d7893;
+      --accent: #7c9cff;
+      --accent-fg: #0f1320;
+      --box: #2b3a6b;
+      --box-fg: #d3defc;
+      --box-edge: #7c9cff;
+      --other: #3a3527;
+      --other-fg: #e6d9b3;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12151c;
+    --surface: #1a1f2a;
+    --stage: #222836;
+    --fg: #e6e9f0;
+    --muted: #97a0b3;
+    --line: #2c3342;
+    --ghost: #6d7893;
+    --accent: #7c9cff;
+    --accent-fg: #0f1320;
+    --box: #2b3a6b;
+    --box-fg: #d3defc;
+    --box-edge: #7c9cff;
+    --other: #3a3527;
+    --other-fg: #e6d9b3;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    padding-inline: 16px;
+    padding-block: 32px 56px;
+  }
+  main { max-width: 860px; margin-inline: auto; display: flex; flex-direction: column; gap: 44px; }
+  section { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.1rem); line-height: 1.15; margin: 0; text-wrap: balance; font-weight: 600; }
+  h2 { font-size: 1.3rem; line-height: 1.2; margin: 0; font-weight: 600; text-wrap: balance; }
+  p { margin: 0; max-width: 65ch; }
+  code { font-family: var(--font-mono); font-size: 0.86em; }
+  .lede, .note { color: var(--muted); }
+  .tag { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px; align-items: start; }
+  .col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+
+  .ctl { display: grid; gap: 10px; }
+  .row { display: grid; grid-template-columns: 92px 1fr 72px; align-items: center; gap: 10px; }
+  .row label { font-weight: 500; }
+  .row input[type="range"] { min-width: 0; width: 100%; accent-color: var(--accent); }
+  .row output { font-family: var(--font-mono); font-size: 0.82rem; text-align: right; font-variant-numeric: tabular-nums; }
+  select {
+    font: inherit; color: var(--fg); background: var(--surface);
+    border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; min-width: 0;
+  }
+  input:focus-visible, button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 8px; }
+  button {
+    font: inherit; font-weight: 500; cursor: pointer;
+    background: var(--surface); color: var(--fg);
+    border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px;
+  }
+  button:hover { border-color: var(--accent); }
+  button[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+
+  pre {
+    margin: 0; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.6;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+    padding: 10px 12px; overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere;
+  }
+  .stage { background: var(--stage); border-radius: 8px; overflow: hidden; position: relative; }
+
+  /* Cajas de ejemplo */
+  .b {
+    width: 100%; height: 100%;
+    background: var(--box); color: var(--box-fg);
+    border: 2px solid var(--box-edge); border-radius: 6px;
+    display: grid; place-items: center;
+    font-weight: 600; font-size: 1.4rem; line-height: 1;
+  }
+  .o {
+    background: var(--other); color: var(--other-fg);
+    border-radius: 6px; width: 70px; height: 70px; flex: none;
+    display: grid; place-items: center; font-weight: 600;
+  }
+  .slot { position: relative; flex: none; border: 1px dashed var(--ghost); border-radius: 6px; }
+
+  /* 1. No empuja a nadie */
+  .lane { display: flex; align-items: center; gap: 8px; height: 150px; padding: 0 16px; }
+  .lane.b-grow .b { width: var(--sz, 70px); height: var(--sz, 70px); }
+  .lane.b-grow .mid { width: var(--sz, 70px); height: var(--sz, 70px); }
+  .lane .cap { position: absolute; left: 12px; top: 8px; font-size: 0.78rem; color: var(--muted); }
+
+  /* 2. Laboratorio */
+  .lab { height: 300px; display: grid; place-items: center; }
+  .lab .slot { width: 110px; height: 110px; }
+  .lab .b { position: absolute; inset: 0; width: auto; height: auto; font-size: 2.2rem; }
+  .dot {
+    position: absolute; width: 10px; height: 10px; border-radius: 50%;
+    background: #e5484d; border: 2px solid var(--surface);
+    transform: translate(-50%, -50%); z-index: 2;
+  }
+
+  /* 3. Clásica vs moderna */
+  .tr { height: 190px; display: grid; place-items: center; }
+  .tr .slot { width: 76px; height: 76px; }
+  .tr .b { position: absolute; inset: 0; width: auto; height: auto; }
+  .classic { transform: rotate(var(--r, 0deg)) scale(var(--s, 1)); transition: transform 0.8s ease; }
+  .modern  { rotate: var(--r, 0deg); scale: var(--s, 1); transition: rotate 0.8s ease, scale 0.2s ease; }
+
+  /* 4. Orden */
+  .ord { height: 190px; }
+  .ord .slot { position: absolute; left: 24px; top: 40px; width: 44px; height: 44px; }
+  .ord .b { position: absolute; inset: 0; width: auto; height: auto; font-size: 1rem; }
+  .ord .m1, .ord .m2 { translate: 90px 0; rotate: 45deg; }
+  .ord .m2 { }
+  .ord .c1 { transform: translate(90px, 0) rotate(45deg); }
+  .ord .c2 { transform: rotate(45deg) translate(90px, 0); }
+  .lbl { font-size: 0.82rem; color: var(--muted); }
+  .same { color: #1f7a4d; font-weight: 600; }
+  .diff { color: #b3401f; font-weight: 600; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .same { color: #6fd6a2; }
+    :root:not([data-theme="light"]) .diff { color: #ff9a78; }
+  }
+  :root[data-theme="dark"] .same { color: #6fd6a2; }
+  :root[data-theme="dark"] .diff { color: #ff9a78; }
+  @media (prefers-reduced-motion: reduce) { .classic, .modern { transition: none; } }
+</style>
+
+<main>
+  <header style="display:flex;flex-direction:column;gap:10px">
+    <h1>transform</h1>
+    <p class="lede">Mueve, agranda, gira o inclina un elemento sin cambiar el espacio que ocupa en la página. Los cuadros punteados de esta página marcan ese espacio original.</p>
+  </header>
+
+  <!-- 1 -->
+  <section>
+    <h2>Sin mover a nadie más</h2>
+    <p>Las dos filas crecen lo mismo. Arriba se cambia <code>width</code> y <code>height</code>, y los vecinos se corren. Abajo se usa <code>scale()</code>, y los vecinos se quedan donde están: el cuadro solo se dibuja más grande encima.</p>
+    <div class="panel">
+      <div class="row" style="grid-template-columns: 110px 1fr 72px">
+        <label for="grow">Crecimiento</label><input id="grow" type="range" min="0" max="60" step="1" value="0"><output id="o-grow">0 px</output>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="lane b-grow" id="lane-a">
+        <span class="cap">width / height</span>
+        <div class="o">A</div>
+        <div class="b mid">B</div>
+        <div class="o">C</div>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="lane">
+        <span class="cap">transform: scale()</span>
+        <div class="o">A</div>
+        <div class="slot" style="width:70px;height:70px"><div class="b" id="scaled" style="position:absolute;inset:0;width:auto;height:auto">B</div></div>
+        <div class="o">C</div>
+      </div>
+    </div>
+    <pre id="code-1">width: 70px;  height: 70px;   /* empuja a A y C */
+transform: scale(1);          /* no empuja a nadie */</pre>
+  </section>
+
+  <!-- 2 -->
+  <section>
+    <h2>Las cuatro funciones y el punto de origen</h2>
+    <p>Mueva los controles. El punto rojo es el <code>transform-origin</code>: la rotación y la escala se hacen alrededor de ese punto. Por defecto es el centro.</p>
+    <div class="two">
+      <div class="panel ctl">
+        <div class="row"><label for="t-x">translate X</label><input id="t-x" type="range" min="-80" max="80" step="1" value="0"><output id="o-x">0px</output></div>
+        <div class="row"><label for="t-y">translate Y</label><input id="t-y" type="range" min="-80" max="80" step="1" value="0"><output id="o-y">0px</output></div>
+        <div class="row"><label for="t-r">rotate</label><input id="t-r" type="range" min="-180" max="180" step="1" value="0"><output id="o-r">0deg</output></div>
+        <div class="row"><label for="t-s">scale</label><input id="t-s" type="range" min="0.3" max="2" step="0.05" value="1"><output id="o-s">1</output></div>
+        <div class="row"><label for="t-k">skew X</label><input id="t-k" type="range" min="-45" max="45" step="1" value="0"><output id="o-k">0deg</output></div>
+        <div class="row" style="grid-template-columns: 92px 1fr">
+          <label for="t-o">origin</label>
+          <select id="t-o">
+            <option value="center">center (por defecto)</option>
+            <option value="top left">top left</option>
+            <option value="top right">top right</option>
+            <option value="bottom left">bottom left</option>
+            <option value="bottom right">bottom right</option>
+          </select>
+        </div>
+        <div class="btns"><button type="button" id="t-reset">Reiniciar</button></div>
+      </div>
+      <div class="col">
+        <div class="stage lab">
+          <div class="slot" id="lab-slot">
+            <div class="b" id="lab-box">F</div>
+            <span class="dot" id="lab-dot"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="two">
+      <div class="col"><span class="tag">Forma clásica</span><pre id="code-classic"></pre></div>
+      <div class="col"><span class="tag">Forma moderna</span><pre id="code-modern"></pre></div>
+    </div>
+    <p class="note"><code>skew()</code> no tiene propiedad propia. Si lo usa, esa parte se queda en <code>transform</code>.</p>
+  </section>
+
+  <!-- 3 -->
+  <section>
+    <h2>Clásica y moderna, animadas</h2>
+    <p>Las dos cajas llegan al mismo resultado. La diferencia aparece al animar. Con <code>transform</code> hay una sola transición para todo, así que girar y agrandar corren con el mismo tiempo. Con las propiedades separadas cada una tiene la suya: aquí el giro es lento y el escalado es rápido.</p>
+    <div class="btns">
+      <button type="button" id="b-rot" aria-pressed="false">Girar 45°</button>
+      <button type="button" id="b-big" aria-pressed="false">Agrandar</button>
+    </div>
+    <div class="two" id="tr-stages">
+      <div class="col">
+        <span class="tag">Clásica</span>
+        <div class="stage tr"><div class="slot"><div class="b classic">F</div></div></div>
+        <pre>transform: rotate(var(--r))
+           scale(var(--s));
+transition: transform .8s;</pre>
+      </div>
+      <div class="col">
+        <span class="tag">Moderna</span>
+        <div class="stage tr"><div class="slot"><div class="b modern">F</div></div></div>
+        <pre>rotate: var(--r);
+scale: var(--s);
+transition: rotate .8s,
+            scale .2s;</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section>
+    <h2>El orden importa solo en transform</h2>
+    <p>Las propiedades separadas siempre se aplican en este orden: primero <code>translate</code>, después <code>rotate</code>, después <code>scale</code>. Da igual en qué orden las escriba. Con la función <code>transform</code>, el orden en que escribe las operaciones sí cambia el resultado, porque cada operación mueve también los ejes de la siguiente.</p>
+    <div class="two">
+      <div class="col">
+        <span class="tag">Propiedades separadas</span>
+        <div class="stage ord"><div class="slot"><div class="b m1">F</div></div></div>
+        <pre>translate: 90px 0;
+rotate: 45deg;</pre>
+        <div class="stage ord"><div class="slot"><div class="b m2">F</div></div></div>
+        <pre>rotate: 45deg;
+translate: 90px 0;</pre>
+        <p class="lbl"><span class="same">Mismo resultado.</span> El navegador ignora el orden en que las escribió.</p>
+      </div>
+      <div class="col">
+        <span class="tag">Función transform</span>
+        <div class="stage ord"><div class="slot"><div class="b c1">F</div></div></div>
+        <pre>transform: translate(90px, 0)
+           rotate(45deg);</pre>
+        <div class="stage ord"><div class="slot"><div class="b c2">F</div></div></div>
+        <pre>transform: rotate(45deg)
+           translate(90px, 0);</pre>
+        <p class="lbl"><span class="diff">Resultado distinto.</span> En el segundo, el eje ya está girado cuando se traslada, y el cuadro baja en diagonal.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  (function () {
+    var $ = function (id) { return document.getElementById(id); };
+
+    // 1. No empuja a nadie
+    var grow = $("grow");
+    function g() {
+      var n = parseInt(grow.value, 10);
+      $("o-grow").textContent = n + " px";
+      $("lane-a").style.setProperty("--sz", (70 + n) + "px");
+      $("scaled").style.transform = "scale(" + ((70 + n) / 70).toFixed(3) + ")";
+      $("code-1").textContent =
+        "width: " + (70 + n) + "px;  height: " + (70 + n) + "px;   /* empuja a A y C */\n" +
+        "transform: scale(" + ((70 + n) / 70).toFixed(2) + ");          /* no empuja a nadie */";
+    }
+    grow.addEventListener("input", g);
+    g();
+
+    // 2. Laboratorio
+    var box = $("lab-box"), dot = $("lab-dot");
+    var pos = {
+      "center": [50, 50], "top left": [0, 0], "top right": [100, 0],
+      "bottom left": [0, 100], "bottom right": [100, 100]
+    };
+    function lab() {
+      var x = +$("t-x").value, y = +$("t-y").value, r = +$("t-r").value,
+          s = +$("t-s").value, k = +$("t-k").value, o = $("t-o").value;
+      $("o-x").textContent = x + "px"; $("o-y").textContent = y + "px";
+      $("o-r").textContent = r + "deg"; $("o-s").textContent = s;
+      $("o-k").textContent = k + "deg";
+      box.style.transformOrigin = o;
+      box.style.transform = "translate(" + x + "px, " + y + "px) rotate(" + r + "deg) scale(" + s + ") skewX(" + k + "deg)";
+      dot.style.left = pos[o][0] + "%"; dot.style.top = pos[o][1] + "%";
+
+      var c = [];
+      c.push("transform: translate(" + x + "px, " + y + "px)");
+      c.push("           rotate(" + r + "deg)");
+      c.push("           scale(" + s + ")");
+      if (k !== 0) c.push("           skewX(" + k + "deg)");
+      var classic = c.join("\n") + ";";
+      if (o !== "center") classic += "\ntransform-origin: " + o + ";";
+      $("code-classic").textContent = classic;
+
+      var m = "translate: " + x + "px " + y + "px;\nrotate: " + r + "deg;\nscale: " + s + ";";
+      if (k !== 0) m += "\ntransform: skewX(" + k + "deg);";
+      if (o !== "center") m += "\ntransform-origin: " + o + ";";
+      $("code-modern").textContent = m;
+    }
+    ["t-x", "t-y", "t-r", "t-s", "t-k"].forEach(function (id) { $(id).addEventListener("input", lab); });
+    $("t-o").addEventListener("change", lab);
+    $("t-reset").addEventListener("click", function () {
+      $("t-x").value = 0; $("t-y").value = 0; $("t-r").value = 0;
+      $("t-s").value = 1; $("t-k").value = 0; $("t-o").value = "center";
+      lab();
+    });
+    lab();
+
+    // 3. Clásica vs moderna
+    var stages = $("tr-stages");
+    var rot = $("b-rot"), big = $("b-big");
+    function toggle(btn, prop, on, off) {
+      btn.addEventListener("click", function () {
+        var v = btn.getAttribute("aria-pressed") !== "true";
+        btn.setAttribute("aria-pressed", String(v));
+        stages.style.setProperty(prop, v ? on : off);
+      });
+    }
+    toggle(rot, "--r", "45deg", "0deg");
+    toggle(big, "--s", "1.5", "1");
+  })();
+</script>
+
+</body></html>

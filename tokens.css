@@ -1,41 +1,120 @@
 /* ==========================================================================
-   Pokédex — Paleta y medidas
+   Pokédex — CI-0137
+   Paleta y tokens del diseño
 
-   Las variables se declaran una sola vez acá y se usan con var() en todo el
-   sitio. Cambiar un color del sitio entero = cambiar una línea de este
-   archivo.
+   Los colores están extraídos directamente del mockup.
+   Se declaran una sola vez acá y se usan con var(--nombre) en todo el sitio.
+   Cambiar un color del sitio entero = cambiar una línea de este archivo.
 
-   Van en :root, que apunta al elemento <html>, porque las variables SE
-   HEREDAN: declaradas ahí quedan disponibles en toda la página.
-   Los nombres tienen que empezar con dos guiones.
-
-   Este archivo se enlaza ANTES que styles.css, porque styles.css lo necesita.
+   Versión "moderna": se mantienen TODOS los tokens originales y se agregan
+   los de tipografía, sombras, movimiento y superficies (secciones al final).
    ========================================================================== */
 
 :root {
 
-  /* --- Colores del aparato --- */
-  --azul:           #2967C5;   /* fondo de la pantalla */
-  --navy:           #142C52;   /* barra inferior y texto sobre amarillo */
-  --amarillo:       #FAD162;   /* pastillas y encabezados */
-  --amarillo-borde: #F0B639;   /* borde de las tarjetas */
-  --crema:          #FDF0CE;   /* fondos suaves */
-  --blanco:         #F2F6FA;   /* fondo de tarjetas y texto sobre azul */
-  --rojo:           #DC2D1A;   /* botones de acción */
-  --pista:          #D6E0EB;   /* líneas y bordes tenues */
+  /* --- Chrome del aparato ------------------------------------------------ */
+  --azul:           #2967C5;  /* fondo de la pantalla */
+  --azul-borde:     #245BB2;  /* borde del marco, un poco más oscuro */
+  --azul-claro:     #4A86E0;  /* brillo suave del fondo (solo decorativo) */
+  --navy:           #142C52;  /* barra inferior y textos sobre amarillo */
 
-  /* --- Medidas que se repiten --- */
-  --radio:          10px;      /* esquinas de tarjetas y paneles */
-  --radio-pastilla: 999px;     /* un radio absurdo siempre da la pastilla
-                                  perfecta, sin importar la altura */
-  --borde:          3px;       /* grosor del borde de las tarjetas */
+  --amarillo:       #FAD162;  /* pastillas y encabezados de panel */
+  --amarillo-borde: #F0B639;  /* borde de las tarjetas, más saturado */
+  --crema:          #FDF0CE;  /* paneles de fondo suave */
+
+  --rojo:           #DC2D1A;  /* botones de acción (oscurecido del mockup
+                                 para que el texto blanco cumpla contraste) */
+  --blanco:         #F2F6FA;  /* fondo de tarjetas y paneles */
+
+  /* --- Zona del sprite (las rayitas) ------------------------------------- */
+  --sprite-raya:    #D7E9F6;
+  --sprite-fondo:   #FFFFFF;
+
+  /* --- Barras de estadísticas ------------------------------------------- */
+  --pista:          #D6E0EB;  /* el carril vacío detrás de la barra */
+  --stat-ps:        #4BB976;
+  --stat-ataque:    #EC5F40;
+  --stat-defensa:   #5E9AEC;
+  --stat-velocidad: #F1B847;
+
+  /* --- Tipos de Pokémon --------------------------------------------------
+     Colores de las pastillas de tipo. Todos llevan texto blanco encima, y
+     todos fueron verificados: cada uno da al menos 4.5:1 de contraste con
+     blanco, que es el mínimo que pide la norma de accesibilidad para texto
+     normal. Si cambiás alguno, volvé a revisarlo. */
+  --tipo-planta:    #306947;
+  --tipo-fuego:     #B92F1F;
+  --tipo-agua:      #2967C5;
+  --tipo-electrico: #9D6B1A;
+  --tipo-veneno:    #6E46B8;
+  --tipo-hada:      #A52881;
+  --tipo-psiquico:  #A53462;
+  --tipo-roca:      #7F5E2E;
+  --tipo-normal:    #60646A;
+  --tipo-volador:   #3474C3;  /* no estaba en el mockup */
+  --tipo-bicho:     #5F7E1F;  /* no estaba en el mockup */
+  --tipo-hielo:     #2B7D8A;  /* no estaba en el mockup */
+
+  /* --- Medidas repetidas ------------------------------------------------- */
+  --radio:          10px;     /* esquinas de tarjetas y paneles */
+  --radio-pastilla: 999px;    /* esquinas de las pastillas: siempre redondas */
+  --borde:          3px;      /* grosor del borde de tarjetas */
+
+  /* ======================================================================
+     NUEVO — capa moderna
+     ====================================================================== */
+
+  /* --- Colores extra ----------------------------------------------------- */
+  --verde:          #2E8B57;  /* fondo del ícono de Estadísticas (solo
+                                 gráfico, no lleva texto encima) */
+  --tinta-suave:    #41557A;  /* texto secundario sobre blanco: 7.5:1 */
+  --linea:          #E3EAF3;  /* separadores finos dentro de tarjetas */
+
+  /* --- Tipografía -------------------------------------------------------
+     Fredoka (redondeada, amable) para títulos y números; Figtree (limpia,
+     muy legible) para el texto corrido. Se cargan desde Google Fonts en el
+     <head>; si no llegan, cae a la siguiente de la lista sin romper nada. */
+  --fuente-titulo: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --fuente-texto:  "Figtree", system-ui, "Segoe UI", sans-serif;
+
+  /* --- Radios más generosos ---------------------------------------------- */
+  --radio-lg:       24px;
+  --radio-xl:       30px;
+
+  /* --- Sombras: siempre en capas (una cercana + una lejana y difusa) ----- */
+  --sombra-1:  0 1px 2px rgba(20, 44, 82, .12),
+               0 8px 16px -8px rgba(20, 44, 82, .45);
+  --sombra-2:  0 2px 4px rgba(20, 44, 82, .10),
+               0 18px 34px -14px rgba(20, 44, 82, .55);
+  --sombra-3:  0 4px 8px rgba(10, 24, 48, .15),
+               0 34px 70px -20px rgba(10, 24, 48, .75);
+  --brillo:    inset 0 2px 0 rgba(255, 255, 255, .7);   /* filo de luz arriba */
+
+  /* --- Movimiento -------------------------------------------------------- */
+  --ease:      cubic-bezier(.2, .8, .2, 1);   /* arranca rápido, frena suave */
+  --dur:       220ms;
+
+  /* --- La zona del sprite (las "rayitas"), reutilizable ------------------ */
+  --sprite-zona:
+    radial-gradient(circle at 50% 58%, var(--sprite-fondo) 0, var(--sprite-fondo) 34%, transparent 72%),
+    repeating-linear-gradient(-45deg, var(--sprite-raya) 0 5px, #EBF3FA 5px 10px);
 }
 
-/* Contraste verificado (el mínimo para texto normal es 4.5:1):
-     navy sobre crema ....... 12.3:1      blanco sobre azul ..... 5.5:1
-     navy sobre blanco ...... 12.8:1      blanco sobre rojo ..... 4.7:1
-     navy sobre amarillo ..... 9.5:1
+/* --------------------------------------------------------------------------
+   Nota sobre contraste
 
-   El amarillo sobre azul da 3.7:1: sirve para bordes y texto grande, pero no
-   para texto normal. Por eso el amarillo se usa como fondo con texto navy
-   encima, nunca como color de letra sobre el azul. */
+   Combinaciones verificadas de esta paleta (mínimo recomendado: 4.5:1):
+
+     navy sobre crema ............ 12.3:1
+     navy sobre tarjeta .......... 12.8:1
+     navy sobre amarillo ..........  9.5:1
+     blanco sobre azul ............  5.5:1
+     crema sobre azul .............  4.8:1
+     blanco sobre rojo ............  4.7:1
+     tinta-suave sobre blanco .....  7.5:1
+     amarillo sobre navy ..........  9.4:1   (enlaces del pie)
+
+   El amarillo sobre azul da 3.7:1: sirve para bordes y para texto grande,
+   pero no para texto normal. Por eso el amarillo se usa como fondo con texto
+   navy encima, nunca como color de letra sobre el azul.
+   -------------------------------------------------------------------------- */
