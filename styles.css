@@ -1801,3 +1801,162 @@ footer a {
   align-self: center;
   font-weight: 700;
 }
+
+
+/* --------------------------------------------------------------------------
+   18. Encabezado y perfil de entrenador
+   -------------------------------------------------------------------------- */
+
+:root {
+  --perfil-fondo: #FFFFFF;
+  --perfil-fondo-final: #EAF1FB; /* celeste de la esquina de la tarjeta */
+  --perfil-sombra-rojo: rgba(220, 45, 26, .45); /* brillo del botón Editar perfil */
+  --menu-foco: rgba(255, 255, 255, .16); /* mismo fondo del hover del menú */
+}
+
+/* --- Encabezado ------------------------------------------------------------
+   El encabezado ya tiene los estilos del sitio y solo falta que
+   los enlaces del menú cambien también con el teclado y con el
+   mouse. El enlace actual no se toca para que siga amarillo. */
+.menu a:not([aria-current]):focus-visible {
+  background: var(--menu-foco);
+  transform: translateY(-1px);
+}
+
+/* --- Tarjeta de perfil -----------------------------------------------------
+   Tarjeta blanca con un degradado tirando a celeste. En pantallas chicas
+   todo va en columna y centrado. */
+.perfil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.75rem;
+  text-align: center;
+  color: var(--navy);
+  background: linear-gradient(135deg, var(--perfil-fondo) 40%, var(--perfil-fondo-final));
+  border-radius: var(--radio-xl);
+  box-shadow: var(--sombra-2);
+}
+
+/* Avatar en un recuadro blanco con borde amarillo y sombra. La imagen es
+   vertical: object-fit: contain la achica para que quepa entera en el
+   cuadro, sin recortarla. */
+.perfil__avatar {
+  flex-shrink: 0;
+  width: 12rem;
+  height: 12rem;
+  padding: .5rem;
+  object-fit: contain;
+  background: var(--perfil-fondo);
+  border: var(--borde) solid var(--amarillo);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-2);
+}
+
+/* El texto ocupa todo el espacio que sobra entre el avatar y el botón. */
+.perfil__info {
+  flex: 1;
+}
+
+/* Número y nombre en la misma línea. */
+.perfil__nombre {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: .75rem;
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+/* Pastilla amarilla del número, con el mismo canto inferior del logo. */
+.perfil__numero {
+  padding: .2rem .8rem;
+  font-size: 1rem;
+  background: var(--amarillo);
+  border-radius: var(--radio-pastilla);
+  box-shadow: inset 0 -3px 0 var(--amarillo-borde);
+}
+
+/* Fila de cápsulas: edad, lugar y estatura. */
+.perfil__datos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .5rem;
+  margin: 1rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cada cápsula: ícono y texto en una pastilla crema. */
+.dato {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .35rem .9rem;
+  font-size: .9rem;
+  font-weight: 600;
+  background: var(--crema);
+  border: 1px solid var(--amarillo);
+  border-radius: var(--radio-pastilla);
+}
+
+/* Ícono de cada cápsula (::before, no va en el HTML). El texto "Edad:",
+   "Ciudad de origen:" y "Estatura:" sigue en el HTML dentro de
+   .solo-lectores. */
+.dato::before {
+  content: "";
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  background: center / contain no-repeat;
+}
+
+.dato--edad::before { background-image: url("assets/age-icon.svg"); }
+.dato--lugar::before { background-image: url("assets/location-icon.svg"); }
+.dato--estatura::before { background-image: url("assets/height-icon.svg"); }
+
+.perfil__descripcion {
+  max-width: 40rem;
+  margin: 0;
+  line-height: 1.6;
+  color: var(--tinta-suave);
+}
+
+/* Botón Editar perfil: rojo con brillo. */
+.perfil__editar {
+  flex-shrink: 0;
+  box-shadow: 0 8px 18px -4px var(--perfil-sombra-rojo);
+}
+
+/* Lápiz del botón Editar perfil (usa .boton--icono de la sección 13). */
+.icono-editar { --icono-boton: url("assets/edit-icon.svg"); }
+
+/* El botón ya sube con :hover (sección 4c); con teclado hace lo mismo. */
+.perfil__editar:focus-visible {
+  transform: translateY(-2px);
+}
+
+/* Sobre la tarjeta blanca el contorno amarillo no se ve: pasa a azul
+   oscuro, igual que en la sección 11. */
+.perfil :focus-visible {
+  outline-color: var(--azul-borde);
+}
+
+/* Desde tablet: avatar a la izquierda, datos al centro y botón arriba a
+   la derecha. El nombre y las cápsulas se alinean a la izquierda. */
+@media (width >= 48rem) {
+  .perfil {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .perfil__nombre,
+  .perfil__datos {
+    justify-content: flex-start;
+  }
+}
