@@ -1017,3 +1017,231 @@ footer a {
     transition-duration: .01ms !important;
   }
 }
+
+
+/* --------------------------------------------------------------------------
+   13. Modales (base)
+   -------------------------------------------------------------------------- */
+
+/* Estructura común a todos los <dialog> del perfil de entrenador:
+     .modal            la caja blanca centrada (hace scroll ella misma)
+     .modal__header    ícono + título + botón de cerrar (pegado arriba)
+     .modal__footer    botones de acción (pegado abajo)
+   Lo que va entre el encabezado y el pie es el contenido de cada modal, sin
+   contenedor extra: el relleno lateral lo pone .modal. */
+
+:root {
+  --modal-superficie:  #FFFFFF;
+  --modal-velo:        rgba(20, 44, 82, .55);  /* fondo detrás del modal */
+  --modal-borde-boton: #C7D5E8;
+  --modal-ancho:       55rem;
+  --modal-margen:      1rem;   /* distancia mínima al borde de la pantalla */
+  --modal-relleno:     2rem;   /* relleno lateral de todo el modal */
+}
+
+/* El navegador ya centra el <dialog> abierto (margin: auto). Solo se define
+   la caja: ancho, alto máximo, esquinas y sombra. Si el contenido no cabe,
+   el modal entero hace scroll. */
+.modal {
+  width: min(var(--modal-ancho), 100% - 2 * var(--modal-margen));
+  max-height: calc(100dvh - 2 * var(--modal-margen));
+  padding: 0 var(--modal-relleno);
+  border: 0;
+  border-radius: var(--radio-xl);
+  background: var(--modal-superficie);
+  color: var(--navy);
+  box-shadow: var(--sombra-3);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.modal[open] {
+  animation: aparecer var(--dur) var(--ease);
+}
+
+/* Velo oscuro y desenfocado sobre la página. */
+.modal::backdrop {
+  background: var(--modal-velo);
+  backdrop-filter: blur(4px);
+}
+
+/* El formulario de "Editar perfil" envuelve los campos y el pie: con
+   display: contents sus hijos se acomodan como si fueran hijos de .modal. */
+.modal__form {
+  display: contents;
+}
+
+/* El primer párrafo después del encabezado es el subtítulo del modal. */
+.modal__header + p {
+  margin-top: 0;
+  color: var(--tinta-suave);
+}
+
+/* --- Encabezado ------------------------------------------------------------
+   Pegado arriba mientras el contenido hace scroll. El margen negativo lo
+   estira hasta los bordes del modal, para que la línea inferior y el fondo
+   lo crucen completo. También anula los estilos del header de la página
+   (fondo azul, sombra), porque el selector de etiqueta alcanza a este. */
+.modal__header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 calc(-1 * var(--modal-relleno)) 1.5rem;
+  padding: 1.5rem var(--modal-relleno);
+  text-align: left;
+  background: var(--modal-superficie);
+  border-bottom: 1px solid var(--linea);
+  box-shadow: none;
+}
+
+.modal__titulo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 1.85rem);
+  font-weight: 700;
+}
+
+/* Recuadro del ícono. Cada tipo de modal define --modal-icono (la imagen
+   SVG) y --modal-icono-fondo (el color del recuadro). */
+.modal__titulo::before {
+  content: "";
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radio);
+  background: var(--modal-icono, none) center / 1.5rem no-repeat,
+              var(--modal-icono-fondo, var(--amarillo));
+  box-shadow: var(--sombra-1);
+}
+
+/* Botón de cerrar: círculo con la X dibujada por ::before. El texto
+   "Cerrar ..." sigue en el HTML dentro de .solo-lectores. */
+.modal__cerrar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  margin-left: auto;
+  padding: 0;
+  cursor: pointer;
+  background: var(--modal-superficie);
+  border: 2px solid var(--modal-borde-boton);
+  border-radius: var(--radio-pastilla);
+  transition: background var(--dur), border-color var(--dur);
+}
+
+/* mask usa el SVG solo como silueta: el color lo da background-color. */
+.modal__cerrar::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--navy);
+  mask: url("assets/close-icon.svg") center / contain no-repeat;
+}
+
+.modal__cerrar:hover,
+.modal__cerrar:focus-visible {
+  background: var(--blanco);
+  border-color: var(--azul);
+}
+
+/* --- Pie -------------------------------------------------------------------
+   Pegado abajo, estirado hasta los bordes igual que el encabezado. También
+   anula los estilos del footer de la página. */
+.modal__footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: .75rem;
+  margin: 1.5rem calc(-1 * var(--modal-relleno)) 0;
+  padding: 1.25rem var(--modal-relleno);
+  color: inherit;
+  background: var(--blanco);
+  border-top: 1px solid var(--linea);
+  box-shadow: none;
+}
+
+/* --- Botones con ícono ------------------------------------------------------
+   .boton--icono agrega un ícono con ::before; la clase icono-* elige cuál.
+   mask usa el SVG como silueta y background-color: currentColor lo pinta
+   del color del texto, así sirve en botones azules, rojos o blancos.
+   .boton--icono-final lo manda después del texto (flechas). */
+.boton--icono::before {
+  content: "";
+  flex-shrink: 0;
+  width: .9rem;
+  height: .9rem;
+  background-color: currentColor;
+  mask: var(--icono-boton) center / contain no-repeat;
+}
+
+.boton--icono-final::before {
+  order: 1;
+}
+
+.icono-mas     { --icono-boton: url("assets/plus-icon.svg"); }
+.icono-menos   { --icono-boton: url("assets/minus-icon.svg"); }
+.icono-flecha  { --icono-boton: url("assets/arrow-icon.svg"); }
+.icono-cerrar  { --icono-boton: url("assets/close-icon.svg"); }
+
+/* Hover y foco de los botones con borde dentro de los modales: se
+   rellenan con su color. */
+.modal .boton--borde-azul:hover,
+.modal .boton--borde-azul:focus-visible {
+  background: var(--azul);
+  color: var(--modal-superficie);
+}
+
+.modal .boton--borde-rojo:hover,
+.modal .boton--borde-rojo:focus-visible {
+  background: var(--rojo);
+  color: var(--modal-superficie);
+}
+
+/* Foco sobre la superficie blanca del modal: azul oscuro (ver sección 11). */
+.modal :focus-visible {
+  outline-color: var(--azul-borde);
+}
+
+/* --- Ícono de cada tipo de modal ------------------------------------------ */
+.modal--equipo {
+  --modal-icono: url("assets/team-icon.svg");
+  --modal-icono-fondo: var(--azul);
+}
+
+.modal--capturados {
+  --modal-icono: url("assets/pokeball.svg");
+  --modal-icono-fondo: var(--rojo);
+}
+
+.modal--favoritos {
+  --modal-icono: url("assets/favorite-icon-black.svg");
+  --modal-icono-fondo: var(--amarillo);
+}
+
+.modal--estadisticas {
+  --modal-icono: url("assets/stats-icon.svg");
+  --modal-icono-fondo: var(--verde);
+}
+
+/* Modales sin ícono en el diseño (Editar perfil). */
+.modal--sin-icono .modal__titulo::before {
+  content: none;
+}
+
+/* Pantallas chicas: menos relleno para dejarle espacio al contenido. */
+@media (width < 40rem) {
+  .modal {
+    --modal-relleno: 1.25rem;
+  }
+}

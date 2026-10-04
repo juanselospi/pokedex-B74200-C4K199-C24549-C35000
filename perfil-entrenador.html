@@ -42,10 +42,15 @@
         </nav>
     </header>
 
-    <dialog id="editar-perfil" aria-labelledby="editar-perfil-titulo">
-        <h2 id="editar-perfil-titulo">Editar perfil</h2>
+    <dialog class="modal modal--sin-icono" id="editar-perfil" aria-labelledby="editar-perfil-titulo">
+        <header class="modal__header">
+            <h2 class="modal__titulo" id="editar-perfil-titulo">Editar perfil</h2>
+            <button class="modal__cerrar" type="button" command="close" commandfor="editar-perfil">
+                <span class="solo-lectores">Cerrar Editar perfil</span>
+            </button>
+        </header>
 
-        <form method="dialog">
+        <form class="modal__form" method="dialog">
             <fieldset>
                 <legend>Datos personales</legend>
 
@@ -83,19 +88,19 @@
                 </p>
             </fieldset>
 
-            <p>
-                <button type="submit">Guardar</button>
-                <button type="submit" value="cancelar" formnovalidate>Cancelar</button>
-            </p>
+            <footer class="modal__footer">
+                <button class="boton boton--claro" type="submit" value="cancelar" formnovalidate>Cancelar</button>
+                <button class="boton boton--primario" type="submit">Guardar</button>
+            </footer>
         </form>
     </dialog>
 
-    <dialog id="team" aria-labelledby="team-titulo" closedby="any">
-        <header>
-            <h2 id="team-titulo">Team Pokémon</h2>
-            <form method="dialog">
-                <button aria-label="Cerrar Team Pokémon">✕</button>
-            </form>
+    <dialog class="modal modal--equipo" id="team" aria-labelledby="team-titulo" closedby="any">
+        <header class="modal__header">
+            <h2 class="modal__titulo" id="team-titulo">Team Pokémon</h2>
+            <button class="modal__cerrar" type="button" command="close" commandfor="team">
+                <span class="solo-lectores">Cerrar Team Pokémon</span>
+            </button>
         </header>
 
         <p>5 de 6 espacios ocupados</p>
@@ -137,17 +142,20 @@
             </li>
         </ul>
 
-        <footer>
-            <button type="button" commandfor="capturados" command="show-modal">Agregar desde capturados</button>
-            <form method="dialog">
-                <button>Cerrar</button>
-            </form>
+        <footer class="modal__footer">
+            <button class="boton boton--primario boton--icono icono-mas" type="button" commandfor="capturados" command="show-modal">Agregar desde capturados</button>
+            <button class="boton boton--claro" type="button" command="close" commandfor="team">Cerrar</button>
         </footer>
     </dialog>
 
-    <dialog id="estadisticas">
-        <h2>Estadísticas</h2>
-        <button type="button">X</button>
+    <dialog class="modal modal--estadisticas" id="estadisticas" aria-labelledby="estadisticas-titulo">
+        <header class="modal__header">
+            <h2 class="modal__titulo" id="estadisticas-titulo">Estadísticas</h2>
+            <button class="modal__cerrar" type="button" command="close" commandfor="estadisticas">
+                <span class="solo-lectores">Cerrar Estadísticas</span>
+            </button>
+        </header>
+
         <p>Comparativa de los Pokémon de tu equipo.</p>
 
         <table>
@@ -254,15 +262,22 @@
 
         <p>Valores base tomados de la Pokédex.</p>
 
-        <button type="button" command="close" commandfor="estadisticas">Cerrar</button>
+        <footer class="modal__footer">
+            <button class="boton boton--claro" type="button" command="close" commandfor="estadisticas">Cerrar</button>
+        </footer>
     </dialog>
 
-    <dialog id="capturados">
-        <h2>Pokémon capturados</h2>
+    <dialog class="modal modal--capturados" id="capturados" aria-labelledby="capturados-titulo">
+        <header class="modal__header">
+            <h2 class="modal__titulo" id="capturados-titulo">Pokémon capturados</h2>
+            <button class="modal__cerrar" type="button" command="close" commandfor="capturados">
+                <span class="solo-lectores">Cerrar Pokémon capturados</span>
+            </button>
+        </header>
 
         <p>Seleccioná los que querés en tu equipo o marcalos como favoritos.</p>
 
-        <form>
+        <form id="capturados-form">
 
             <label for="buscar">Buscar por nombre</label>
             <input type="search" id="buscar" name="buscar">
@@ -350,19 +365,24 @@
 
             </ul>
 
-            <button type="button">Marcar favorito</button>
-            <button type="button">Agregar al equipo</button>
-
         </form>
 
-        <button type="button" command="close" commandfor="capturados">Cerrar</button>
+        <footer class="modal__footer">
+            <button class="boton boton--claro" type="button" form="capturados-form">Marcar favorito</button>
+            <button class="boton boton--primario" type="button" form="capturados-form">Agregar al equipo</button>
+            <button class="boton boton--claro" type="button" command="close" commandfor="capturados">Cerrar</button>
+        </footer>
     </dialog>
 
-    <dialog id="favoritos">
-        <!-- Persona 3 -->
-        <h2>Favoritos</h2>
-        <button type="button" command="close" commandfor="favoritos" aria-label="Cerrar Favoritos">X</button>
-        
+    <dialog class="modal modal--favoritos" id="favoritos" aria-labelledby="favoritos-titulo">
+
+        <header class="modal__header">
+            <h2 class="modal__titulo" id="favoritos-titulo">Favoritos</h2>
+            <button class="modal__cerrar" type="button" command="close" commandfor="favoritos">
+                <span class="solo-lectores">Cerrar Favoritos</span>
+            </button>
+        </header>
+
         <p>4 Pokémon marcados como favoritos</p>
 
         <ul class="pokemon-list">
@@ -385,7 +405,7 @@
             <li class="pokemon-card">
                 <a class="pokemon-card__link" href="detalle-pokemon-charmander.html">
                     <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
-                    <img class="pokemon-card__image" src="assets/charmander.png".png" alt="Charmander" width="96" height="96">
+                    <img class="pokemon-card__image" src="assets/charmander.png" alt="Charmander" width="96" height="96">
                     <span class="pokemon-card__number">#003</span>
                     <span class="pokemon-card__name">Charmander</span>
                 </a>
@@ -399,11 +419,11 @@
                 </a>
             </li>
         </ul>
-        
-        <p>
-            <button type="button" command="show-modal" commandfor="capturados">Agregar desde capturados</button>
-            <button type="button" command="close" commandfor="favoritos">Cerrar</button>
-        </p>
+
+        <footer class="modal__footer">
+            <button class="boton boton--primario boton--icono icono-mas" type="button" command="show-modal" commandfor="capturados">Agregar desde capturados</button>
+            <button class="boton boton--claro" type="button" command="close" commandfor="favoritos">Cerrar</button>
+        </footer>
     </dialog>
 
     <main>
