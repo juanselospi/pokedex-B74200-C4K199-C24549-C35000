@@ -1,9 +1,16 @@
 /* ==========================================================================
    Pokédex — CI-0137
-   Hoja de estilos del sitio
+   Hoja de estilos del sitio — versión moderna
 
-   Los colores y las medidas salen de tokens.css, que se enlaza antes que
-   este archivo.
+   Mantiene la estructura y los nombres de clase de la versión anterior
+   (clases 3 a 6: base, flexbox, grid, contenedores) y le suma una capa
+   visual: sombras en capas, esquinas redondeadas, tipografía con carácter,
+   transiciones y animaciones de entrada. Los colores y medidas salen de
+   tokens.css, que se enlaza antes que este archivo.
+
+   Regla de la casa para el movimiento: toda animación es decoración, nunca
+   información. Por eso al final hay un bloque que las apaga para quien
+   tiene activado "reducir movimiento" en su sistema (sección 12).
    ========================================================================== */
 
 
@@ -11,32 +18,75 @@
    1. Base
    -------------------------------------------------------------------------- */
 
-/* El asterisco son todos los elementos; los dos pseudo-elementos se agregan
-   aparte porque el asterisco no los alcanza.
-
-   border-box hace que width incluya el relleno y el borde, en vez de medir
-   solo el contenido. Sin esto, una caja de width: 300px con padding: 20px y
-   border: 2px mide 344 en pantalla. */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-/* Estas tres propiedades se heredan: declaradas una vez en body bajan solas
-   a toda la página. Regla para acordarse: lo que tiene que ver con el texto
-   se hereda; lo que tiene que ver con la caja no. */
+/* El fondo azul lleva un brillo radial arriba a la izquierda: con un solo
+   degradado ya deja de verse como un color plano. El color sólido va
+   después de la coma como "plan B" (así se pinta mientras carga). */
 body {
-  font-family: Verdana, Geneva, sans-serif;
-  background: var(--azul);
+  margin: 0;
+  min-height: 100dvh;
+  font-family: var(--fuente-texto);
+  line-height: 1.55;
+  background:
+    radial-gradient(60rem 32rem at 12% -8%, var(--azul-claro) 0, transparent 70%),
+    var(--azul);
+  background-attachment: fixed;
   color: var(--blanco);
 }
 
-/* Los enlaces no toman el color de body: un valor heredado pierde contra
-   cualquier regla que apunte directamente al elemento, y la hoja del
-   navegador tiene una para "a". Hay que decírselo aparte. */
+/* Marca de agua: una pokébola gigante, en contorno, casi transparente,
+   pegada a la esquina inferior derecha. Es un pseudo-elemento (no una
+   <img>) porque es pura decoración: no debe existir para un lector de
+   pantalla. pointer-events: none deja pasar los clics a lo que hay debajo. */
+body::before {
+  content: "";
+  position: fixed;
+  right: -10rem;
+  bottom: -10rem;
+  width: 34rem;
+  height: 34rem;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .09;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='%23fff' stroke-width='3'%3E%3Ccircle cx='32' cy='32' r='29'/%3E%3Cpath d='M3 32h58'/%3E%3Ccircle cx='32' cy='32' r='10'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+h1, h2, h3 {
+  font-family: var(--fuente-titulo);
+  font-weight: 600;
+  line-height: 1.15;
+}
+
 a {
   color: var(--blanco);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Foco visible: doble señal (contorno + separación). Amarillo sobre el azul
+   y el navy; sobre superficies claras se cambia a azul oscuro (sección 11),
+   porque amarillo sobre blanco casi no se ve. */
+:focus-visible {
+  outline: 3px solid var(--amarillo);
+  outline-offset: 3px;
+}
+
+/* Lo que leen los lectores de pantalla pero no se dibuja. */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 
@@ -44,22 +94,22 @@ a {
    2. Logo
    -------------------------------------------------------------------------- */
 
-/* La pastilla amarilla no está dentro de la imagen: la dibuja el CSS acá.
-
-   display: inline-block es necesario porque un enlace es un elemento de
-   línea, y a esos el relleno vertical no les agranda la caja: el amarillo se
-   derramaría sobre las líneas de arriba y abajo. inline-block se comporta
-   como caja sin dejar de acomodarse en la línea.
-
-   line-height: 0 saca el hueco que deja la línea base del texto debajo de la
-   imagen. Sin eso la pastilla se ve descentrada. */
+/* La pastilla amarilla la dibuja el CSS; el SVG solo trae pokébola y nombre.
+   Ahora con un "canto" inferior más oscuro (inset shadow) que le da
+   volumen de botón físico, y un saltito al pasar el mouse. */
 .logo {
   display: inline-block;
   background: var(--amarillo);
-  border: var(--borde) solid var(--navy);
   border-radius: var(--radio-pastilla);
   padding: 0.35rem 1.1rem;
   line-height: 0;
+  box-shadow: inset 0 -3px 0 var(--amarillo-borde), var(--sombra-1);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.logo:hover {
+  transform: translateY(-2px) rotate(-1.5deg);
+  box-shadow: inset 0 -3px 0 var(--amarillo-borde), var(--sombra-2);
 }
 
 
@@ -67,48 +117,111 @@ a {
    3. Lista de Pokémon
    -------------------------------------------------------------------------- */
 
-/* La viñeta y la sangría son dos cosas distintas que pone el navegador.
-   Quitar una no quita la otra. */
 .pokemon-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.25rem;
   list-style: none;
   padding-left: 0;
 }
 
-/* Las cuatro capas de la caja, en orden de adentro hacia afuera: contenido,
-   relleno, borde y margen.
-
-   El relleno está adentro y se pinta con el fondo; el margen está afuera y
-   siempre es transparente. Por eso el relleno separa el texto del borde, y el
-   margen separa una tarjeta de la siguiente.
-
-   Ojo: entre dos tarjetas no hay 2rem de separación sino 1rem. Los márgenes
-   verticales adyacentes no se suman, se fusionan y gana el mayor. A eso se le
-   llama colapso de márgenes, y es a propósito. */
+/* La tarjeta:
+   - fondo con degradado casi imperceptible (blanco → gris azulado) que
+     evita el "plano de papel";
+   - sombra en capas (--sombra-2) y filo de luz arriba (--brillo);
+   - borde fino translúcido en vez del amarillo grueso de antes; el amarillo
+     ahora aparece en la pastilla del número y en el hover. */
 .pokemon-card {
-  background: var(--blanco);
+  position: relative;
+  container-type: inline-size;
+  text-align: center;
   color: var(--navy);
-  border: var(--borde) solid var(--amarillo-borde);
-  border-radius: var(--radio);
-  padding: 1rem;
-  margin-bottom: 1rem;
+  background: linear-gradient(180deg, #fff, var(--blanco));
+  border: 2px solid rgba(255, 255, 255, .8);
+  border-radius: var(--radio-lg);
+  padding: 1rem 1rem 1.25rem;
+  box-shadow: var(--sombra-2), var(--brillo);
+  transition: box-shadow var(--dur) var(--ease), border-color var(--dur);
 }
 
-/* El color se hereda dentro de la tarjeta, pero el enlace no lo toma */
+/* Cada tarjeta entra un poquito después que la anterior (efecto cascada).
+   --n es una variable propia: la regla de arriba la lee con calc(). */
+.pokemon-card:nth-child(2)  { --n: 1; }
+.pokemon-card:nth-child(3)  { --n: 2; }
+.pokemon-card:nth-child(4)  { --n: 3; }
+.pokemon-card:nth-child(5)  { --n: 4; }
+.pokemon-card:nth-child(6)  { --n: 5; }
+.pokemon-card:nth-child(7)  { --n: 6; }
+.pokemon-card:nth-child(8)  { --n: 7; }
+.pokemon-card:nth-child(9)  { --n: 8; }
+.pokemon-card:nth-child(10) { --n: 9; }
+.pokemon-card:nth-child(n+11) { --n: 10; }
+
+/* Toda la tarjeta es el enlace: display: block lo estira, y así el
+   área clicable es la tarjeta entera, no solo el texto. */
+.pokemon-card__link {
+  display: block;
+  text-decoration: none;
+  border-radius: var(--radio-lg);
+}
+
+/* El sprite vive sobre la zona de rayitas del mockup, con un círculo blanco
+   de luz detrás. La sombra proyectada (drop-shadow) sigue la silueta del
+   PNG, a diferencia de box-shadow que siempre dibuja un rectángulo. */
+.pokemon-card__image {
+  display: block;
+  margin: 0 auto 0.6rem;
+  width: 100%;
+  max-width: 9.5rem;
+  padding: 0.75rem;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  border-radius: 1.25rem;
+  background: var(--sprite-zona);
+  filter: drop-shadow(0 8px 8px rgba(20, 44, 82, .25));
+  transition: transform .35s var(--ease);
+}
+
+.pokemon-card__insignia {
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  z-index: 2;
+  background: var(--rojo);
+  color: var(--blanco);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radio-pastilla);
+  box-shadow: var(--sombra-1);
+}
+
+.pokemon-card__number {
+  display: inline-block;
+  background: var(--amarillo);
+  color: var(--navy);
+  border-radius: var(--radio-pastilla);
+  padding: 0.2rem 0.7rem;
+  font-family: var(--fuente-titulo);
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--amarillo-borde);
+  margin-bottom: 0.4rem;
+}
+
+.pokemon-card__name {
+  display: block;
+  font-family: var(--fuente-titulo);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
 .pokemon-card a {
   color: var(--navy);
 }
 
-.pokemon-card__number {
-  color: #60646A;
-  font-size: 0.85rem;
-}
-
-.pokemon-card__name {
-  font-weight: bold;
-}
-
-/* La paginación ya lleva el número en el texto del enlace: el marcador del
-   <ol> lo estaba repitiendo. */
 .paginacion {
   list-style: none;
   padding-left: 0;
@@ -116,96 +229,791 @@ a {
 
 
 /* --------------------------------------------------------------------------
-   4. Tabla de estadísticas
+   4. Disposición con Flexbox
    -------------------------------------------------------------------------- */
 
-/* Por defecto cada celda tiene su propio borde y hay separación entre ellas,
-   así que donde dos celdas se tocan aparecen dos líneas. collapse las fusiona
-   en una sola. */
-.stats-table {
-  border-collapse: collapse;
+/* Encabezado pegajoso (position: sticky): se queda arriba mientras se hace
+   scroll. Fondo con degradado + sombra que lo despega del contenido.
+   Base móvil: apilado y centrado. */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(180deg, #2A66C0, var(--azul-borde));
+  border-bottom: 1px solid rgba(255, 255, 255, .18);
+  box-shadow: 0 8px 24px -8px rgba(20, 44, 82, .55);
+}
+
+@media (width >= 40rem) {
+  header {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    padding-inline: 3rem;
+  }
+}
+
+header p { margin: 0; }
+
+.header__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem 1.5rem;
+}
+
+.contador {
+  background: var(--amarillo);
+  color: var(--navy);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.3rem 0.9rem;
+  border-radius: var(--radio-pastilla);
+  white-space: nowrap;
+}
+
+/* Menú en píldoras. El enlace de la página actual lleva aria-current="page"
+   en el HTML, y el CSS se engancha de ESE atributo: así lo que ve la vista
+   y lo que anuncia el lector de pantalla salen de la misma fuente. */
+header nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+header nav a {
+  display: block;
+  padding: 0.5rem 1.1rem;
+  border-radius: var(--radio-pastilla);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background var(--dur), transform var(--dur) var(--ease);
+}
+
+header nav a:hover {
+  background: rgba(255, 255, 255, .16);
+  transform: translateY(-1px);
+}
+
+header nav a[aria-current] {
+  background: var(--amarillo);
+  color: var(--navy);
+  font-weight: 700;
+  box-shadow: 0 4px 10px -2px rgba(0, 0, 0, .35);
+}
+
+/* Carrusel: columna en móvil, fila desde tablet. La pokébola activa es más
+   grande, "respira" con un halo pulsante y las otras se aclaran al pasar
+   el mouse. */
+.carrusel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  list-style: none;
+  padding-left: 0;
+}
+
+@media (width >= 40rem) {
+  .carrusel {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.25rem;
+  }
+}
+
+.carrusel__item img {
+  display: block;
+  opacity: .75;
+  transition: transform var(--dur) var(--ease), opacity var(--dur);
+}
+
+.carrusel__item a:hover img,
+.carrusel__item a:focus-visible img {
+  opacity: 1;
+  transform: scale(1.25) rotate(-12deg);
+}
+
+.carrusel__item--activo img {
+  opacity: 1;
+  border-radius: 50%;
+  animation: latido 2.2s ease-in-out infinite;
+}
+
+#carrusel h2 {
+  margin: 0 0 .5rem;
+  text-align: center;
+  font-size: .85rem;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--crema);
+}
+
+.paginacion {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.paginacion a {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;                 /* 44px: tamaño mínimo cómodo para el dedo */
+  height: 2.75rem;
+  border-radius: 50%;
   background: var(--blanco);
   color: var(--navy);
+  font-family: var(--fuente-titulo);
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--sombra-1);
+  transition: transform var(--dur) var(--ease), background var(--dur);
 }
 
-/* La coma es una lista de selectores: aplicá esto a los dos. */
-.stats-table th,
-.stats-table td {
-  border: 1px solid var(--pista);
-  padding: 0.5rem 0.75rem;
-  text-align: center;
-}
-
-.stats-table__total {
-  font-weight: bold;
+.paginacion a:hover {
+  transform: translateY(-3px);
   background: var(--crema);
+}
+
+.paginacion a[aria-current] {
+  background: var(--amarillo);
+  box-shadow: inset 0 -3px 0 var(--amarillo-borde), var(--sombra-1);
 }
 
 
 /* --------------------------------------------------------------------------
-   5. Encabezado y pie
+   4b. Buscador
    -------------------------------------------------------------------------- */
 
-/* Sin clase: header y footer ya se identifican por su propia etiqueta. Esa es
-  la ventaja de haber usado HTML semántico en vez de div para todo. */
-header {
-  padding: 1rem 1.5rem;
+/* El <section id="buscador"> y el <form> comparten la clase .buscador (así
+   venía del HTML). Para distinguirlos se usa la etiqueta: section.buscador
+   es el panel de vidrio; form.buscador solo organiza el interior. */
+section.buscador {
+  padding: 1.25rem 1.5rem 1.5rem;
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, .10);
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: var(--radio-lg);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--sombra-2);
 }
 
-/* Acá se ve la diferencia entre relleno y margen, porque hay fondo: el navy
-   llega hasta donde termina el relleno y se corta ahí; el margen queda
-   afuera, transparente. */
+section.buscador h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+section.buscador > p {
+  margin: .25rem 0 1rem;
+  color: var(--crema);
+}
+
+.buscador fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.buscador legend {
+  padding: 0;
+  margin-bottom: .75rem;
+  font-weight: 700;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--crema);
+}
+
+.buscador label {
+  font-weight: 600;
+}
+
+/* Campos claros con esquinas de pastilla. El foco los "enciende" con un
+   halo amarillo (box-shadow) además del contorno. */
+.buscador input[type="search"],
+.buscador select {
+  font: inherit;
+  color: var(--navy);
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: var(--radio-pastilla);
+  padding: 0.6rem 1rem;
+  box-shadow: var(--sombra-1);
+  transition: border-color var(--dur), box-shadow var(--dur);
+}
+
+.buscador input[type="search"] {
+  flex: 1 1 12rem;
+}
+
+.buscador input:focus-visible,
+.buscador select:focus-visible {
+  outline: none;
+  border-color: var(--amarillo);
+  box-shadow: 0 0 0 4px rgba(250, 209, 98, .45);
+}
+
+/* accent-color pinta checkboxes y radios con un color de marca sin tener
+   que reconstruirlos. Una línea, todo el sitio. */
+.buscador input[type="checkbox"],
+.buscador input[type="radio"] {
+  accent-color: var(--amarillo);
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.buscador p {
+  margin: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   4c. Botones (reutilizables en todo el sitio)
+   -------------------------------------------------------------------------- */
+
+/* Una sola clase base (.boton) y variantes con modificadores (--rojo...),
+   la convención BEM que ya usan las tarjetas. Sirve igual para <button> y
+   para <a>. Alto mínimo de 44px para que sean cómodos en pantallas táctiles. */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 1.4rem;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: var(--radio-pastilla);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur);
+}
+
+.boton:hover  { transform: translateY(-2px); }
+.boton:active { transform: translateY(1px) scale(.98); }
+
+.boton--primario {
+  background: var(--azul);
+  color: #fff;
+  box-shadow: 0 8px 18px -4px rgba(41, 103, 197, .6), inset 0 1px 0 rgba(255, 255, 255, .25);
+}
+
+.boton--rojo {
+  background: var(--rojo);
+  color: #fff;
+}
+
+.boton--claro {
+  background: #fff;
+  color: var(--navy);
+  border-color: #C7D5E8;
+}
+
+.boton--borde-azul {
+  background: #fff;
+  color: var(--azul);
+  border-color: var(--azul);
+}
+
+.boton--borde-rojo {
+  background: #fff;
+  color: var(--rojo);
+  border-color: var(--rojo);
+}
+
+.boton--chico {
+  min-height: 2.25rem;
+  padding: 0 1rem;
+  font-size: .9rem;
+}
+
+.boton svg {
+  flex-shrink: 0;
+}
+
+
+/* --------------------------------------------------------------------------
+   5. Tabla de estadísticas
+   -------------------------------------------------------------------------- */
+
+/* Antes: border-collapse: collapse (una sola línea entre celdas). Ahora la
+   tabla tiene esquinas redondeadas, y border-radius NO funciona en tablas
+   colapsadas. Por eso pasa a separate con border-spacing: 0 (sin huecos
+   entre celdas) y las líneas las ponen los border-top de cada celda. */
+.stats-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  color: var(--navy);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: var(--sombra-2);
+}
+
+/* El caption es la primera franja de la tabla: se pinta del mismo crema que
+   el encabezado y lleva relleno suficiente para no chocar con las esquinas
+   redondeadas (el overflow: hidden de arriba las recorta). */
+.stats-table caption {
+  padding: 1rem 1.25rem .25rem;
+  text-align: left;
+  font-weight: 700;
+  color: var(--tinta-suave);
+  background: var(--crema);
+}
+
+.stats-table th,
+.stats-table td {
+  border-top: 1px solid var(--linea);
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.stats-table thead th {
+  border-top: 0;
+  background: var(--crema);
+  font-size: .85rem;
+}
+
+.stats-table td {
+  font-family: var(--fuente-titulo);
+  font-size: 1.35rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* La barra bajo cada número: mide (valor / 130) del carril. El valor viene
+   del HTML como variable propia (style="--valor: 44"), así el número y la
+   barra jamás se desincronizan. Cada columna toma un color de stat, y
+   "llenar" la anima de 0 a su largo al cargar. */
+.stats-table tbody td::after {
+  content: "";
+  display: block;
+  height: .4rem;
+  margin: .4rem auto 0;
+  width: 100%;
+  max-width: 5rem;
+  border-radius: var(--radio-pastilla);
+  background:
+    linear-gradient(var(--color-stat, var(--stat-ps)) 0 0) left / calc(var(--valor, 0) / 130 * 100%) 100% no-repeat,
+    var(--pista);
+  animation: llenar 1s var(--ease) .3s backwards;
+}
+
+.stats-table tbody td:nth-child(1) { --color-stat: var(--stat-ps); }
+.stats-table tbody td:nth-child(2),
+.stats-table tbody td:nth-child(4) { --color-stat: var(--stat-ataque); }
+.stats-table tbody td:nth-child(3),
+.stats-table tbody td:nth-child(5) { --color-stat: var(--stat-defensa); }
+.stats-table tbody td:nth-child(6) { --color-stat: var(--stat-velocidad); }
+
+.stats-table__total,
+.stats-table__total td {
+  font-weight: 700;
+  background: var(--amarillo);
+  font-size: 1.15rem;
+}
+
+
+/* --------------------------------------------------------------------------
+   6. Encabezado y pie — layout general de la página
+   -------------------------------------------------------------------------- */
+
+main {
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+@media (width >= 64rem) {
+  main {
+    padding: 2rem;
+  }
+}
+
+h1 {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+}
+
 footer {
   background: var(--navy);
-  color: var(--blanco);
+  color: #C9D6EA;
   padding: 1.5rem;
-  margin-top: 2rem;
+  margin-top: 3rem;
+  box-shadow: 0 -12px 30px -12px rgba(0, 0, 0, .4);
 }
 
-/* El pie tiene fondo oscuro y adentro hay enlaces: necesitan su propio color.
-   Cada vez que le cambies el fondo a una caja, revisá el texto de adentro. */
 footer a {
   color: var(--amarillo);
 }
 
 
 /* --------------------------------------------------------------------------
-   6. Estados
+   7. Estados
    -------------------------------------------------------------------------- */
 
-/* Una pseudo-clase selecciona un elemento que ya existe cuando está en cierto
-   estado, y lleva UN dos puntos. Un pseudo-elemento crea una caja nueva que
-   no está en el HTML, y lleva DOS.
-
-   :hover es el mouse encima. :focus-within es el foco del teclado en algo de
-   adentro, y hace falta porque quien navega con teclado no tiene puntero: sin
-   esta regla, esa persona nunca sabe dónde está parada. */
+/* Hover = la tarjeta "se levanta": sube, la sombra se agranda y se vuelve
+   crema; el sprite crece y se inclina un pelín. Todo con transition, así
+   la ida y la vuelta son suaves. :focus-within hace lo mismo para quien
+   navega con teclado. */
 .pokemon-card:hover,
 .pokemon-card:focus-within {
-  border-color: var(--navy);
-  background: var(--crema);
+  border-color: var(--amarillo);
+  background: linear-gradient(180deg, #fff, var(--crema));
+  box-shadow: var(--sombra-3), var(--brillo);
 }
 
-.pokemon-card a:hover {
+.pokemon-card a:hover .pokemon-card__name {
   text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-/* El anillo de foco nunca se quita sin poner algo en su lugar: es lo único
-   que le indica a una persona con teclado dónde está. */
-a:focus-visible {
-  outline: 3px solid var(--amarillo);
-  outline-offset: 2px;
+
+/* --------------------------------------------------------------------------
+   8. Consultas de contenedor (clase 5)
+   -------------------------------------------------------------------------- */
+
+@container (inline-size >= 20rem) {
+  .pokemon-card__name {
+    font-size: 1.35rem;
+  }
 }
 
-/* Un pseudo-elemento: esta flecha no está en el HTML, la inventó el CSS.
-   content es obligatorio; sin él no se dibuja nada, aunque le pongas color.
 
-   Sirve para decoración, nunca para información que haga falta entender: los
-   lectores de pantalla a veces leen el content y a veces no, según el
-   navegador. Acá la flecha solo refuerza algo que el texto ya dice.
+/* --------------------------------------------------------------------------
+   9. Disposición con Grid (clase 6)
+   -------------------------------------------------------------------------- */
 
-   El selector entre corchetes busca por atributo: los enlaces que abren en
-   pestaña nueva. */
-a[target="_blank"]::after {
-  content: " ↗";
+@media (width >= 40rem) {
+  footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0 2rem;
+    padding-inline: 3rem;
+  }
+
+  footer p {
+    margin: 0;
+  }
+}
+
+.ficha-pokemon__resumen {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (width >= 40rem) {
+  .ficha-pokemon__resumen {
+    grid-template-columns: 300px 1fr;
+    grid-template-areas:
+      "imagen  detalles"
+      "imagen  habilidades";
+  }
+
+  .ficha-pokemon__imagen      { grid-area: imagen; }
+  .ficha-pokemon__detalles    { grid-area: detalles; }
+  .ficha-pokemon__habilidades { grid-area: habilidades; }
+}
+
+
+/* --------------------------------------------------------------------------
+   10. Ficha de detalle del Pokémon
+   -------------------------------------------------------------------------- */
+
+/* La ficha es un panel blanco flotante: el texto vuelve a ser navy. */
+#ficha-pokemon {
+  color: var(--navy);
+  background: linear-gradient(180deg, #fff, var(--blanco));
+  border-radius: var(--radio-xl);
+  padding: 1.5rem;
+  box-shadow: var(--sombra-3), var(--brillo);
+  animation: aparecer .6s var(--ease) backwards;
+}
+
+@media (width >= 40rem) {
+  #ficha-pokemon {
+    padding: 2.25rem;
+  }
+}
+
+#ficha-pokemon h1 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .75rem;
+  margin: 0 0 1rem;
+}
+
+/* El número de la h1 es un <span>: pastilla amarilla, como en las tarjetas. */
+#ficha-pokemon h1 span {
+  font-size: .5em;
+  background: var(--amarillo);
+  padding: .3em .7em;
+  border-radius: var(--radio-pastilla);
+  box-shadow: inset 0 -3px 0 var(--amarillo-borde);
+}
+
+#ficha-pokemon a {
+  color: var(--azul);
+}
+
+/* Los títulos de sección llevan una barrita amarilla adelante. */
+#ficha-pokemon h2 {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: 1.5rem;
+}
+
+#ficha-pokemon h2::before {
+  content: "";
+  width: .5rem;
+  height: 1.4rem;
+  border-radius: var(--radio-pastilla);
+  background: var(--amarillo);
+  box-shadow: inset 0 -2px 0 var(--amarillo-borde);
+}
+
+/* Índice de la ficha: chips que saltan a cada sección. */
+#indice-ficha ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+}
+
+#indice-ficha a {
+  display: block;
+  padding: .4rem 1rem;
+  border-radius: var(--radio-pastilla);
+  background: var(--crema);
+  color: var(--navy);
+  font-weight: 600;
+  font-size: .9rem;
+  text-decoration: none;
+  transition: background var(--dur), transform var(--dur) var(--ease);
+}
+
+#indice-ficha a:hover {
+  background: var(--amarillo);
+  transform: translateY(-2px);
+}
+
+/* Imagen grande: sobre las rayitas y flotando suavemente. La animación va
+   en la <img> y el marco (figure) queda quieto. */
+.ficha-pokemon__imagen {
+  align-self: start;   /* sin esto el grid la estira a la altura de las dos filas */
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+  border-radius: var(--radio-xl);
+  background: var(--sprite-zona);
+  box-shadow: inset 0 0 0 3px #fff, var(--sombra-1);
+}
+
+.ficha-pokemon__imagen img {
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 16px 12px rgba(20, 44, 82, .3));
+  animation: flotar 4s ease-in-out infinite;
+}
+
+.ficha-pokemon__imagen figcaption {
+  margin-top: .5rem;
+  font-weight: 600;
+  color: var(--tinta-suave);
+}
+
+/* Lista de definiciones (dl) como rejilla de dos columnas: término a la
+   izquierda, valor a la derecha. */
+.ficha-pokemon__detalles dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: .5rem 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.ficha-pokemon__detalles dt {
+  color: var(--tinta-suave);
+  font-weight: 600;
+}
+
+.ficha-pokemon__detalles dd,
+.ficha-pokemon__habilidades dd {
+  margin: 0;
+}
+
+.ficha-pokemon__detalles dd {
+  font-weight: 700;
+}
+
+.ficha-pokemon__habilidades dl {
+  margin: 0;
+}
+
+.ficha-pokemon__habilidades dt {
+  margin-top: .5rem;
+  font-family: var(--fuente-titulo);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.ficha-pokemon__habilidades dt + dd {
+  padding: .15rem 0 .75rem;
+  border-bottom: 1px solid var(--linea);
+  color: var(--tinta-suave);
+}
+
+.ficha-pokemon__habilidades dt em {
+  font-family: var(--fuente-texto);
+  font-size: .8rem;
+  color: var(--tinta-suave);
+}
+
+/* Pastilla de tipo. El color sale del modificador: .tipo--agua, etc. */
+.tipo {
+  display: inline-block;
+  padding: .25rem .8rem;
+  border-radius: var(--radio-pastilla);
+  background: var(--color-tipo, var(--tipo-normal));
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 700;
+}
+
+.tipo--planta    { --color-tipo: var(--tipo-planta); }
+.tipo--fuego     { --color-tipo: var(--tipo-fuego); }
+.tipo--agua      { --color-tipo: var(--tipo-agua); }
+.tipo--electrico { --color-tipo: var(--tipo-electrico); }
+.tipo--veneno    { --color-tipo: var(--tipo-veneno); }
+.tipo--volador   { --color-tipo: var(--tipo-volador); }
+
+/* Cadena evolutiva: píldoras unidas por flechas (::after). El Pokémon que
+   se está viendo va resaltado. */
+.cadena-evolutiva {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cadena-evolutiva li {
+  padding: .35rem .9rem;
+  border-radius: var(--radio-pastilla);
+  background: var(--blanco);
+  border: 2px solid var(--linea);
+  font-weight: 600;
+}
+
+.cadena-evolutiva li + li::before {
+  content: "→";
+  margin-right: .5rem;
+  color: var(--tinta-suave);
+}
+
+.cadena-evolutiva .cadena-evolutiva__actual {
+  background: var(--amarillo);
+  border-color: var(--amarillo-borde);
+}
+
+#estadisticas,
+#mas-informacion {
+  margin-top: 2rem;
+}
+
+#mas-informacion h3 {
+  margin-bottom: .25rem;
+}
+
+#mas-informacion p {
+  margin-top: 0;
+  color: var(--tinta-suave);
+}
+
+.volver a {
+  display: inline-block;
+  padding: .4rem 1rem;
+  border-radius: var(--radio-pastilla);
+  background: rgba(255, 255, 255, .14);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background var(--dur), transform var(--dur) var(--ease);
+}
+
+.volver a:hover {
+  background: rgba(255, 255, 255, .26);
+  transform: translateX(-4px);
+}
+
+
+/* --------------------------------------------------------------------------
+   11. Foco sobre superficies claras
+   -------------------------------------------------------------------------- */
+
+/* Amarillo sobre blanco no se distingue: dentro de las tarjetas, la ficha
+   y los diálogos el anillo de foco pasa a azul oscuro. */
+.pokemon-card :focus-visible,
+#ficha-pokemon :focus-visible,
+.boton--claro:focus-visible,
+.boton--borde-azul:focus-visible,
+.boton--borde-rojo:focus-visible {
+  outline-color: var(--azul-borde);
+}
+
+
+/* --------------------------------------------------------------------------
+   12. Animaciones
+   -------------------------------------------------------------------------- */
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(16px) scale(.97); }
+}
+
+@keyframes flotar {
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes latido {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(250, 209, 98, .7); }
+  50%      { box-shadow: 0 0 0 10px rgba(250, 209, 98, 0); }
+}
+
+@keyframes llenar {
+  from { background-size: 0 100%, 100% 100%; }
+}
+
+/* Quien pide "reducir movimiento" en su sistema (por mareos, migrañas o
+   simple preferencia) no debe recibir animaciones. En vez de tocar cada
+   regla, este bloque las apaga todas de una vez. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: .01ms !important;
+  }
 }

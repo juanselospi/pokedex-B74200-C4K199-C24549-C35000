@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo — Interactividad sin JavaScript</title>
+
+  <style>
+    /*
+  Esta página tiene muy poquito CSS, y solo donde hace falta para que se
+  entienda algo. Todo el comportamiento —abrir, cerrar, la tecla Escape, el
+  foco, la capa oscura de atrás— lo hace el navegador solo.
+*/
+
+    /* La capa oscura detrás de un modal es un pseudo-elemento propio.
+   Sin esta regla igual existe, pero casi transparente. */
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.55);
+    }
+
+    /* Un poco de aire adentro de las ventanas, nada más. */
+    [popover],
+    dialog {
+      padding: 1.25rem;
+      max-width: 34rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Interactividad sin JavaScript</h1>
+    <p>Tres características de HTML que resuelven, con un par de atributos, cosas
+      que normalmente se programan a mano.</p>
+  </header>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <section id="escalera">
+    <h2>1. Tres formas de mostrar y ocultar</h2>
+
+    <p>Las tres esconden contenido hasta que alguien lo pide, y las tres
+      funcionan sin una línea de JavaScript. Lo que cambia es
+      <strong>cuánto interrumpen</strong>.
+    </p>
+
+    <ol>
+      <li><strong><code>&lt;details&gt;</code></strong> — el contenido se
+        despliega <em>dentro del flujo de la página</em> y empuja hacia abajo lo
+        que sigue. No interrumpe nada.</li>
+      <li><strong><code>popover</code></strong> — aparece <em>encima</em> de la
+        página, pero el resto sigue usable. Interrumpe un poco.</li>
+      <li><strong><code>&lt;dialog&gt;</code> modal</strong> — aparece encima y
+        <em>bloquea todo lo demás</em>. Interrumpe del todo.
+      </li>
+    </ol>
+
+    <p>Elegir bien es elegir el escalón más bajo que resuelva el problema. Si
+      alcanza con un acordeón, no hace falta un modal.</p>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <section id="acordeon">
+    <h2>2. Acordeones: details y summary</h2>
+
+    <p>El escalón más bajo, y el que más se usa. Son dos elementos:
+      <code>&lt;details&gt;</code> es el contenedor y
+      <code>&lt;summary&gt;</code> es la parte que se ve siempre, la que funciona
+      como el botón que abre y cierra.
+    </p>
+
+    <details>
+      <summary>¿Qué come un Squirtle?</summary>
+      <p>Principalmente peces pequeños y algas. En cautiverio se le puede dar
+        alimento preparado para Pokémon de tipo Agua.</p>
+    </details>
+
+    <details>
+      <summary>¿Por qué se esconde en su caparazón?</summary>
+      <p>Es su defensa principal. Además, desde adentro puede disparar agua a
+        presión sin exponerse.</p>
+    </details>
+
+    <details open>
+      <summary>Este viene abierto desde el inicio</summary>
+      <p>Con el atributo <code>open</code> el contenido aparece desplegado al
+        cargar la página. Sin el atributo, empieza cerrado.</p>
+    </details>
+
+    <h3>El código</h3>
+
+    <pre><code>&lt;details&gt;
+  &lt;summary&gt;¿Qué come un Squirtle?&lt;/summary&gt;
+  &lt;p&gt;Principalmente peces pequeños y algas.&lt;/p&gt;
+&lt;/details&gt;
+
+&lt;details open&gt;
+  &lt;summary&gt;Este viene abierto&lt;/summary&gt;
+  &lt;p&gt;El atributo open lo deja desplegado al cargar.&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+
+    <p>Todo lo que pongan dentro del <code>&lt;details&gt;</code> que no sea el
+      <code>&lt;summary&gt;</code> se muestra u oculta al hacer clic. El
+      triangulito lo dibuja el navegador.
+    </p>
+
+    <h3>Pruébenlo con el teclado</h3>
+
+    <p>Presionen <kbd>Tab</kbd> hasta llegar a uno de los triangulitos y después
+      <kbd>Enter</kbd>. Funciona, y nadie lo programó. El
+      <code>&lt;summary&gt;</code> recibe el foco por su cuenta y un lector de
+      pantalla anuncia si está abierto o cerrado.
+    </p>
+
+    <p>Un detalle que vale: el contenido oculto de un
+      <code>&lt;details&gt;</code> <strong>sí lo encuentra el buscador del
+        navegador</strong>. Si aprietan <kbd>Ctrl</kbd>+<kbd>F</kbd> y buscan una
+      palabra que está adentro de uno cerrado, el navegador lo abre solo. Eso no
+      pasa con un acordeón hecho a mano que esconde cosas con
+      <code>display: none</code>.
+    </p>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <section id="exclusivo">
+    <h2>3. Acordeón exclusivo: el atributo name</h2>
+
+    <p>Si varios <code>&lt;details&gt;</code> comparten el mismo atributo
+      <code>name</code>, se convierten en un grupo: al abrir uno, los otros se
+      cierran solos.
+    </p>
+
+    <details name="grupo-demo" open>
+      <summary>Primero</summary>
+      <p>Abran el segundo y miren qué le pasa a este.</p>
+    </details>
+
+    <details name="grupo-demo">
+      <summary>Segundo</summary>
+      <p>El primero se cerró solo. Nadie escribió nada para que eso pasara.</p>
+    </details>
+
+    <details name="grupo-demo">
+      <summary>Tercero</summary>
+      <p>Solo puede haber uno abierto a la vez dentro del grupo.</p>
+    </details>
+
+    <pre><code>&lt;details name="grupo-demo" open&gt;
+  &lt;summary&gt;Primero&lt;/summary&gt;
+  &lt;p&gt;…&lt;/p&gt;
+&lt;/details&gt;
+
+&lt;details name="grupo-demo"&gt;
+  &lt;summary&gt;Segundo&lt;/summary&gt;
+  &lt;p&gt;…&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+
+    <p>Es la misma idea del <code>name</code> compartido de los botones de radio
+      en un formulario: lo que los agrupa no es estar uno al lado del otro, es
+      compartir el nombre.</p>
+
+    <p>Esto se puede usar con confianza: está en todos los navegadores desde
+      2024.</p>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <section id="diferencia">
+    <h2>4. Popover y modal no son lo mismo</h2>
+
+    <p>Subimos un escalón. Estas dos aparecen <em>encima</em> de la página, no
+      dentro de ella, pero se comportan distinto entre sí.</p>
+
+    <p>Un <dfn>popover</dfn> es <strong>no modal</strong>: aparece encima, pero
+      el resto de la página sigue funcionando. Podés hacer clic afuera, seguir
+      leyendo, usar otro botón. Sirve para menús, avisos, ayudas contextuales.</p>
+
+    <p>Un <dfn>modal</dfn> <strong>bloquea todo lo demás</strong>. Mientras está
+      abierto, no se puede interactuar con la página de atrás: el teclado queda
+      atrapado adentro y el fondo se vuelve inerte. Sirve cuando hay que responder
+      algo antes de seguir: confirmar un borrado, aceptar unos términos.</p>
+
+    <p>La pregunta para elegir: <strong>¿la persona puede ignorar esto y seguir
+        con lo suyo?</strong> Si sí, popover. Si no, modal.</p>
+
+    <p>Y una advertencia que vale más que la técnica: <strong>los modales
+        interrumpen</strong>. Cada vez que abrís uno le estás quitando el control a
+      la persona. Úsenlos cuando de verdad haga falta, no para avisos que caben en
+      la página.</p>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <section id="popover">
+    <h2>5. El atributo popover</h2>
+
+    <p>Son dos piezas: un elemento con el atributo <code>popover</code> y un
+      botón con <code>popovertarget</code> apuntando a su <code>id</code>.</p>
+
+    <p><button popovertarget="menu-demo">Abrir un menú</button></p>
+
+    <div id="menu-demo" popover>
+      <h3>Filtrar por tipo</h3>
+      <ul>
+        <li><a href="#popover">Planta</a></li>
+        <li><a href="#popover">Fuego</a></li>
+        <li><a href="#popover">Agua</a></li>
+      </ul>
+      <p><small>Hacé clic afuera, o apretá <kbd>Esc</kbd>. Los dos lo
+          cierran.</small></p>
+    </div>
+
+    <h3>El código completo</h3>
+
+    <pre><code>&lt;button popovertarget="menu-demo"&gt;Abrir un menú&lt;/button&gt;
+
+&lt;div id="menu-demo" popover&gt;
+  &lt;h3&gt;Filtrar por tipo&lt;/h3&gt;
+  ...
+&lt;/div&gt;</code></pre>
+
+    <p>Eso es todo. El mismo botón lo abre y lo cierra, se cierra solo al hacer
+      clic afuera, se cierra con <kbd>Esc</kbd>, y aparece por encima de cualquier
+      otra cosa de la página sin importar el orden del documento.</p>
+
+    <h3>Dónde aparece</h3>
+
+    <p>Van a notar que el menú sale <strong>en el centro de la pantalla</strong>,
+      no pegado al botón. Eso es lo que hace el navegador por defecto: lo pone en
+      una capa aparte, arriba de todo, centrado.</p>
+
+    <p>Ubicarlo junto al botón es trabajo de CSS, no de HTML. Se puede con
+      posicionamiento normal o con posicionamiento de anclaje, que es más nuevo.</p>
+
+    <h3>La diferencia con el acordeón</h3>
+
+    <p>Comparen con la sección 2. Un <code>&lt;details&gt;</code> abierto
+      <strong>empuja</strong> el contenido de abajo; un popover
+      <strong>flota encima</strong> y no mueve nada. Esa es la razón principal para
+      elegir uno u otro.
+    </p>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <section id="tipos">
+    <h2>6. Los dos tipos de popover</h2>
+
+    <h3>popover="auto" — el de siempre</h3>
+
+    <p>Es el valor por defecto: escribir <code>popover</code> a secas es lo mismo
+      que escribir <code>popover="auto"</code>. Se cierra al hacer clic afuera —a
+      eso se le llama <em>cierre suave</em>— y solo puede haber uno abierto a la
+      vez.</p>
+
+    <p>Es la misma exclusividad del <code>&lt;details name&gt;</code> de la
+      sección 3, pero acá viene de fábrica sin pedirla.</p>
+
+    <h3>popover="manual" — el que se queda</h3>
+
+    <p><button popovertarget="aviso-demo">Mostrar un aviso</button></p>
+
+    <div id="aviso-demo" popover="manual">
+      <p><strong>Pokémon registrado.</strong></p>
+      <p>Este no se cierra haciendo clic afuera ni con <kbd>Esc</kbd>: hay que
+        usar el botón. Y como es manual, pueden abrir el menú de la sección
+        anterior sin que este desaparezca.</p>
+      <p><button popovertarget="aviso-demo" popovertargetaction="hide">Cerrar</button></p>
+    </div>
+
+    <pre><code>&lt;div id="aviso-demo" popover="manual"&gt;
+  &lt;p&gt;Pokémon registrado.&lt;/p&gt;
+  &lt;button popovertarget="aviso-demo" popovertargetaction="hide"&gt;Cerrar&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+
+    <p>Noten el atributo <code>popovertargetaction</code>: por defecto vale
+      <code>toggle</code> (abre si está cerrado, cierra si está abierto), pero
+      también acepta <code>show</code> y <code>hide</code>. Ahí lo usamos para
+      hacer un botón que solo cierra.
+    </p>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <section id="dialog">
+    <h2>7. El elemento dialog</h2>
+
+    <p>El escalón más alto. Para un modal de verdad existe un elemento propio:
+      <code>&lt;dialog&gt;</code>. La diferencia con el popover es que al abrirlo
+      como modal, <strong>el resto de la página queda fuera de alcance</strong>.
+    </p>
+
+    <p><button type="button" command="show-modal" commandfor="confirmar-demo">
+        Registrar captura
+      </button></p>
+
+    <dialog id="confirmar-demo">
+      <h3>¿Registrar a Squirtle?</h3>
+      <p>Se va a agregar a tu lista de Pokémon capturados.</p>
+      <p>
+        <button type="button" command="close" commandfor="confirmar-demo">Cancelar</button>
+        <button type="button" command="close" commandfor="confirmar-demo">Confirmar</button>
+      </p>
+    </dialog>
+
+    <h3>El código</h3>
+
+    <pre><code>&lt;button type="button" command="show-modal" commandfor="confirmar-demo"&gt;
+  Registrar captura
+&lt;/button&gt;
+
+&lt;dialog id="confirmar-demo"&gt;
+  &lt;h3&gt;¿Registrar a Squirtle?&lt;/h3&gt;
+  &lt;button type="button" command="close" commandfor="confirmar-demo"&gt;Cancelar&lt;/button&gt;
+&lt;/dialog&gt;</code></pre>
+
+    <p>Los dos atributos nuevos son <code>commandfor</code>, que apunta al
+      <code>id</code> del elemento que queremos controlar, y <code>command</code>,
+      que dice qué hacerle. Los valores útiles son:
+    </p>
+
+    <ul>
+      <li><code>show-modal</code> — abrir como modal</li>
+      <li><code>close</code> — cerrar</li>
+      <li><code>request-close</code> — pedir que se cierre, respetando lo que
+        diga el propio diálogo</li>
+      <li><code>toggle-popover</code>, <code>show-popover</code>,
+        <code>hide-popover</code> — lo mismo pero para popovers
+      </li>
+    </ul>
+
+    <h3>Dos detalles que importan</h3>
+
+    <p>Primero: <strong>siempre escriban <code>type="button"</code></strong> en
+      estos botones. Si el modal está dentro de un formulario y no lo ponen, el
+      botón va a enviar el formulario además de abrir el diálogo, porque el tipo
+      por defecto es <code>submit</code>.</p>
+
+    <p>Segundo: fíjense en el fondo oscuro detrás del modal. Eso es
+      <code>::backdrop</code>, un pseudo-elemento que el navegador crea solo. Se
+      estiliza con CSS como cualquier otra cosa:
+    </p>
+
+    <pre><code>dialog::backdrop {
+  background: rgba(0, 0, 0, 0.55);
+}</code></pre>
+
+    <p>Es la única regla de CSS que de verdad hace falta en toda esta página.</p>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <section id="formulario">
+    <h2>8. Un formulario dentro del modal</h2>
+
+    <p>Un modal casi siempre contiene un formulario. Y hay una forma especial de
+      escribirlo que evita tener que programar el cierre.</p>
+
+    <p><button type="button" command="show-modal" commandfor="form-demo">
+        Apodar al Pokémon
+      </button></p>
+
+    <dialog id="form-demo">
+      <form method="dialog">
+        <h3>Ponerle un apodo</h3>
+
+        <p>
+          <label for="apodo">Apodo</label><br>
+          <input type="text" id="apodo" name="apodo">
+        </p>
+
+        <p>
+          <button value="cancelar">Cancelar</button>
+          <button value="guardar">Guardar</button>
+        </p>
+      </form>
+    </dialog>
+
+    <pre><code>&lt;dialog id="form-demo"&gt;
+  &lt;form method="dialog"&gt;
+    &lt;label for="apodo"&gt;Apodo&lt;/label&gt;
+    &lt;input type="text" id="apodo" name="apodo"&gt;
+
+    &lt;button value="cancelar"&gt;Cancelar&lt;/button&gt;
+    &lt;button value="guardar"&gt;Guardar&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/dialog&gt;</code></pre>
+
+    <p>La clave es <code>method="dialog"</code>. Ya vimos que
+      <code>method</code> acepta <code>get</code> y <code>post</code>; este tercer
+      valor solo existe dentro de un <code>&lt;dialog&gt;</code> y significa:
+      <strong>al enviar, no mandes nada a ningún lado, simplemente cerrá el
+        diálogo</strong>.
+    </p>
+
+    <p>Además, el <code>value</code> del botón que se usó queda guardado, así que
+      después se puede saber si la persona apretó Guardar o Cancelar. Eso ya se lee
+      con JavaScript, pero el cierre en sí no necesita nada.</p>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <section id="gratis">
+    <h2>9. Lo que el navegador hace por ustedes</h2>
+
+    <p>Abran el modal de la sección 7 y prueben estas cuatro cosas. Todas
+      funcionan sin que nadie las haya programado.</p>
+
+    <ol>
+      <li><strong>El foco entra solo.</strong> Al abrirse, el teclado ya está
+        adentro del diálogo.</li>
+      <li><strong>El foco no se escapa.</strong> Apretá <kbd>Tab</kbd> muchas
+        veces: da vueltas entre los botones del modal y nunca se va a los enlaces
+        de atrás.</li>
+      <li><strong><kbd>Esc</kbd> lo cierra.</strong></li>
+      <li><strong>El foco vuelve a su lugar.</strong> Al cerrar, el teclado
+        regresa al botón que lo abrió, no al inicio de la página.</li>
+    </ol>
+
+    <p>Esas cuatro cosas son las que más se olvidan cuando uno hace un modal a
+      mano, y son las que deciden si una persona que navega con teclado puede usar
+      la página o queda atrapada.</p>
+
+    <p>Y hay una quinta, invisible: el lector de pantalla anuncia el diálogo como
+      diálogo y deja de leer el contenido de atrás, porque el navegador lo marcó
+      como inerte.</p>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <section id="impostor">
+    <h2>10. El impostor</h2>
+
+    <p>Así es como se hacía esto antes, y como todavía aparece en muchísimo
+      código:</p>
+
+    <pre><code>&lt;div class="overlay"&gt;
+  &lt;div class="modal"&gt;
+    &lt;h3&gt;¿Estás seguro?&lt;/h3&gt;
+    &lt;div class="boton-cerrar"&gt;X&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+    <p>Dos <code>div</code> y CSS para ponerlos encima. Con el mouse funciona
+      perfecto, y por eso pasa desapercibido. Pero para que se comporte como un
+      modal de verdad hay que agregarle a mano:</p>
+
+    <ul>
+      <li>que se pueda cerrar con <kbd>Esc</kbd></li>
+      <li>que el foco entre al abrirse</li>
+      <li>que el foco no se escape con <kbd>Tab</kbd></li>
+      <li>que el foco vuelva al botón al cerrarse</li>
+      <li>que el fondo quede inerte para los lectores de pantalla</li>
+      <li>que el lector de pantalla sepa que esto es un diálogo</li>
+    </ul>
+
+    <p>Son varias decenas de líneas de JavaScript, es fácil olvidarse de alguna,
+      y los errores son invisibles para quien usa mouse.</p>
+
+    <p>Lo mismo pasa un escalón más abajo: un acordeón hecho a mano necesita un
+      <code>div</code> que parezca botón, código para abrir y cerrar, manejo de
+      teclado, y atributos extra para anunciar el estado. Con
+      <code>&lt;details&gt;</code> son dos etiquetas.
+    </p>
+
+    <p>Es el mismo argumento en los tres escalones: <strong>antes de programar un
+        comportamiento, revisen si el HTML ya lo trae</strong>.</p>
+  </section>
+
+  <hr>
+
+  <!-- ============================================================ -->
+  <section id="soporte">
+    <h2>11. Soporte: leer antes de usar</h2>
+
+    <p>Las tres cosas de esta página no llegaron al mismo tiempo, y eso es un
+      buen ejemplo de por qué conviene revisar el soporte antes de comprometerse
+      con algo.</p>
+
+    <ul>
+      <li><strong><code>&lt;details&gt;</code> y <code>&lt;summary&gt;</code></strong>
+        llevan años disponibles. Sin ninguna duda.</li>
+      <li><strong>El atributo <code>name</code> para acordeones exclusivos</strong>
+        llegó a todos los navegadores en 2024.</li>
+      <li><strong>El atributo <code>popover</code> con
+          <code>popovertarget</code></strong> también lleva tiempo disponible.</li>
+      <li><strong>Los atributos <code>command</code> y <code>commandfor</code></strong>
+        son mucho más nuevos: terminaron de llegar a todos los navegadores en
+        diciembre de 2025.</li>
+    </ul>
+
+    <p>En términos de Baseline, los primeros son <em>widely available</em> y el
+      último apenas <em>newly available</em>. La diferencia práctica: si alguien
+      abre esta página con un navegador desactualizado, los acordeones y el menú
+      van a funcionar, y los modales de las secciones 7 y 8 no. El botón va a estar
+      ahí y no va a pasar nada.</p>
+
+    <p>Eso no es un desastre —degrada sin romper, no da error— pero hay que
+      decidirlo a conciencia, no por accidente.</p>
+
+    <h3>Si necesitan más soporte</h3>
+
+    <p>El elemento <code>&lt;dialog&gt;</code> en sí es viejo y tiene soporte
+      amplio; lo nuevo es la forma de abrirlo sin JavaScript. Hay dos caminos:</p>
+
+    <ul>
+      <li>Ponerle también el atributo <code>popover</code> al
+        <code>&lt;dialog&gt;</code> y abrirlo con <code>popovertarget</code>. Se
+        pierde el comportamiento modal estricto, pero funciona en más
+        navegadores.
+      </li>
+      <li>Abrirlo con una línea de JavaScript (<code>.showModal()</code>), que es
+        como se hacía hasta hace poco.</li>
+    </ul>
+
+    <p>Para verificar el estado actual de cualquiera de estas cosas:
+      <a href="https://caniuse.com" target="_blank" rel="noopener">caniuse.com</a>
+      o el recuadro de Baseline que aparece en MDN.
+    </p>
+  </section>
+
+  <hr>
+
+  <footer>
+    <p><small>Página de apoyo del curso Desarrollo de Aplicaciones Web
+        (<abbr title="Curso de Informática 0137">CI-0137</abbr>),
+        <abbr title="Universidad de Costa Rica">UCR</abbr>.
+        <time datetime="2026">2026</time>.</small></p>
+  </footer>
+
+</body>
+
+</html>

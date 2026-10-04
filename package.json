@@ -1,0 +1,29 @@
+{
+  "name": "ci0137-pokedex",
+  "version": "1.0.0",
+  "description": "Proyecto de referencia del curso **Desarrollo de Aplicaciones Web**, Escuela de Ciencias de la Computación e Informática, Universidad de Costa Rica.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariannuar/ci0137-pokedex.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mariannuar/ci0137-pokedex/issues"
+  },
+  "homepage": "https://github.com/mariannuar/ci0137-pokedex#readme",
+  "devDependencies": {
+    "sass": "^1.105.0",
+    "stylelint": "^17.15.0",
+    "stylelint-config-standard": "^40.0.0"
+  }
+}

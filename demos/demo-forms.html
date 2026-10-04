@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Demo: Checkbox vs. Radio button</title>
+  </head>
+
+  <body>
+    <main>
+      <h1>Checkbox vs. Radio button</h1>
+      <p>
+        Los dos sirven para que la persona elija entre opciones, pero se
+        comportan distinto: un checkbox se marca sin afectar a los demás,
+        mientras que un radio button solo permite uno marcado por grupo.
+      </p>
+
+      <!--
+        DEMO 1: CHECKBOX
+        Cada checkbox es independiente: marcar uno no desmarca a los demás,
+        por eso se puede elegir ninguno, uno, varios o todos a la vez.
+        Se usa para opciones de "sí/no" o listas donde tiene sentido
+        elegir más de una cosa. Fíjense que cada uno tiene su propio id,
+        y el name="tipos" solo se repite para agruparlos al enviar el form
+        (no para que se excluyan entre sí, como pasa con los radios).
+      -->
+      <section>
+        <h2>Checkbox: podés elegir varias opciones</h2>
+
+        <form>
+          <fieldset>
+            <legend>Marcá los tipos que más te gusten</legend>
+
+            <input type="checkbox" id="tipo-agua" name="tipos" value="Agua">
+            <label for="tipo-agua">Agua</label>
+
+            <input type="checkbox" id="tipo-fuego" name="tipos" value="Fuego">
+            <label for="tipo-fuego">Fuego</label>
+
+            <input type="checkbox" id="tipo-planta" name="tipos" value="Planta">
+            <label for="tipo-planta">Planta</label>
+
+            <input type="checkbox" id="tipo-electrico" name="tipos" value="Eléctrico">
+            <label for="tipo-electrico">Eléctrico</label>
+          </fieldset>
+        </form>
+      </section>
+
+      <hr>
+
+      <!--
+        DEMO 2: RADIO BUTTON
+        Todos comparten el mismo name="inicial", y eso es justo lo que hace
+        que sean excluyentes entre sí: al marcar uno, el navegador desmarca
+        automáticamente cualquier otro del mismo grupo. Se usa cuando la
+        persona debe elegir exactamente UNA opción entre varias.
+      -->
+      <section>
+        <h2>Radio: solo podés elegir una opción</h2>
+
+        <form>
+          <fieldset>
+            <legend>Elegí tu Pokémon inicial</legend>
+
+            <input type="radio" id="inicial-bulbasaur" name="inicial" value="Bulbasaur">
+            <label for="inicial-bulbasaur">Bulbasaur</label>
+
+            <input type="radio" id="inicial-charmander" name="inicial" value="Charmander">
+            <label for="inicial-charmander">Charmander</label>
+
+            <input type="radio" id="inicial-squirtle" name="inicial" value="Squirtle">
+            <label for="inicial-squirtle">Squirtle</label>
+          </fieldset>
+        </form>
+      </section>
+
+      <hr>
+
+      <!--
+        Tabla comparativa: solo texto, sirve como resumen para repasar
+        después de ver los dos ejemplos de arriba.
+      -->
+      <table>
+        <caption>Resumen rápido</caption>
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Checkbox</th>
+            <th scope="col">Radio button</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">¿Cuántos se pueden marcar?</th>
+            <td>Ninguno, uno o varios</td>
+            <td>Exactamente uno por grupo</td>
+          </tr>
+          <tr>
+            <th scope="row">¿Para qué se usa el <code>name</code> repetido?</th>
+            <td>Para agruparlos al enviar el formulario</td>
+            <td>Para que se excluyan entre sí</td>
+          </tr>
+          <tr>
+            <th scope="row">¿Cuándo usarlo?</th>
+            <td>Opciones independientes ("sí/no", listas de varias)</td>
+            <td>Elegir una sola opción de una lista</td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </body>
+
+</html>
