@@ -105,40 +105,61 @@
 
         <p>5 de 6 espacios ocupados</p>
 
-        <ul>
-            <li>
-                <img src="assets/bulbasaur.png" alt="Bulbasaur" width="96" height="96">
-                <p>#001</p>
-                <h3>Bulbasaur</h3>
-                <button type="button" aria-label="Quitar a Bulbasaur del equipo">Quitar</button>
+        <ul class="equipo">
+            <li class="equipo__pokemon">
+                <img class="equipo__imagen" src="assets/bulbasaur.png" alt="" width="96" height="96">
+                <p class="equipo__numero">#001</p>
+                <h3 class="equipo__nombre">Bulbasaur</h3>
+                <ul class="equipo__tipos">
+                    <li class="tipo tipo--planta">Planta</li>
+                    <li class="tipo tipo--veneno">Veneno</li>
+                </ul>
+                <button class="boton boton--borde-rojo boton--chico boton--icono icono-menos" type="button">Quitar<span class="solo-lectores"> a Bulbasaur del equipo</span></button>
             </li>
 
-            <li>
-                <img src="assets/charmander.png" alt="Charmander" width="96" height="96">
-                <p>#004</p>
-                <h3>Charmander</h3>
-                <button type="button" aria-label="Quitar a Charmander del equipo">Quitar</button>
+            <li class="equipo__pokemon">
+                <img class="equipo__imagen" src="assets/charmander.png" alt="" width="96" height="96">
+                <p class="equipo__numero">#004</p>
+                <h3 class="equipo__nombre">Charmander</h3>
+                <ul class="equipo__tipos">
+                    <li class="tipo tipo--fuego">Fuego</li>
+                </ul>
+                <button class="boton boton--borde-rojo boton--chico boton--icono icono-menos" type="button">Quitar<span class="solo-lectores"> a Charmander del equipo</span></button>
             </li>
 
-            <li>
-                <img src="assets/charizard.png" alt="Charizard" width="96" height="96">
-                <p>#006</p>
-                <h3>Charizard</h3>
-                <button type="button" aria-label="Quitar a Charizard del equipo">Quitar</button>
+            <li class="equipo__pokemon">
+                <img class="equipo__imagen" src="assets/charizard.png" alt="" width="96" height="96">
+                <p class="equipo__numero">#006</p>
+                <h3 class="equipo__nombre">Charizard</h3>
+                <ul class="equipo__tipos">
+                    <li class="tipo tipo--fuego">Fuego</li>
+                    <li class="tipo tipo--volador">Volador</li>
+                </ul>
+                <button class="boton boton--borde-rojo boton--chico boton--icono icono-menos" type="button">Quitar<span class="solo-lectores"> a Charizard del equipo</span></button>
             </li>
 
-            <li>
-                <img src="assets/squirtle.png" alt="Squirtle" width="96" height="96">
-                <p>#007</p>
-                <h3>Squirtle</h3>
-                <button type="button" aria-label="Quitar a Squirtle del equipo">Quitar</button>
+            <li class="equipo__pokemon">
+                <img class="equipo__imagen" src="assets/squirtle.png" alt="" width="96" height="96">
+                <p class="equipo__numero">#007</p>
+                <h3 class="equipo__nombre">Squirtle</h3>
+                <ul class="equipo__tipos">
+                    <li class="tipo tipo--agua">Agua</li>
+                </ul>
+                <button class="boton boton--borde-rojo boton--chico boton--icono icono-menos" type="button">Quitar<span class="solo-lectores"> a Squirtle del equipo</span></button>
             </li>
 
-            <li>
-                <img src="assets/pikachu.png" alt="Pikachu" width="96" height="96">
-                <p>#025</p>
-                <h3>Pikachu</h3>
-                <button type="button" aria-label="Quitar a Pikachu del equipo">Quitar</button>
+            <li class="equipo__pokemon">
+                <img class="equipo__imagen" src="assets/pikachu.png" alt="" width="96" height="96">
+                <p class="equipo__numero">#025</p>
+                <h3 class="equipo__nombre">Pikachu</h3>
+                <ul class="equipo__tipos">
+                    <li class="tipo tipo--electrico">Eléctrico</li>
+                </ul>
+                <button class="boton boton--borde-rojo boton--chico boton--icono icono-menos" type="button">Quitar<span class="solo-lectores"> a Pikachu del equipo</span></button>
+            </li>
+
+            <li class="equipo__libre">
+                <button class="equipo__agregar" type="button" command="show-modal" commandfor="capturados">Espacio libre<span class="solo-lectores">: agregar desde capturados</span></button>
             </li>
         </ul>
 
@@ -156,42 +177,28 @@
             </button>
         </header>
 
-        <p>Comparativa de los Pokémon de tu equipo.</p>
+        <p>Comparativa de los Pokémon de tu equipo</p>
 
-        <table>
-            <caption>Estadísticas base del equipo Pokémon</caption>
+        <table class="estadisticas">
+            <caption class="solo-lectores">Estadísticas base del equipo Pokémon</caption>
 
             <thead>
                 <tr>
-                    <th>Pokémon</th>
-                    <th abbr="PS">Puntos de Salud</th>
-                    <th abbr="ATQ">Ataque</th>
-                    <th abbr="DEF">Defensa</th>
-                    <th abbr="AT. ESP.">Ataque Especial</th>
-                    <th abbr="DEF. ESP.">Defensa Especial</th>
-                    <th abbr="VEL">Velocidad</th>
-                    <th>Total</th>
+                    <th scope="col">Pokémon</th>
+                    <th scope="col"><abbr title="Puntos de Salud">PS</abbr></th>
+                    <th scope="col"><abbr title="Ataque">ATQ</abbr></th>
+                    <th scope="col"><abbr title="Defensa">DEF</abbr></th>
+                    <th scope="col"><abbr title="Ataque Especial">AT.ESP</abbr></th>
+                    <th scope="col"><abbr title="Defensa Especial">DEF.ESP</abbr></th>
+                    <th scope="col"><abbr title="Velocidad">VEL</abbr></th>
+                    <th scope="col">Total</th>
                 </tr>
             </thead>
 
             <tbody>
                 <tr>
-                    <th>
-                        <img src="assets/squirtle.png" alt="Squirtle">
-                        Squirtle
-                    </th>
-                    <td>44</td>
-                    <td>48</td>
-                    <td>65</td>
-                    <td>50</td>
-                    <td>64</td>
-                    <td>43</td>
-                    <td>314</td>
-                </tr>
-
-                <tr>
-                    <th>
-                        <img src="assets/bulbasaur.png" alt="Bulbasaur">
+                    <th scope="row">
+                        <img class="estadisticas__sprite" src="assets/bulbasaur.png" alt="" width="40" height="40">
                         Bulbasaur
                     </th>
                     <td>45</td>
@@ -200,12 +207,11 @@
                     <td>65</td>
                     <td>65</td>
                     <td>45</td>
-                    <td>318</td>
+                    <td><span class="estadisticas__total">318</span></td>
                 </tr>
-
                 <tr>
-                    <th>
-                        <img src="assets/charmander.png" alt="Charmander">
+                    <th scope="row">
+                        <img class="estadisticas__sprite" src="assets/charmander.png" alt="" width="40" height="40">
                         Charmander
                     </th>
                     <td>39</td>
@@ -214,12 +220,37 @@
                     <td>60</td>
                     <td>50</td>
                     <td>65</td>
-                    <td>309</td>
+                    <td><span class="estadisticas__total">309</span></td>
                 </tr>
-
                 <tr>
-                    <th>
-                        <img src="assets/pikachu.png" alt="Pikachu">
+                    <th scope="row">
+                        <img class="estadisticas__sprite" src="assets/charizard.png" alt="" width="40" height="40">
+                        Charizard
+                    </th>
+                    <td><strong>78</strong></td>
+                    <td><strong>84</strong></td>
+                    <td><strong>78</strong></td>
+                    <td><strong>109</strong></td>
+                    <td><strong>85</strong></td>
+                    <td><strong>100</strong></td>
+                    <td><span class="estadisticas__total">534</span></td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <img class="estadisticas__sprite" src="assets/squirtle.png" alt="" width="40" height="40">
+                        Squirtle
+                    </th>
+                    <td>44</td>
+                    <td>48</td>
+                    <td>65</td>
+                    <td>50</td>
+                    <td>64</td>
+                    <td>43</td>
+                    <td><span class="estadisticas__total">314</span></td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <img class="estadisticas__sprite" src="assets/pikachu.png" alt="" width="40" height="40">
                         Pikachu
                     </th>
                     <td>35</td>
@@ -228,27 +259,13 @@
                     <td>50</td>
                     <td>50</td>
                     <td>90</td>
-                    <td>320</td>
-                </tr>
-
-                <tr>
-                    <th>
-                        <img src="assets/charizard.png" alt="Charizard">
-                        Charizard
-                    </th>
-                    <td>78</td>
-                    <td>84</td>
-                    <td>78</td>
-                    <td>109</td>
-                    <td>85</td>
-                    <td>100</td>
-                    <td>534</td>
+                    <td><span class="estadisticas__total">320</span></td>
                 </tr>
             </tbody>
 
             <tfoot>
                 <tr>
-                    <th>Promedio del equipo</th>
+                    <th scope="row">Promedio del equipo</th>
                     <td>48.2</td>
                     <td>57.6</td>
                     <td>55</td>
@@ -260,10 +277,10 @@
             </tfoot>
         </table>
 
-        <p>Valores base tomados de la Pokédex.</p>
+        <p class="estadisticas__nota">Valores base tomados de la Pokédex · la fila de totales resume el equipo completo.</p>
 
         <footer class="modal__footer">
-            <button class="boton boton--claro" type="button" command="close" commandfor="estadisticas">Cerrar</button>
+            <button class="boton boton--primario" type="button" command="close" commandfor="estadisticas">Cerrar</button>
         </footer>
     </dialog>
 
@@ -278,96 +295,132 @@
         <p>Seleccioná los que querés en tu equipo o marcalos como favoritos.</p>
 
         <form id="capturados-form">
+            <fieldset class="capturados__busqueda">
+                <legend class="solo-lectores">Filtrar Pokémon capturados</legend>
 
-            <label for="buscar">Buscar por nombre</label>
-            <input type="search" id="buscar" name="buscar">
+                <label class="solo-lectores" for="buscar">Buscar por nombre</label>
+                <input class="capturados__campo capturados__buscar" type="search" id="buscar" name="buscar" placeholder="Buscar por nombre">
 
-            <label for="tipo">Tipo</label>
-            <select id="tipo" name="tipo">
-                <option value="">Todos</option>
-                <option value="agua">Agua</option>
-                <option value="planta">Planta</option>
-                <option value="fuego">Fuego</option>
-                <option value="electrico">Eléctrico</option>
-            </select>
+                <label class="solo-lectores" for="tipo">Tipo</label>
+                <select class="capturados__campo" id="tipo" name="tipo">
+                    <option value="">Todos los tipos</option>
+                    <option value="agua">Agua</option>
+                    <option value="planta">Planta</option>
+                    <option value="fuego">Fuego</option>
+                    <option value="electrico">Eléctrico</option>
+                </select>
 
-            <button type="submit">Buscar</button>
+                <button class="boton boton--primario" type="submit">Buscar</button>
+            </fieldset>
 
-            <ul class="pokemon-capturados">
-
-                <li class="pokemon-capturado">
-                    <input class="pokemon-checkbox" type="checkbox" id="squirtle" name="pokemon" value="squirtle">
-
-                    <label for="squirtle">
-                        <img src="assets/squirtle.png" alt="Squirtle">
-                        #007 Squirtle
+            <ul class="capturados">
+                <li class="capturado">
+                    <input class="capturado__seleccion" type="checkbox" id="capturado-bulbasaur" name="pokemon" value="bulbasaur">
+                    <label class="capturado__tarjeta" for="capturado-bulbasaur">
+                        <img class="capturado__imagen" src="assets/bulbasaur.png" alt="" width="96" height="96">
+                        <span class="capturado__numero">#001</span>
+                        <span class="capturado__nombre">Bulbasaur</span>
                     </label>
-
-                    <input class="favorito-checkbox" type="checkbox" id="fav-squirtle" name="favorito" value="squirtle">
-
-                    <label for="fav-squirtle">Favorito</label>
+                    <input class="capturado__favorito" type="checkbox" id="favorito-bulbasaur" name="favorito" value="bulbasaur" checked>
+                    <label class="solo-lectores" for="favorito-bulbasaur">Bulbasaur favorito</label>
                 </li>
-
-                <li class="pokemon-capturado">
-                    <input class="pokemon-checkbox" type="checkbox" id="bulbasaur" name="pokemon" value="bulbasaur">
-
-                    <label for="bulbasaur">
-                        <img src="assets/bulbasaur.png" alt="Bulbasaur">
-                        #001 Bulbasaur
+                <li class="capturado">
+                    <input class="capturado__seleccion" type="checkbox" id="capturado-ivysaur" name="pokemon" value="ivysaur">
+                    <label class="capturado__tarjeta" for="capturado-ivysaur">
+                        <img class="capturado__imagen" src="assets/ivysaur.png" alt="" width="96" height="96">
+                        <span class="capturado__numero">#002</span>
+                        <span class="capturado__nombre">Ivysaur</span>
                     </label>
-
-                    <input class="favorito-checkbox" type="checkbox" id="fav-bulbasaur" name="favorito"
-                        value="bulbasaur">
-
-                    <label for="fav-bulbasaur">Favorito</label>
+                    <input class="capturado__favorito" type="checkbox" id="favorito-ivysaur" name="favorito" value="ivysaur">
+                    <label class="solo-lectores" for="favorito-ivysaur">Ivysaur favorito</label>
                 </li>
-
-                <li class="pokemon-capturado">
-                    <input class="pokemon-checkbox" type="checkbox" id="charmander" name="pokemon" value="charmander">
-
-                    <label for="charmander">
-                        <img src="assets/charmander.png" alt="Charmander">
-                        #004 Charmander
+                <li class="capturado">
+                    <input class="capturado__seleccion" type="checkbox" id="capturado-venusaur" name="pokemon" value="venusaur">
+                    <label class="capturado__tarjeta" for="capturado-venusaur">
+                        <img class="capturado__imagen" src="assets/venusaur.png" alt="" width="96" height="96">
+                        <span class="capturado__numero">#003</span>
+                        <span class="capturado__nombre">Venusaur</span>
                     </label>
-
-                    <input class="favorito-checkbox" type="checkbox" id="fav-charmander" name="favorito"
-                        value="charmander">
-
-                    <label for="fav-charmander">Favorito</label>
+                    <input class="capturado__favorito" type="checkbox" id="favorito-venusaur" name="favorito" value="venusaur">
+                    <label class="solo-lectores" for="favorito-venusaur">Venusaur favorito</label>
                 </li>
-
-                <li class="pokemon-capturado">
-                    <input class="pokemon-checkbox" type="checkbox" id="pikachu" name="pokemon" value="pikachu">
-
-                    <label for="pikachu">
-                        <img src="assets/pikachu.png" alt="Pikachu">
-                        #025 Pikachu
+                <li class="capturado">
+                    <input class="capturado__seleccion" type="checkbox" id="capturado-charmander" name="pokemon" value="charmander">
+                    <label class="capturado__tarjeta" for="capturado-charmander">
+                        <img class="capturado__imagen" src="assets/charmander.png" alt="" width="96" height="96">
+                        <span class="capturado__numero">#004</span>
+                        <span class="capturado__nombre">Charmander</span>
                     </label>
-
-                    <input class="favorito-checkbox" type="checkbox" id="fav-pikachu" name="favorito" value="pikachu">
-
-                    <label for="fav-pikachu">Favorito</label>
+                    <input class="capturado__favorito" type="checkbox" id="favorito-charmander" name="favorito" value="charmander" checked>
+                    <label class="solo-lectores" for="favorito-charmander">Charmander favorito</label>
                 </li>
-
-                <li class="pokemon-capturado">
-                    <input class="pokemon-checkbox" type="checkbox" id="charizard" name="pokemon" value="charizard">
-
-                    <label for="charizard">
-                        <img src="assets/charizard.png" alt="Charizard">
-                        #006 Charizard
+                <li class="capturado">
+                    <input class="capturado__seleccion" type="checkbox" id="capturado-charmeleon" name="pokemon" value="charmeleon">
+                    <label class="capturado__tarjeta" for="capturado-charmeleon">
+                        <img class="capturado__imagen" src="assets/charmeleon.png" alt="" width="96" height="96">
+                        <span class="capturado__numero">#005</span>
+                        <span class="capturado__nombre">Charmeleon</span>
                     </label>
-
-                    <input class="favorito-checkbox" type="checkbox" id="fav-charizard" name="favorito"
-                        value="charizard">
-
-                    <label for="fav-charizard">Favorito</label>
+                    <input class="capturado__favorito" type="checkbox" id="favorito-charmeleon" name="favorito" value="charmeleon">
+                    <label class="solo-lectores" for="favorito-charmeleon">Charmeleon favorito</label>
                 </li>
-
+                <li class="capturado">
+                    <input class="capturado__seleccion" type="checkbox" id="capturado-charizard" name="pokemon" value="charizard">
+                    <label class="capturado__tarjeta" for="capturado-charizard">
+                        <img class="capturado__imagen" src="assets/charizard.png" alt="" width="96" height="96">
+                        <span class="capturado__numero">#006</span>
+                        <span class="capturado__nombre">Charizard</span>
+                    </label>
+                    <input class="capturado__favorito" type="checkbox" id="favorito-charizard" name="favorito" value="charizard" checked>
+                    <label class="solo-lectores" for="favorito-charizard">Charizard favorito</label>
+                </li>
+                <li class="capturado">
+                    <input class="capturado__seleccion" type="checkbox" id="capturado-squirtle" name="pokemon" value="squirtle">
+                    <label class="capturado__tarjeta" for="capturado-squirtle">
+                        <img class="capturado__imagen" src="assets/squirtle.png" alt="" width="96" height="96">
+                        <span class="capturado__numero">#007</span>
+                        <span class="capturado__nombre">Squirtle</span>
+                    </label>
+                    <input class="capturado__favorito" type="checkbox" id="favorito-squirtle" name="favorito" value="squirtle">
+                    <label class="solo-lectores" for="favorito-squirtle">Squirtle favorito</label>
+                </li>
+                <li class="capturado">
+                    <input class="capturado__seleccion" type="checkbox" id="capturado-wartortle" name="pokemon" value="wartortle">
+                    <label class="capturado__tarjeta" for="capturado-wartortle">
+                        <img class="capturado__imagen" src="assets/wartortle.png" alt="" width="96" height="96">
+                        <span class="capturado__numero">#008</span>
+                        <span class="capturado__nombre">Wartortle</span>
+                    </label>
+                    <input class="capturado__favorito" type="checkbox" id="favorito-wartortle" name="favorito" value="wartortle">
+                    <label class="solo-lectores" for="favorito-wartortle">Wartortle favorito</label>
+                </li>
+                <li class="capturado">
+                    <input class="capturado__seleccion" type="checkbox" id="capturado-blastoise" name="pokemon" value="blastoise">
+                    <label class="capturado__tarjeta" for="capturado-blastoise">
+                        <img class="capturado__imagen" src="assets/blastoise.png" alt="" width="96" height="96">
+                        <span class="capturado__numero">#009</span>
+                        <span class="capturado__nombre">Blastoise</span>
+                    </label>
+                    <input class="capturado__favorito" type="checkbox" id="favorito-blastoise" name="favorito" value="blastoise">
+                    <label class="solo-lectores" for="favorito-blastoise">Blastoise favorito</label>
+                </li>
+                <li class="capturado">
+                    <input class="capturado__seleccion" type="checkbox" id="capturado-pikachu" name="pokemon" value="pikachu">
+                    <label class="capturado__tarjeta" for="capturado-pikachu">
+                        <img class="capturado__imagen" src="assets/pikachu.png" alt="" width="96" height="96">
+                        <span class="capturado__numero">#025</span>
+                        <span class="capturado__nombre">Pikachu</span>
+                    </label>
+                    <input class="capturado__favorito" type="checkbox" id="favorito-pikachu" name="favorito" value="pikachu" checked>
+                    <label class="solo-lectores" for="favorito-pikachu">Pikachu favorito</label>
+                </li>
             </ul>
-
         </form>
 
+        <p class="capturados__mostrando">Mostrando 10 de 10 capturados</p>
+
         <footer class="modal__footer">
+            <p class="capturados__contador">0 de 6 seleccionados</p>
             <button class="boton boton--claro" type="button" form="capturados-form">Marcar favorito</button>
             <button class="boton boton--primario" type="button" form="capturados-form">Agregar al equipo</button>
             <button class="boton boton--claro" type="button" command="close" commandfor="capturados">Cerrar</button>
@@ -385,38 +438,44 @@
 
         <p>4 Pokémon marcados como favoritos</p>
 
-        <ul class="pokemon-list">
-            <li class="pokemon-card">
-                <a class="pokemon-card__link" href="detalle-pokemon-bulbasaur.html">
-                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
-                    <img class="pokemon-card__image" src="assets/bulbasaur.png" alt="Bulbasaur" width="96" height="96">
-                    <span class="pokemon-card__number">#001</span>
-                    <span class="pokemon-card__name">Bulbasaur</span>
-                </a>
+        <ul class="favoritos">
+            <li class="favorito">
+                <img class="favorito__imagen" src="assets/bulbasaur.png" alt="" width="96" height="96">
+                <h3 class="favorito__nombre">Bulbasaur <span class="favorito__numero">#001</span></h3>
+                <ul class="favorito__tipos">
+                    <li class="tipo tipo--planta">Planta</li>
+                    <li class="tipo tipo--veneno">Veneno</li>
+                </ul>
+                <a class="boton boton--borde-azul boton--icono boton--icono-final icono-flecha favorito__detalle" href="detalle-pokemon-bulbasaur.html">Ver detalle<span class="solo-lectores"> de Bulbasaur</span></a>
+                <button class="boton boton--borde-rojo boton--icono boton--icono-final icono-cerrar favorito__quitar" type="button">Quitar<span class="solo-lectores"> a Bulbasaur</span> de favoritos</button>
             </li>
-            <li class="pokemon-card">
-                <a class="pokemon-card__link" href="detalle-pokemon-pikachu.html">
-                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
-                    <img class="pokemon-card__image" src="assets/pikachu.png" alt="Pikachu" width="96" height="96">
-                    <span class="pokemon-card__number">#002</span>
-                    <span class="pokemon-card__name">Pikachu</span>
-                </a>
+            <li class="favorito">
+                <img class="favorito__imagen" src="assets/charmander.png" alt="" width="96" height="96">
+                <h3 class="favorito__nombre">Charmander <span class="favorito__numero">#004</span></h3>
+                <ul class="favorito__tipos">
+                    <li class="tipo tipo--fuego">Fuego</li>
+                </ul>
+                <a class="boton boton--borde-azul boton--icono boton--icono-final icono-flecha favorito__detalle" href="detalle-pokemon-charmander.html">Ver detalle<span class="solo-lectores"> de Charmander</span></a>
+                <button class="boton boton--borde-rojo boton--icono boton--icono-final icono-cerrar favorito__quitar" type="button">Quitar<span class="solo-lectores"> a Charmander</span> de favoritos</button>
             </li>
-            <li class="pokemon-card">
-                <a class="pokemon-card__link" href="detalle-pokemon-charmander.html">
-                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
-                    <img class="pokemon-card__image" src="assets/charmander.png" alt="Charmander" width="96" height="96">
-                    <span class="pokemon-card__number">#003</span>
-                    <span class="pokemon-card__name">Charmander</span>
-                </a>
+            <li class="favorito">
+                <img class="favorito__imagen" src="assets/charizard.png" alt="" width="96" height="96">
+                <h3 class="favorito__nombre">Charizard <span class="favorito__numero">#006</span></h3>
+                <ul class="favorito__tipos">
+                    <li class="tipo tipo--fuego">Fuego</li>
+                    <li class="tipo tipo--volador">Volador</li>
+                </ul>
+                <a class="boton boton--borde-azul boton--icono boton--icono-final icono-flecha favorito__detalle" href="detalle-pokemon-charizard.html">Ver detalle<span class="solo-lectores"> de Charizard</span></a>
+                <button class="boton boton--borde-rojo boton--icono boton--icono-final icono-cerrar favorito__quitar" type="button">Quitar<span class="solo-lectores"> a Charizard</span> de favoritos</button>
             </li>
-            <li class="pokemon-card">
-                <a class="pokemon-card__link" href="detalle-pokemon-charizard.html">
-                    <img class="pokemon-card__icon" src="assets/favorite-icon.svg" alt="Estrella favorito">
-                    <img class="pokemon-card__image" src="assets/charizard.png" alt="Charizard" width="96" height="96">
-                    <span class="pokemon-card__number">#004</span>
-                    <span class="pokemon-card__name">Charizard</span>
-                </a>
+            <li class="favorito">
+                <img class="favorito__imagen" src="assets/pikachu.png" alt="" width="96" height="96">
+                <h3 class="favorito__nombre">Pikachu <span class="favorito__numero">#025</span></h3>
+                <ul class="favorito__tipos">
+                    <li class="tipo tipo--electrico">Eléctrico</li>
+                </ul>
+                <a class="boton boton--borde-azul boton--icono boton--icono-final icono-flecha favorito__detalle" href="detalle-pokemon-pikachu.html">Ver detalle<span class="solo-lectores"> de Pikachu</span></a>
+                <button class="boton boton--borde-rojo boton--icono boton--icono-final icono-cerrar favorito__quitar" type="button">Quitar<span class="solo-lectores"> a Pikachu</span> de favoritos</button>
             </li>
         </ul>
 

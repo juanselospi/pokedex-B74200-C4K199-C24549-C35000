@@ -1245,3 +1245,559 @@ footer a {
     --modal-relleno: 1.25rem;
   }
 }
+
+
+/* --------------------------------------------------------------------------
+   14. Modal de Favoritos
+   -------------------------------------------------------------------------- */
+
+/* Lista de filas, una debajo de otra. */
+.favoritos {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cada fila: estrella, imagen, nombre y tipos, y los dos botones.
+   Grid con áreas con nombre: el nombre y los tipos quedan apilados en la
+   misma columna sin necesitar un contenedor extra en el HTML. */
+.favorito {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto auto;
+  grid-template-areas:
+    "estrella imagen nombre detalle quitar"
+    "estrella imagen tipos  detalle quitar";
+  align-items: center;
+  column-gap: 1rem;
+  row-gap: .35rem;
+  padding: 1rem;
+  background: var(--blanco);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-1);
+  transition: box-shadow var(--dur) var(--ease), border-color var(--dur);
+}
+
+.favorito:hover,
+.favorito:focus-within {
+  border-color: var(--amarillo);
+  box-shadow: var(--sombra-2);
+}
+
+/* Estrella decorativa en un círculo crema (::before, no va en el HTML). */
+.favorito::before {
+  content: "";
+  grid-area: estrella;
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid var(--amarillo);
+  border-radius: var(--radio-pastilla);
+  background: url("assets/favorite-icon-yellow.svg") center / 1.25rem no-repeat,
+              var(--crema);
+}
+
+/* Sprite sobre un recuadro blanco con sombra. */
+.favorito__imagen {
+  grid-area: imagen;
+  width: 4.5rem;
+  height: 4.5rem;
+  padding: .35rem;
+  background: var(--modal-superficie);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-1);
+}
+
+/* Nombre con el número como pastilla amarilla a la derecha. */
+.favorito__nombre {
+  grid-area: nombre;
+  align-self: end;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .6rem;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.favorito__numero {
+  padding: .1rem .6rem;
+  border-radius: var(--radio-pastilla);
+  background: var(--amarillo);
+  font-size: .85rem;
+}
+
+/* Pastillas de tipo, más chicas que en la ficha de detalle. */
+.favorito__tipos {
+  grid-area: tipos;
+  align-self: start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.favorito__tipos .tipo {
+  padding: .1rem .6rem;
+  font-size: .75rem;
+}
+
+.favorito__detalle { grid-area: detalle; }
+.favorito__quitar  { grid-area: quitar; }
+
+/* Pantallas chicas: los botones bajan a su propia fila. */
+@media (width < 48rem) {
+  .favorito {
+    grid-template-columns: auto auto 1fr;
+    grid-template-areas:
+      "estrella imagen  nombre"
+      "estrella imagen  tipos"
+      "detalle  detalle detalle"
+      "quitar   quitar  quitar";
+    row-gap: .5rem;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   15. Modal de Equipo
+   -------------------------------------------------------------------------- */
+
+:root {
+  --equipo-libre-fondo: #EEF4FD;  /* celeste muy claro del espacio libre */
+}
+
+/* Cuadrícula de tarjetas: tantas columnas de al menos 12rem como quepan
+   (3 en escritorio, 2 o 1 en pantallas chicas). Las filas estiran todas
+   las tarjetas a la misma altura, incluido el espacio libre. */
+.equipo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Tarjeta de un Pokémon: todo centrado en columna. position: relative
+   para ubicar el número en la esquina. */
+.equipo__pokemon {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .4rem;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  background: var(--modal-superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-2);
+  transition: box-shadow var(--dur) var(--ease), border-color var(--dur);
+}
+
+.equipo__pokemon:hover,
+.equipo__pokemon:focus-within {
+  border-color: var(--amarillo);
+  box-shadow: var(--sombra-3);
+}
+
+.equipo__imagen {
+  width: 5.5rem;
+  height: 5.5rem;
+  filter: drop-shadow(0 6px 6px rgba(20, 44, 82, .18));
+}
+
+/* Número: pastilla amarilla en la esquina superior izquierda. */
+.equipo__numero {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  margin: 0;
+  padding: .1rem .55rem;
+  border-radius: var(--radio-pastilla);
+  background: var(--amarillo);
+  font-family: var(--fuente-titulo);
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.equipo__nombre {
+  margin: .25rem 0 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.equipo__tipos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.equipo__tipos .tipo {
+  padding: .1rem .6rem;
+  font-size: .75rem;
+}
+
+.equipo__pokemon .boton {
+  margin-top: .35rem;
+}
+
+/* Espacio libre: borde punteado y fondo celeste. Todo el recuadro es un
+   botón que abre el modal de capturados. */
+.equipo__libre {
+  min-height: 14rem;
+  border: 2px dashed var(--azul-claro);
+  border-radius: var(--radio-lg);
+  background: var(--equipo-libre-fondo);
+  transition: border-color var(--dur);
+}
+
+.equipo__libre:hover,
+.equipo__libre:focus-within {
+  border-color: var(--azul);
+}
+
+.equipo__agregar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--tinta-suave);
+  cursor: pointer;
+  background: none;
+  border: 0;
+  border-radius: var(--radio-lg);
+}
+
+/* Círculo blanco con el "+" (::before). Aquí el SVG va como imagen, con
+   su propio color, porque el círculo blanco es el fondo del mismo
+   pseudo-elemento y una máscara lo recortaría. */
+.equipo__agregar::before {
+  content: "";
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: var(--radio-pastilla);
+  background: url("assets/plus-icon.svg") center / 1.25rem no-repeat,
+              var(--modal-superficie);
+  box-shadow: var(--sombra-1);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur);
+}
+
+.equipo__agregar:hover::before,
+.equipo__agregar:focus-visible::before {
+  transform: scale(1.08);
+  box-shadow: var(--sombra-2);
+}
+
+
+/* --------------------------------------------------------------------------
+   16. Modal de Estadísticas
+   -------------------------------------------------------------------------- */
+
+/* Tabla propia del modal (distinta de .stats-table de la ficha de detalle,
+   que lleva barras bajo cada número). Igual que aquella usa
+   border-collapse: separate para que funcione el border-radius. */
+.estadisticas {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--modal-superficie);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-2);
+  overflow: hidden;
+  font-variant-numeric: tabular-nums;
+}
+
+.estadisticas th,
+.estadisticas td {
+  padding: .85rem 1rem;
+  text-align: left;
+  border-top: 1px solid var(--linea);
+}
+
+/* La columna Total va alineada a la derecha. */
+.estadisticas th:last-child,
+.estadisticas td:last-child {
+  text-align: right;
+}
+
+/* Encabezado: franja crema con etiquetas chicas. */
+.estadisticas thead th {
+  border-top: 0;
+  background: var(--crema);
+  font-size: .85rem;
+  font-weight: 700;
+}
+
+/* Las abreviaturas no llevan el subrayado punteado del navegador; el
+   nombre completo sigue en title. */
+.estadisticas abbr {
+  text-decoration: none;
+}
+
+/* Filas alternadas para seguir la lectura. */
+.estadisticas tbody tr:nth-child(even) {
+  background: var(--blanco);
+}
+
+/* Nombre del Pokémon con su sprite. La celda no lleva Flexbox porque
+   dejaría de comportarse como celda de tabla; el sprite se alinea con
+   vertical-align. */
+.estadisticas tbody th {
+  white-space: nowrap;
+  font-family: var(--fuente-titulo);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.estadisticas__sprite {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: .6rem;
+  vertical-align: middle;
+}
+
+/* El resto de las celdas también centradas en vertical. */
+.estadisticas td {
+  vertical-align: middle;
+}
+
+/* El valor más alto de cada columna va en <strong>. */
+.estadisticas strong {
+  font-weight: 800;
+}
+
+/* Total de cada Pokémon: pastilla navy. */
+.estadisticas__total {
+  display: inline-block;
+  min-width: 3rem;
+  padding: .2rem .6rem;
+  text-align: center;
+  border-radius: var(--radio-pastilla);
+  background: var(--navy);
+  color: var(--modal-superficie);
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+}
+
+/* Fila de promedio: franja amarilla con separadores verticales. */
+.estadisticas tfoot th,
+.estadisticas tfoot td {
+  border-top: 0;
+  background: var(--amarillo);
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+}
+
+.estadisticas tfoot td {
+  border-left: 1px solid var(--amarillo-borde);
+}
+
+.estadisticas tfoot td:last-child {
+  font-size: 1.25rem;
+}
+
+.estadisticas__nota {
+  margin-bottom: 0;
+  font-size: .85rem;
+  color: var(--tinta-suave);
+}
+
+/* Pantallas chicas: la tabla no cabe, así que hace scroll horizontal
+   ella misma (display: block) en vez de romper el ancho del modal. */
+@media (width < 48rem) {
+  .estadisticas {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .estadisticas__sprite {
+    display: none;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   17. Modal de Pokémon capturados
+   -------------------------------------------------------------------------- */
+
+/* --- Búsqueda: campo de texto, selector de tipo y botón en una fila ------- */
+.capturados__busqueda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  border: 0;
+}
+
+.capturados__campo {
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  font: inherit;
+  color: var(--navy);
+  background: var(--modal-superficie);
+  border: 2px solid var(--modal-borde-boton);
+  border-radius: var(--radio);
+  transition: border-color var(--dur);
+}
+
+.capturados__campo:hover,
+.capturados__campo:focus-visible {
+  border-color: var(--azul);
+}
+
+/* El buscador ocupa todo el espacio que sobra. */
+.capturados__buscar {
+  flex: 1 1 14rem;
+}
+
+.capturados__buscar::placeholder {
+  color: var(--tinta-suave);
+}
+
+/* --- Lista: cuadrícula con scroll propio ------------------------------------
+   Muestra dos filas de tarjetas; el resto se ve haciendo scroll dentro del
+   recuadro, como en el wireframe. */
+.capturados {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 1rem;
+  max-height: 27rem;
+  margin: 0;
+  padding: 1rem;
+  overflow-y: auto;
+  list-style: none;
+  background: var(--blanco);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-lg);
+}
+
+/* Cada tarjeta. La casilla y la estrella van en las esquinas de arriba. */
+.capturado {
+  position: relative;
+}
+
+/* La etiqueta es la tarjeta entera: un clic en cualquier parte marca la
+   casilla de selección. */
+.capturado__tarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .25rem;
+  height: 100%;
+  padding: 2.5rem 1rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  background: var(--modal-superficie);
+  border: 2px solid var(--linea);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-1);
+  transition: border-color var(--dur), box-shadow var(--dur) var(--ease);
+}
+
+.capturado__tarjeta:hover {
+  border-color: var(--amarillo);
+  box-shadow: var(--sombra-2);
+}
+
+/* Tarjeta seleccionada: borde azul y fondo crema. :has() mira si la
+   casilla de esa tarjeta está marcada. */
+.capturado:has(.capturado__seleccion:checked) .capturado__tarjeta {
+  border-color: var(--azul);
+  background: var(--crema);
+}
+
+/* Foco del teclado en la casilla: se resalta la tarjeta completa. */
+.capturado:has(.capturado__seleccion:focus-visible) .capturado__tarjeta {
+  outline: 3px solid var(--azul-borde);
+  outline-offset: 3px;
+}
+
+.capturado__imagen {
+  width: 5rem;
+  height: 5rem;
+}
+
+.capturado__numero {
+  font-size: .85rem;
+  color: var(--tinta-suave);
+}
+
+.capturado__nombre {
+  font-family: var(--fuente-titulo);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* Casilla de selección: la nativa, con el color del sitio. */
+.capturado__seleccion {
+  position: absolute;
+  top: .9rem;
+  left: .9rem;
+  z-index: 1;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  accent-color: var(--azul);
+  cursor: pointer;
+}
+
+/* Estrella de favorito: la casilla pierde su aspecto nativo
+   (appearance: none) y se dibuja con el SVG de la estrella. Vacía cuando
+   no está marcada, amarilla cuando sí. */
+.capturado__favorito {
+  position: absolute;
+  top: .6rem;
+  right: .6rem;
+  z-index: 1;
+  width: 2rem;
+  height: 2rem;
+  margin: 0;
+  cursor: pointer;
+  appearance: none;
+  border-radius: var(--radio-pastilla);
+  background: url("assets/favorite-icon.svg") center / 1.25rem no-repeat;
+  transition: transform var(--dur) var(--ease);
+}
+
+.capturado__favorito:checked {
+  background-image: url("assets/favorite-icon-yellow.svg");
+}
+
+.capturado__favorito:hover,
+.capturado__favorito:focus-visible {
+  transform: scale(1.15);
+}
+
+/* --- Textos de estado ------------------------------------------------------ */
+.capturados__mostrando {
+  margin-bottom: 0;
+  font-size: .85rem;
+  color: var(--tinta-suave);
+}
+
+/* El contador va a la izquierda del pie; margin-right: auto empuja los
+   botones a la derecha. */
+.capturados__contador {
+  margin: 0 auto 0 0;
+  align-self: center;
+  font-weight: 700;
+}
