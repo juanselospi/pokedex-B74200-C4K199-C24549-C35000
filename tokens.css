@@ -68,6 +68,10 @@
   --verde:          #2E8B57;  /* fondo del ícono de Estadísticas (solo
                                  gráfico, no lleva texto encima) */
   --tinta-suave:    #41557A;  /* texto secundario sobre blanco: 7.5:1 */
+  --blanco-puro:    #FFFFFF;  /* fondos blancos y texto sobre color */
+  --azul-encabezado: #2A66C0; /* inicio del degradado del encabezado */
+  --borde-claro:    #C7D5E8;  /* borde de los botones claros */
+  --tinta-pie:      #C9D6EA;  /* texto del pie de página sobre navy */
   --linea:          #E3EAF3;  /* separadores finos dentro de tarjetas */
 
   /* --- Tipografía -------------------------------------------------------

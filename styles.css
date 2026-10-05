@@ -79,7 +79,8 @@ img {
   outline-offset: 3px;
 }
 
-/* Lo que leen los lectores de pantalla pero no se dibuja. */
+/* Texto que no se ve pero el lector de pantalla sí lee.
+   No usar display: none, porque eso lo oculta también para el lector. */
 .solo-lectores {
   position: absolute;
   width: 1px;
@@ -89,6 +90,10 @@ img {
   white-space: nowrap;
 }
 
+/* Íconos: SVG de assets/ puestos con ::before (nunca con <img>).
+   - mask-image: el ícono toma el color del texto (botones, cerrar).
+   - background-image: el ícono mantiene sus colores (cápsulas, modales).
+   Si el ícono reemplaza una palabra, esa palabra va en .solo-lectores. */
 
 /* --------------------------------------------------------------------------
    2. Logo
@@ -136,7 +141,7 @@ img {
   container-type: inline-size;
   text-align: center;
   color: var(--navy);
-  background: linear-gradient(180deg, #fff, var(--blanco));
+  background: linear-gradient(180deg, var(--blanco-puro), var(--blanco));
   border: 2px solid rgba(255, 255, 255, .8);
   border-radius: var(--radio-lg);
   padding: 1rem 1rem 1.25rem;
@@ -245,7 +250,7 @@ header {
   text-align: center;
   gap: 0.75rem;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(180deg, #2A66C0, var(--azul-borde));
+  background: linear-gradient(180deg, var(--azul-encabezado), var(--azul-borde));
   border-bottom: 1px solid rgba(255, 255, 255, .18);
   box-shadow: 0 8px 24px -8px rgba(20, 44, 82, .55);
 }
@@ -449,7 +454,7 @@ section.buscador > p {
 .buscador select {
   font: inherit;
   color: var(--navy);
-  background: #fff;
+  background: var(--blanco-puro);
   border: 2px solid transparent;
   border-radius: var(--radio-pastilla);
   padding: 0.6rem 1rem;
@@ -511,29 +516,29 @@ section.buscador > p {
 
 .boton--primario {
   background: var(--azul);
-  color: #fff;
+  color: var(--blanco-puro);
   box-shadow: 0 8px 18px -4px rgba(41, 103, 197, .6), inset 0 1px 0 rgba(255, 255, 255, .25);
 }
 
 .boton--rojo {
   background: var(--rojo);
-  color: #fff;
+  color: var(--blanco-puro);
 }
 
 .boton--claro {
-  background: #fff;
+  background: var(--blanco-puro);
   color: var(--navy);
-  border-color: #C7D5E8;
+  border-color: var(--borde-claro);
 }
 
 .boton--borde-azul {
-  background: #fff;
+  background: var(--blanco-puro);
   color: var(--azul);
   border-color: var(--azul);
 }
 
 .boton--borde-rojo {
-  background: #fff;
+  background: var(--blanco-puro);
   color: var(--rojo);
   border-color: var(--rojo);
 }
@@ -561,7 +566,7 @@ section.buscador > p {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  background: #fff;
+  background: var(--blanco-puro);
   color: var(--navy);
   border-radius: 1.25rem;
   overflow: hidden;
@@ -655,7 +660,7 @@ h1 {
 
 footer {
   background: var(--navy);
-  color: #C9D6EA;
+  color: var(--tinta-pie);
   padding: 1.5rem;
   margin-top: 3rem;
   box-shadow: 0 -12px 30px -12px rgba(0, 0, 0, .4);
@@ -677,7 +682,7 @@ footer a {
 .pokemon-card:hover,
 .pokemon-card:focus-within {
   border-color: var(--amarillo);
-  background: linear-gradient(180deg, #fff, var(--crema));
+  background: linear-gradient(180deg, var(--blanco-puro), var(--crema));
   box-shadow: var(--sombra-3), var(--brillo);
 }
 
@@ -742,7 +747,7 @@ footer a {
 /* La ficha es un panel blanco flotante: el texto vuelve a ser navy. */
 #ficha-pokemon {
   color: var(--navy);
-  background: linear-gradient(180deg, #fff, var(--blanco));
+  background: linear-gradient(180deg, var(--blanco-puro), var(--blanco));
   border-radius: var(--radio-xl);
   padding: 1.5rem;
   box-shadow: var(--sombra-3), var(--brillo);
@@ -829,7 +834,7 @@ footer a {
   text-align: center;
   border-radius: var(--radio-xl);
   background: var(--sprite-zona);
-  box-shadow: inset 0 0 0 3px #fff, var(--sombra-1);
+  box-shadow: inset 0 0 0 3px var(--blanco-puro), var(--sombra-1);
 }
 
 .ficha-pokemon__imagen img {
@@ -897,7 +902,7 @@ footer a {
   padding: .25rem .8rem;
   border-radius: var(--radio-pastilla);
   background: var(--color-tipo, var(--tipo-normal));
-  color: #fff;
+  color: var(--blanco-puro);
   font-size: .85rem;
   font-weight: 700;
 }
@@ -1031,9 +1036,9 @@ footer a {
    contenedor extra: el relleno lateral lo pone .modal. */
 
 :root {
-  --modal-superficie:  #FFFFFF;
+  --modal-superficie:  var(--blanco-puro);
   --modal-velo:        rgba(20, 44, 82, .55);  /* fondo detrás del modal */
-  --modal-borde-boton: #C7D5E8;
+  --modal-borde-boton: var(--borde-claro);
   --modal-ancho:       55rem;
   --modal-margen:      1rem;   /* distancia mínima al borde de la pantalla */
   --modal-relleno:     2rem;   /* relleno lateral de todo el modal */
@@ -1137,13 +1142,17 @@ footer a {
   transition: background var(--dur), border-color var(--dur);
 }
 
-/* mask usa el SVG solo como silueta: el color lo da background-color. */
+/* La X toma el color de background-color. Se usa mask-image y no
+   el atajo mask porque el validador del W3C no lo acepta. */
 .modal__cerrar::before {
   content: "";
   width: 1rem;
   height: 1rem;
   background-color: var(--navy);
-  mask: url("assets/close-icon.svg") center / contain no-repeat;
+  mask-image: url("assets/close-icon.svg");
+  mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
 }
 
 .modal__cerrar:hover,
@@ -1182,7 +1191,10 @@ footer a {
   width: .9rem;
   height: .9rem;
   background-color: currentColor;
-  mask: var(--icono-boton) center / contain no-repeat;
+  mask-image: var(--icono-boton);
+  mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
 }
 
 .boton--icono-final::before {
@@ -1808,7 +1820,7 @@ footer a {
    -------------------------------------------------------------------------- */
 
 :root {
-  --perfil-fondo: #FFFFFF;
+  --perfil-fondo: var(--blanco-puro);
   --perfil-fondo-final: #EAF1FB; /* celeste de la esquina de la tarjeta */
   --perfil-sombra-rojo: rgba(220, 45, 26, .45); /* brillo del botón Editar perfil */
   --menu-foco: rgba(255, 255, 255, .16); /* mismo fondo del hover del menú */
