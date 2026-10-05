@@ -2044,6 +2044,7 @@ footer a {
   border-radius: var(--radio-lg);
   background: var(--seccion-icono) center / var(--seccion-icono-tamano, 40%) no-repeat, var(--seccion-color);
   box-shadow: 0 14px 24px -8px var(--seccion-brillo), var(--brillo);
+  transition: transform 0.25s var(--ease);
 }
 
 .seccion--equipo {
@@ -2113,7 +2114,7 @@ footer a {
   mask-position: center;
   mask-size: contain;
   mask-repeat: no-repeat;
-  transition: background-color var(--dur);
+  transition: background-color var(--dur), transform 0.25s var(--ease);
 }
 
 /* El área de clic del botón se estira a toda la tarjeta: un clic en
@@ -2155,4 +2156,17 @@ footer a {
 .seccion__abrir:focus-visible::after {
   outline: 3px solid var(--amarillo);
   outline-offset: 3px;
+}
+
+/* --- Animación propia (punto extra) ----------------------------------------
+  La flecha se desliza hacia la derecha y el
+  recuadro del ícono se inclina un poco. */
+.seccion:hover .seccion__abrir::before,
+.seccion__abrir:focus-visible::before {
+  transform: translateX(0.3rem);
+}
+
+.seccion:hover::before,
+.seccion:focus-within::before {
+  transform: rotate(-8deg);
 }
