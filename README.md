@@ -1,6 +1,6 @@
 # Pokédex — CI-0137
 
-Laboratorio 1 del curso Desarrollo de Aplicaciones Web, Escuela de
+Laboratorios 1 y 2 del curso Desarrollo de Aplicaciones Web, Escuela de
 Ciencias de la Computación e Informática, Universidad de Costa Rica.
 
 ## Integrantes
@@ -18,9 +18,17 @@ Ciencias de la Computación e Informática, Universidad de Costa Rica.
 
 ## Puntos extra realizados
 
+### Laboratorio 1
+
 - **Formulario para editar el entrenador:** el botón *Editar perfil* abre un
   diálogo con un formulario para cambiar nombre, edad, ciudad, estatura y
   biografía, con campos etiquetados, agrupados y botones de guardar y cancelar.
+
+### Laboratorio 2
+
+- **Animación propia en botones o hovers:** en las tarjetas de sección
+  (Equipo, Capturados, Favoritos y Estadísticas), la flecha se desliza a la
+  derecha y el ícono se inclina con `:hover` y `:focus-visible`.
 
 ---
 

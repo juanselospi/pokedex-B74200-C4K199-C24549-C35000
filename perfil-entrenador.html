@@ -513,17 +513,39 @@
             </button>
         </section>
 
-            <li>Equipo Pokemon</li>
-            <button type="button" commandfor="team" command="show-modal">Equipo Pokemon</button>
+        <ul class="secciones">
+            <li class="seccion seccion--equipo">
+                <h2 class="seccion__titulo">Equipo Pokémon</h2>
+                <p class="seccion__subtitulo">5 de 6 espacios ocupados</p>
+                <button class="seccion__abrir" type="button" commandfor="team" command="show-modal">
+                    <span class="solo-lectores">Abrir Equipo Pokémon</span>
+                </button>
+            </li>
 
-            <li>Pokemon Capturados</li>
-            <button type="button" commandfor="capturados" command="show-modal">Pokemon Capturados</button>
+            <li class="seccion seccion--capturados">
+                <h2 class="seccion__titulo">Pokémon Capturados</h2>
+                <p class="seccion__subtitulo">10 Pokémon en tu colección</p>
+                <button class="seccion__abrir" type="button" commandfor="capturados" command="show-modal">
+                    <span class="solo-lectores">Abrir Pokémon Capturados</span>
+                </button>
+            </li>
 
-            <li>Favoritos</li>
-            <button type="button" commandfor="favoritos" command="show-modal">Favoritos</button>
+            <li class="seccion seccion--favoritos">
+                <h2 class="seccion__titulo">Favoritos</h2>
+                <p class="seccion__subtitulo">4 Pokémon marcados</p>
+                <button class="seccion__abrir" type="button" commandfor="favoritos" command="show-modal">
+                    <span class="solo-lectores">Abrir Favoritos</span>
+                </button>
+            </li>
 
-            <li>Estadísticas</li>
-            <button type="button" commandfor="estadisticas" command="show-modal">Estadísticas</button>
+            <li class="seccion seccion--estadisticas">
+                <h2 class="seccion__titulo">Estadísticas</h2>
+                <p class="seccion__subtitulo">Comparativa de tu equipo</p>
+                <button class="seccion__abrir" type="button" commandfor="estadisticas" command="show-modal">
+                    <span class="solo-lectores">Abrir Estadísticas</span>
+                </button>
+            </li>
+        </ul>
 
     </main>
 

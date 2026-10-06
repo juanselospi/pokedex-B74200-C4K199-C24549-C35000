@@ -1972,3 +1972,201 @@ footer a {
     justify-content: flex-start;
   }
 }
+
+
+/* --------------------------------------------------------------------------
+   19. Tarjetas de sección (Equipo, Capturados, Favoritos, Estadísticas)
+   -------------------------------------------------------------------------- */
+
+/* Brillo de color debajo de cada recuadro de ícono (mismo tono que el
+   recuadro, transparente). */
+:root {
+  --seccion-brillo-azul: rgba(41, 103, 197, .55);
+  --seccion-brillo-rojo: rgba(220, 45, 26, .5);
+  --seccion-brillo-amarillo: rgba(240, 182, 57, .65);
+  --seccion-brillo-verde: rgba(46, 139, 87, .5);
+}
+
+/* --- Cuadrícula ------------------------------------------------------------
+   Una columna en móvil y 2 × 2 desde tablet. */
+.secciones {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (width >= 48rem) {
+  .secciones {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- Tarjeta ---------------------------------------------------------------
+   Grid con áreas: el ícono a la izquierda, título y subtítulo apilados en
+   el centro y el botón con flecha a la derecha. position: relative es para
+   que el botón pueda cubrir toda la tarjeta. */
+.seccion {
+  --seccion-caja: 4rem;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "icono titulo    abrir"
+    "icono subtitulo abrir";
+  align-items: center;
+  column-gap: 1rem;
+  padding: 1.5rem 1.25rem;
+  color: var(--navy);
+  background: var(--blanco-puro);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-2);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+@media (width >= 36rem) {
+  .seccion {
+    --seccion-caja: 5.5rem;
+    column-gap: 1.5rem;
+    padding: 2rem 1.75rem;
+  }
+}
+
+/* Recuadro de color con el ícono. Cada variante define --seccion-icono,
+   su tamaño, el color y el brillo. */
+.seccion::before {
+  content: "";
+  grid-area: icono;
+  width: var(--seccion-caja);
+  height: var(--seccion-caja);
+  border-radius: var(--radio-lg);
+  background: var(--seccion-icono) center / var(--seccion-icono-tamano, 40%) no-repeat, var(--seccion-color);
+  box-shadow: 0 14px 24px -8px var(--seccion-brillo), var(--brillo);
+  transition: transform 0.25s var(--ease);
+}
+
+.seccion--equipo {
+  --seccion-icono: url("assets/team-icon.svg");
+  --seccion-color: var(--azul);
+  --seccion-brillo: var(--seccion-brillo-azul);
+}
+
+.seccion--capturados {
+  --seccion-icono: url("assets/pokeball.svg");
+  --seccion-icono-tamano: 55%;
+  --seccion-color: var(--rojo);
+  --seccion-brillo: var(--seccion-brillo-rojo);
+}
+
+.seccion--favoritos {
+  --seccion-icono: url("assets/favorite-icon-black.svg");
+  --seccion-color: var(--amarillo);
+  --seccion-brillo: var(--seccion-brillo-amarillo);
+}
+
+.seccion--estadisticas {
+  --seccion-icono: url("assets/stats-icon.svg");
+  --seccion-icono-tamano: 35%;
+  --seccion-color: var(--verde);
+  --seccion-brillo: var(--seccion-brillo-verde);
+}
+
+.seccion__titulo {
+  grid-area: titulo;
+  align-self: end;
+  margin: 0;
+  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+}
+
+.seccion__subtitulo {
+  grid-area: subtitulo;
+  align-self: start;
+  margin: .25rem 0 0;
+  color: var(--tinta-suave);
+}
+
+/* --- Botón circular con flecha ---------------------------------------------
+   El texto "Abrir ..." sigue en el HTML dentro de .solo-lectores; la flecha
+   la dibuja ::before con mask, así toma el color de background-color. */
+.seccion__abrir {
+  grid-area: abrir;
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 0;
+  cursor: pointer;
+  background: var(--blanco);
+  border: 2px solid var(--linea);
+  border-radius: var(--radio-pastilla);
+  transition: background var(--dur), border-color var(--dur);
+}
+
+.seccion__abrir::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--navy);
+  mask-image: url("assets/arrow-icon.svg");
+  mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  transition: background-color var(--dur), transform 0.25s var(--ease);
+}
+
+/* El área de clic del botón se estira a toda la tarjeta: un clic en
+   cualquier parte abre el diálogo, pero sigue siendo un solo botón para
+   el teclado y el lector de pantalla. */
+.seccion__abrir::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radio-lg);
+}
+
+/* --- Estados ---------------------------------------------------------------
+   Con el mouse o con el teclado la tarjeta se levanta y el botón se
+   rellena de azul con la flecha blanca. */
+.seccion:hover,
+.seccion:focus-within {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-3);
+}
+
+.seccion:hover .seccion__abrir,
+.seccion__abrir:focus-visible {
+  background: var(--azul);
+  border-color: var(--azul);
+}
+
+.seccion:hover .seccion__abrir::before,
+.seccion__abrir:focus-visible::before {
+  background-color: var(--blanco-puro);
+}
+
+/* El anillo de foco se dibuja alrededor de toda la tarjeta (que es el
+   área de clic), por fuera, sobre el fondo azul: ahí el amarillo sí se ve. */
+.seccion__abrir:focus-visible {
+  outline: none;
+}
+
+.seccion__abrir:focus-visible::after {
+  outline: 3px solid var(--amarillo);
+  outline-offset: 3px;
+}
+
+/* --- Animación propia (punto extra) ----------------------------------------
+  La flecha se desliza hacia la derecha y el
+  recuadro del ícono se inclina un poco. */
+.seccion:hover .seccion__abrir::before,
+.seccion__abrir:focus-visible::before {
+  transform: translateX(0.3rem);
+}
+
+.seccion:hover::before,
+.seccion:focus-within::before {
+  transform: rotate(-8deg);
+}
