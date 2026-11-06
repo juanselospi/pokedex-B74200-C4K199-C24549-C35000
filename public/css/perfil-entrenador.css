@@ -9,7 +9,7 @@
      2. Tarjeta del entrenador
      3. Tarjetas de sección (los 4 botones grandes)
      4. Diálogos: base, cabecera, cuerpo, pie
-     5. Piezas compartidas por los diálogos (sprite, número, pips)
+     5. Piezas compartidas por los diálogos (sprite, número)
      6. Equipo   7. Favoritos   8. Estadísticas   9. Capturados
    ========================================================================== */
 
@@ -611,23 +611,6 @@ body:has(dialog[open]) {
   padding: .2rem .65rem;
   font-size: .75rem;
 }
-
-/* Los "pips": pastillitas que muestran cuántos de 6 hay ocupados. Las que
-   tienen la clase .lleno se pintan de azul. */
-.pips {
-  display: flex;
-  gap: .3rem;
-}
-
-.pips span {
-  width: 1.4rem;
-  height: .5rem;
-  border-radius: var(--radio-pastilla);
-  background: var(--pista);
-  transition: background var(--dur);
-}
-
-.pips .lleno { background: var(--azul); }
 
 
 /* --------------------------------------------------------------------------
