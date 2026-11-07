@@ -12,7 +12,14 @@ function leer() {
 function escribir(conjunto) {
   try {
     localStorage.setItem(CLAVE, JSON.stringify([...conjunto]));
-  } catch { /* Si no se puede guardar, seguimos sin romper. */ }
+  } catch {
+    return; // Si no se puede guardar, no anunciamos un cambio.
+  }
+
+  // Otras vistas pueden escuchar este evento y consultar listaFavoritos().
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('favoritos:actualizados'));
+  }
 }
 
 export function listaFavoritos() {

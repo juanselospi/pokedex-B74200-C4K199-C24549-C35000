@@ -1,5 +1,5 @@
 import { buscarPorId, numeroPokedex } from './datos.js';
-import { listaFavoritos } from './favoritos.js';
+import { listaFavoritos, quitarFavorito } from './favoritos.js';
 
 const nombresTipos = {
   planta: 'Planta',
@@ -37,4 +37,28 @@ export function pintarFavoritos() {
   document.querySelector('#favoritos-vacio').hidden = favoritos.length > 0;
 }
 
-pintarFavoritos();
+const modal = document.querySelector('#favoritos');
+
+if (modal) {
+  // Delegación: también funciona para las fichas creadas en cada renderizado.
+  modal.addEventListener('click', (evento) => {
+    const boton = evento.target.closest('.favorito__quitar');
+    if (boton) quitarFavorito(Number(boton.dataset.id));
+  });
+
+  modal.addEventListener('beforetoggle', (evento) => {
+    if (evento.newState === 'open') pintarFavoritos();
+  });
+
+  window.addEventListener('favoritos:actualizados', pintarFavoritos);
+
+  // El evento storage avisa de cambios hechos desde otra pestaña.
+  window.addEventListener('storage', (evento) => {
+    if (evento.storageArea === localStorage
+        && (evento.key === 'pokedex:favoritos' || evento.key === null)) {
+      pintarFavoritos();
+    }
+  });
+
+  pintarFavoritos();
+}
