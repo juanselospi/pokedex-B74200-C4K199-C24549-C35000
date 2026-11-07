@@ -21,6 +21,7 @@
       lo que cambia es rel, que dice qué relación tiene el archivo con el documento. -->
   <link rel="stylesheet" href="tokens.css">
   <link rel="stylesheet" href="styles.css">
+  <script type="module" src="js/modal-favoritos.js"></script>
 </head>
 
 <body>
@@ -436,48 +437,9 @@
             </button>
         </header>
 
-        <p>4 Pokémon marcados como favoritos</p>
-
-        <ul class="favoritos">
-            <li class="favorito">
-                <img class="favorito__imagen" src="assets/bulbasaur.png" alt="" width="96" height="96">
-                <h3 class="favorito__nombre">Bulbasaur <span class="favorito__numero">#001</span></h3>
-                <ul class="favorito__tipos">
-                    <li class="tipo tipo--planta">Planta</li>
-                    <li class="tipo tipo--veneno">Veneno</li>
-                </ul>
-                <a class="boton boton--borde-azul boton--icono boton--icono-final icono-flecha favorito__detalle" href="detalle-pokemon-bulbasaur.html">Ver detalle<span class="solo-lectores"> de Bulbasaur</span></a>
-                <button class="boton boton--borde-rojo boton--icono boton--icono-final icono-cerrar favorito__quitar" type="button">Quitar<span class="solo-lectores"> a Bulbasaur</span> de favoritos</button>
-            </li>
-            <li class="favorito">
-                <img class="favorito__imagen" src="assets/charmander.png" alt="" width="96" height="96">
-                <h3 class="favorito__nombre">Charmander <span class="favorito__numero">#004</span></h3>
-                <ul class="favorito__tipos">
-                    <li class="tipo tipo--fuego">Fuego</li>
-                </ul>
-                <a class="boton boton--borde-azul boton--icono boton--icono-final icono-flecha favorito__detalle" href="detalle-pokemon-charmander.html">Ver detalle<span class="solo-lectores"> de Charmander</span></a>
-                <button class="boton boton--borde-rojo boton--icono boton--icono-final icono-cerrar favorito__quitar" type="button">Quitar<span class="solo-lectores"> a Charmander</span> de favoritos</button>
-            </li>
-            <li class="favorito">
-                <img class="favorito__imagen" src="assets/charizard.png" alt="" width="96" height="96">
-                <h3 class="favorito__nombre">Charizard <span class="favorito__numero">#006</span></h3>
-                <ul class="favorito__tipos">
-                    <li class="tipo tipo--fuego">Fuego</li>
-                    <li class="tipo tipo--volador">Volador</li>
-                </ul>
-                <a class="boton boton--borde-azul boton--icono boton--icono-final icono-flecha favorito__detalle" href="detalle-pokemon-charizard.html">Ver detalle<span class="solo-lectores"> de Charizard</span></a>
-                <button class="boton boton--borde-rojo boton--icono boton--icono-final icono-cerrar favorito__quitar" type="button">Quitar<span class="solo-lectores"> a Charizard</span> de favoritos</button>
-            </li>
-            <li class="favorito">
-                <img class="favorito__imagen" src="assets/pikachu.png" alt="" width="96" height="96">
-                <h3 class="favorito__nombre">Pikachu <span class="favorito__numero">#025</span></h3>
-                <ul class="favorito__tipos">
-                    <li class="tipo tipo--electrico">Eléctrico</li>
-                </ul>
-                <a class="boton boton--borde-azul boton--icono boton--icono-final icono-flecha favorito__detalle" href="detalle-pokemon-pikachu.html">Ver detalle<span class="solo-lectores"> de Pikachu</span></a>
-                <button class="boton boton--borde-rojo boton--icono boton--icono-final icono-cerrar favorito__quitar" type="button">Quitar<span class="solo-lectores"> a Pikachu</span> de favoritos</button>
-            </li>
-        </ul>
+        <p id="favoritos-resumen" aria-live="polite"></p>
+        <p id="favoritos-vacio" hidden>Todavía no marcaste favoritos. Agregalos desde Capturados.</p>
+        <ul class="favoritos"></ul>
 
         <footer class="modal__footer">
             <button class="boton boton--primario boton--icono icono-mas" type="button" command="show-modal" commandfor="capturados">Agregar desde capturados</button>
