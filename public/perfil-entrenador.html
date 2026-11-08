@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="/css/perfil-entrenador.css">
     <script type="module" src="/js/perfil-entrenador.js"></script>
     <script type="module" src="/js/modal-favoritos.js"></script>
+    <script type="module" src="/js/modal-capturados.js"></script>
   </head>
 
   <body>
@@ -361,9 +362,10 @@
       </div>
 
       <div class="modal__pie">
+        <p class="seleccion-estado" role="status"></p>
         <div class="modal__acciones">
-          <button type="button" class="boton boton--claro"><svg class="icono " aria-hidden="true" width="24" height="24"><use href="#i-star"/></svg> Marcar favorito</button>
-          <button type="button" class="boton boton--primario"><svg class="icono " aria-hidden="true" width="24" height="24"><use href="#i-plus"/></svg> Agregar al equipo</button>
+          <button type="button" class="boton boton--claro" data-accion="favorito"><svg class="icono " aria-hidden="true" width="24" height="24"><use href="#i-star"/></svg> Marcar favorito</button>
+          <button type="button" class="boton boton--primario" data-accion="equipo"><svg class="icono " aria-hidden="true" width="24" height="24"><use href="#i-plus"/></svg> Agregar al equipo</button>
         </div>
       </div>
     </dialog>

@@ -38,7 +38,7 @@ function pintarCapturados() {
     } else {
       grilla.innerHTML = capturados.map((p) => `
         <li class="captura">
-          <input type="checkbox" class="captura__check" id="cap-${p.id}" aria-label="Seleccionar a ${p.nombre}">
+          <input type="checkbox" class="captura__check" id="cap-${p.id}" value="${p.id}" aria-label="Seleccionar a ${p.nombre}">
           <label class="captura__cuerpo" for="cap-${p.id}">
             <span class="sprite-zona"><img src="assets/${p.slug}.png" alt="" width="96" height="96"></span>
             <span class="numero">${numeroPokedex(p.id)}</span>
