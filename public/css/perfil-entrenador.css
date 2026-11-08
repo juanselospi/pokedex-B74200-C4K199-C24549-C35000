@@ -289,11 +289,9 @@
 .mini-sprites {
   display: flex;
   margin: .4rem 0 0;
-  padding: 0;
-  list-style: none;
 }
 
-.mini-sprites li {
+.mini-sprites__item {
   display: grid;
   place-items: center;
   width: 2.75rem;
@@ -305,7 +303,7 @@
   box-shadow: 0 3px 8px -2px rgba(20, 44, 82, .35);
 }
 
-.mini-sprites li:first-child { margin-left: 0; }
+.mini-sprites__item:first-child { margin-left: 0; }
 
 .mini-sprites img { width: 2.1rem; height: 2.1rem; }
 
