@@ -289,11 +289,9 @@
 .mini-sprites {
   display: flex;
   margin: .4rem 0 0;
-  padding: 0;
-  list-style: none;
 }
 
-.mini-sprites li {
+.mini-sprites__item {
   display: grid;
   place-items: center;
   width: 2.75rem;
@@ -305,7 +303,7 @@
   box-shadow: 0 3px 8px -2px rgba(20, 44, 82, .35);
 }
 
-.mini-sprites li:first-child { margin-left: 0; }
+.mini-sprites__item:first-child { margin-left: 0; }
 
 .mini-sprites img { width: 2.1rem; height: 2.1rem; }
 
@@ -887,6 +885,26 @@ body:has(dialog[open]) {
   border: 0;
   outline: 0;
   appearance: none;
+}
+
+/* Un clic en el <label> solo enfoca el <select>, no abre la lista: el select
+   ocupa todo el óvalo y la flecha queda encima sin atrapar el clic. */
+.campo--select {
+  position: relative;
+  padding: 0;
+}
+
+.campo--select select {
+  align-self: stretch;
+  padding: 0 3rem 0 1rem;
+  border-radius: inherit;
+  cursor: pointer;
+}
+
+.campo--select .icono {
+  position: absolute;
+  right: 1rem;
+  pointer-events: none;
 }
 
 /* :focus-within = el foco está en algo DE ADENTRO. Como el control real no
