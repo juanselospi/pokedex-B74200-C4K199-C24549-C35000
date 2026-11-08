@@ -889,6 +889,26 @@ body:has(dialog[open]) {
   appearance: none;
 }
 
+/* Un clic en el <label> solo enfoca el <select>, no abre la lista: el select
+   ocupa todo el óvalo y la flecha queda encima sin atrapar el clic. */
+.campo--select {
+  position: relative;
+  padding: 0;
+}
+
+.campo--select select {
+  align-self: stretch;
+  padding: 0 3rem 0 1rem;
+  border-radius: inherit;
+  cursor: pointer;
+}
+
+.campo--select .icono {
+  position: absolute;
+  right: 1rem;
+  pointer-events: none;
+}
+
 /* :focus-within = el foco está en algo DE ADENTRO. Como el control real no
    tiene borde ni contorno, el que se enciende es el óvalo entero. */
 .campo:focus-within {
